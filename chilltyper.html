@@ -7,7 +7,7 @@
     <!-- Inline Data-URI SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%2306b6d4'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%23060911' font-family='sans-serif'>CT</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@600;800;900&family=Fredoka:wght@500;600;700&family=VT323&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@600;800;900&family=Fredoka:wght@500;600;700&family=VT323&family=Space+Grotesk:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -15,21 +15,122 @@
             background-color: #060911;
             color: #f8fafc;
             user-select: none;
+            transition: background-color 0.4s ease, color 0.4s ease, font-family 0.4s ease;
         }
 
         .font-mono-code {
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .glass-panel {
+        /* ----------------------------------------------------
+           PAGE LEVEL GLOBAL THEMES (Original, Cyberpunk, Hacker, Oldstyle)
+           Dynamic Fonts applying to both UI and Typing Area!
+        ---------------------------------------------------- */
+        /* 1. ORIGINAL THEME (Default Modern Glassmorphism) */
+        body[data-app-theme="original"] {
+            background-color: #060911;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        body[data-app-theme="original"] .glass-panel {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
         }
-
-        .glass-card {
+        body[data-app-theme="original"] .glass-card {
             background: rgba(30, 41, 59, 0.55);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+        }
+        body[data-app-theme="original"] #text-container,
+        body[data-app-theme="original"] #text-container * {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 2. CYBERPUNK THEME (Sci-Fi Orbitron Font, Sharp Cut Edges & Neon Glow) */
+        body[data-app-theme="cyberpunk"] {
+            background-color: #0c0218;
+            color: #fde047;
+            font-family: 'Orbitron', sans-serif;
+        }
+        body[data-app-theme="cyberpunk"] .glass-panel {
+            background: rgba(28, 10, 48, 0.92);
+            backdrop-filter: blur(16px);
+            border: 2px solid #ec4899;
+            border-radius: 4px !important;
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.4), inset 0 0 15px rgba(217, 70, 239, 0.2);
+        }
+        body[data-app-theme="cyberpunk"] .glass-card {
+            background: rgba(48, 16, 79, 0.75);
+            border: 2px solid #f472b6;
+            border-radius: 2px !important;
+            box-shadow: 0 0 12px rgba(244, 114, 182, 0.3);
+        }
+        body[data-app-theme="cyberpunk"] button,
+        body[data-app-theme="cyberpunk"] select,
+        body[data-app-theme="cyberpunk"] div.glass-panel > div {
+            border-radius: 4px !important;
+        }
+        body[data-app-theme="cyberpunk"] #text-container,
+        body[data-app-theme="cyberpunk"] #text-container * {
+            font-family: 'Orbitron', sans-serif !important;
+        }
+
+        /* 3. HACKER THEME (VT323 Terminal Monospace, Pixel Grid Square Shapes) */
+        body[data-app-theme="hacker"] {
+            background-color: #020a04;
+            color: #4ade80;
+            font-family: 'VT323', monospace;
+            font-size: 1.12rem;
+        }
+        body[data-app-theme="hacker"] .glass-panel {
+            background: rgba(4, 26, 12, 0.95);
+            backdrop-filter: blur(16px);
+            border: 2px solid #22c55e;
+            border-radius: 0px !important;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.35), inset 0 0 12px rgba(34, 197, 94, 0.2);
+        }
+        body[data-app-theme="hacker"] .glass-card {
+            background: rgba(8, 41, 19, 0.85);
+            border: 1px dashed #4ade80;
+            border-radius: 0px !important;
+        }
+        body[data-app-theme="hacker"] button,
+        body[data-app-theme="hacker"] select,
+        body[data-app-theme="hacker"] div.glass-panel > div {
+            border-radius: 0px !important;
+        }
+        body[data-app-theme="hacker"] #text-container,
+        body[data-app-theme="hacker"] #text-container * {
+            font-family: 'VT323', monospace !important;
+        }
+
+        /* 4. OLDSTYLE THEME (Courier Prime Vintage Typewriter Font & Double Amber Frames) */
+        body[data-app-theme="oldstyle"] {
+            background-color: #1a140e;
+            color: #fef3c7;
+            font-family: 'Courier Prime', 'Space Grotesk', serif;
+        }
+        body[data-app-theme="oldstyle"] .glass-panel {
+            background: rgba(38, 29, 20, 0.94);
+            backdrop-filter: blur(16px);
+            border: 4px double #d97706;
+            border-radius: 12px !important;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(217, 119, 6, 0.15);
+        }
+        body[data-app-theme="oldstyle"] .glass-card {
+            background: rgba(59, 44, 29, 0.8);
+            border: 2px solid #f59e0b;
+            border-radius: 8px !important;
+        }
+        body[data-app-theme="oldstyle"] button,
+        body[data-app-theme="oldstyle"] select {
+            border-radius: 8px !important;
+        }
+        body[data-app-theme="oldstyle"] #text-container,
+        body[data-app-theme="oldstyle"] #text-container * {
+            font-family: 'Courier Prime', serif !important;
         }
 
         /* Color assignments per finger */
@@ -112,22 +213,22 @@
         }
 
         /* 1. PULSE THEME (Space Grotesk) */
-        .anim-pulse #text-container { font-family: 'Space Grotesk', sans-serif; }
+        .anim-pulse #text-container, .anim-pulse #text-container * { font-family: 'Space Grotesk', sans-serif; }
         .anim-pulse .cursor-char { background-color: rgba(6, 182, 212, 0.3) !important; color: #67e8f9 !important; border-bottom: 3px solid #06b6d4; }
         .anim-pulse .just-typed { animation: key-hit-pulse 0.32s ease-out forwards; display: inline-block; }
 
         /* 2. NEON CYBER THEME (Orbitron) */
-        .anim-neon #text-container { font-family: 'Orbitron', sans-serif; letter-spacing: 0.08em; }
+        .anim-neon #text-container, .anim-neon #text-container * { font-family: 'Orbitron', sans-serif !important; letter-spacing: 0.08em; }
         .anim-neon .cursor-char { background-color: rgba(168, 85, 247, 0.35) !important; color: #f0abfc !important; border: 2px solid #e879f9 !important; box-shadow: 0 0 14px #d946ef !important; }
         .anim-neon .just-typed { animation: key-hit-neon 0.38s ease-out forwards; display: inline-block; }
 
         /* 3. POP & UGRÁS THEME (Fredoka) */
-        .anim-bounce #text-container { font-family: 'Fredoka', cursive; letter-spacing: 0.05em; }
+        .anim-bounce #text-container, .anim-bounce #text-container * { font-family: 'Fredoka', cursive !important; letter-spacing: 0.05em; }
         .anim-bounce .cursor-char { background-color: #f59e0b !important; color: #0f172a !important; border-radius: 6px; }
         .anim-bounce .just-typed { animation: key-hit-bounce 0.42s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; display: inline-block; }
 
         /* 4. TERMINÁL THEME (VT323) */
-        .anim-terminal #text-container { font-family: 'VT323', monospace; font-size: 1.28em; letter-spacing: 0.1em; }
+        .anim-terminal #text-container, .anim-terminal #text-container * { font-family: 'VT323', monospace !important; font-size: 1.28em; letter-spacing: 0.1em; }
         .anim-terminal .cursor-char { background-color: #22c55e; color: #022c22; font-weight: 900; }
         .anim-terminal .just-typed { animation: key-hit-terminal 0.28s ease-out forwards; display: inline-block; }
 
@@ -145,7 +246,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-slate-100 p-3 sm:p-5 md:p-8 overflow-x-hidden">
+<body data-app-theme="original" class="min-h-screen flex flex-col justify-between p-3 sm:p-5 md:p-8 overflow-x-hidden transition-colors duration-300">
 
     <!-- NOTIFICATION TOAST -->
     <div id="badge-toast" class="fixed top-6 right-6 z-50 transform -translate-y-36 opacity-0 transition-all duration-500 bg-amber-500/20 border-2 border-amber-400 text-amber-200 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-center gap-4">
@@ -167,14 +268,14 @@
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
                         ChillTyper
                     </h1>
-                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v4.7</span>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v4.9</span>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-400 font-semibold">Magyar QWERTZ Vakírás Tanuló & Gyakorló Program</p>
             </div>
         </div>
 
         <!-- Action Controls & Mode Selection Tabs -->
-        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-slate-900/90 p-2 sm:p-2.5 rounded-2xl border border-slate-800 shadow-lg">
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-slate-900/90 p-2 sm:p-2.5 rounded-2xl border border-slate-800 shadow-lg relative">
             <!-- NEW GAME BUTTON -->
             <button id="new-game-btn" onclick="startNewGame()" class="px-4 sm:px-6 py-3 rounded-xl text-sm sm:text-base font-black transition flex items-center gap-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 text-slate-950 hover:brightness-110 shadow-lg shadow-orange-500/25 transform active:scale-95">
                 🎮 Új játék
@@ -192,9 +293,38 @@
                 💬 Mondatok
             </button>
 
+            <!-- SOUND TOGGLE BUTTON -->
             <button id="sound-btn" onclick="toggleSound()" class="p-3 rounded-xl glass-card hover:bg-slate-800 text-slate-200 transition flex items-center text-base font-bold" title="Hangjelzések Be/Ki">
                 <span id="sound-icon" class="text-xl">🔊</span>
             </button>
+
+            <!-- GEAR BUTTON FOR PAGE THEME SWITCHER -->
+            <div class="relative">
+                <button id="theme-menu-btn" onclick="toggleThemeMenu()" class="p-3 rounded-xl glass-card hover:bg-slate-800 text-slate-200 transition flex items-center text-base font-bold" title="Teljes Oldal Témájának Módosítása">
+                    <span class="text-xl animate-spin-slow">⚙️</span>
+                </button>
+
+                <!-- THEME SELECTOR DROPDOWN MENU -->
+                <div id="theme-dropdown" class="absolute right-0 top-14 w-52 bg-slate-900 border-2 border-cyan-500/40 rounded-2xl p-2 shadow-2xl z-50 hidden backdrop-blur-xl flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase text-slate-400 px-3 py-1 tracking-wider block border-b border-slate-800 mb-1">Oldal Témája:</span>
+                    <button onclick="setAppTheme('original')" class="w-full px-3 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between hover:bg-slate-800 transition text-cyan-300">
+                        <span>🌌 Original</span>
+                        <span id="check-original" class="text-emerald-400 font-extrabold">✓</span>
+                    </button>
+                    <button onclick="setAppTheme('cyberpunk')" class="w-full px-3 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between hover:bg-slate-800 transition text-pink-400">
+                        <span>🔮 Cyberpunk</span>
+                        <span id="check-cyberpunk" class="text-emerald-400 font-extrabold hidden">✓</span>
+                    </button>
+                    <button onclick="setAppTheme('hacker')" class="w-full px-3 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between hover:bg-slate-800 transition text-emerald-400">
+                        <span>📟 Hacker</span>
+                        <span id="check-hacker" class="text-emerald-400 font-extrabold hidden">✓</span>
+                    </button>
+                    <button onclick="setAppTheme('oldstyle')" class="w-full px-3 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between hover:bg-slate-800 transition text-amber-300">
+                        <span>📜 Oldstyle</span>
+                        <span id="check-oldstyle" class="text-emerald-400 font-extrabold hidden">✓</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -209,7 +339,7 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-3 flex-wrap">
-                        <h2 class="text-lg sm:text-2xl md:text-3xl font-black text-slate-100" id="module-title">1. Szint: F, J, Szóköz</h2>
+                        <h2 class="text-lg sm:text-2xl md:text-3xl font-black" id="module-title">1. Szint: F, J, Szóköz</h2>
                         <span id="mode-status-badge" class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-teal-500/20 text-teal-300 border border-teal-500/30">
                             Kezdő Mód (Dinamikus Cél)
                         </span>
@@ -221,7 +351,7 @@
             <!-- PROMINENT NEW KEY BADGE IN LEVEL HEADER -->
             <div id="new-key-header-card" class="px-4 py-2.5 rounded-2xl bg-slate-900 border border-cyan-500/40 flex items-center gap-3 shadow-lg shrink-0">
                 <span class="text-xs font-black uppercase tracking-wider text-slate-400">Új betű ezen a szinten:</span>
-                <span id="header-newkey-box" class="w-9 h-9 rounded-xl font-mono-code font-black text-xl flex items-center justify-center bg-cyan-500/20 text-cyan-300 border border-cyan-400 shadow">
+                <span id="header-newkey-box" class="w-9 h-9 rounded-xl font-black text-xl flex items-center justify-center bg-cyan-500/20 text-cyan-300 border border-cyan-400 shadow">
                     F
                 </span>
                 <span id="header-newkey-finger" class="text-xs font-bold text-teal-300">
@@ -239,10 +369,10 @@
         <div id="beginner-progress-card" class="glass-panel rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col gap-3">
             <div class="flex justify-between items-center text-xs sm:text-sm md:text-base flex-wrap gap-2">
                 <span class="font-extrabold text-teal-300 flex items-center gap-2">
-                    <span class="text-xl">🎯</span> Gyakorlási cél (Izommemória): <span id="hits-target-display" class="font-mono-code font-black text-emerald-300 text-base sm:text-lg">128</span> leütés
+                    <span class="text-xl">🎯</span> Gyakorlási cél (Izommemória): <span id="hits-target-display" class="font-black text-emerald-300 text-base sm:text-lg">128</span> leütés
                 </span>
                 <span class="font-bold text-slate-400">
-                    Összes leütés ebben a körben: <span id="hits-current-display" class="font-mono-code font-black text-cyan-300 text-base sm:text-lg">0</span> leütés
+                    Összes leütés ebben a körben: <span id="hits-current-display" class="font-black text-cyan-300 text-base sm:text-lg">0</span> leütés
                 </span>
             </div>
 
@@ -265,19 +395,19 @@
         <div id="advanced-stats-card" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 hidden">
             <div class="glass-panel rounded-2xl p-4 text-center">
                 <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Sebesség (CPM)</span>
-                <span class="text-2xl sm:text-4xl font-black text-cyan-400 font-mono-code" id="stat-cpm">0</span>
+                <span class="text-2xl sm:text-4xl font-black text-cyan-400" id="stat-cpm">0</span>
             </div>
             <div class="glass-panel rounded-2xl p-4 text-center">
                 <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Szó / Perc (WPM)</span>
-                <span class="text-2xl sm:text-4xl font-black text-indigo-400 font-mono-code" id="stat-wpm">0</span>
+                <span class="text-2xl sm:text-4xl font-black text-indigo-400" id="stat-wpm">0</span>
             </div>
             <div class="glass-panel rounded-2xl p-4 text-center">
                 <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Pontosság</span>
-                <span class="text-2xl sm:text-4xl font-black text-emerald-400 font-mono-code" id="stat-accuracy">100%</span>
+                <span class="text-2xl sm:text-4xl font-black text-emerald-400" id="stat-accuracy">100%</span>
             </div>
             <div class="glass-panel rounded-2xl p-4 text-center">
                 <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Eltelt Idő</span>
-                <span class="text-2xl sm:text-4xl font-black text-amber-400 font-mono-code" id="stat-timer">00:00</span>
+                <span class="text-2xl sm:text-4xl font-black text-amber-400" id="stat-timer">00:00</span>
             </div>
         </div>
 
@@ -300,7 +430,7 @@
                 <div class="flex items-center gap-3">
                     <span class="text-xl sm:text-2xl">👉</span>
                     <span class="text-xs sm:text-sm md:text-base text-slate-300 font-extrabold">
-                        Következő gomb: <span id="target-key-name" class="text-cyan-300 font-black font-mono-code underline decoration-cyan-500 underline-offset-4 text-lg sm:text-xl">F</span>
+                        Következő gomb: <span id="target-key-name" class="text-cyan-300 font-black underline decoration-cyan-500 underline-offset-4 text-lg sm:text-xl">F</span>
                     </span>
                 </div>
                 <div id="target-finger-badge" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wide border finger-3 flex items-center gap-2 shadow">
@@ -308,7 +438,7 @@
                 </div>
             </div>
 
-            <!-- 3-LINE TEXT CONTAINER (CENTERED & RESPONSIVE) -->
+            <!-- 3-LINE TEXT CONTAINER (CENTERED & RESPONSIVE WITH DYNAMIC THEME FONTS) -->
             <div id="text-container" class="flex flex-col gap-3.5 py-2 sm:py-4 max-w-full overflow-hidden">
                 <!-- Lines generated dynamically -->
             </div>
@@ -345,7 +475,7 @@
             <!-- PROMINENT NEW KEY PROMPT BOX -->
             <div class="w-full bg-slate-900/90 border-2 border-cyan-500/50 rounded-2xl p-4 flex flex-col items-center gap-2 shadow-xl">
                 <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Újonnan Feloldott Karakter a Következő Szintre:</span>
-                <div id="modal-newkey-badge" class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-teal-500/20 border-2 border-cyan-400 text-cyan-300 text-3xl font-black font-mono-code flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                <div id="modal-newkey-badge" class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-teal-500/20 border-2 border-cyan-400 text-cyan-300 text-3xl font-black flex items-center justify-center shadow-lg shadow-cyan-500/20">
                     D
                 </div>
                 <span id="modal-newkey-finger" class="text-xs font-extrabold text-teal-300 uppercase tracking-wide">
@@ -401,6 +531,7 @@
            1. CORE DATA STRUCTURES & CONSTANTS
         ---------------------------------------------------- */
         let currentAnimation = 'pulse';
+        let currentAppTheme = 'original'; // 'original', 'cyberpunk', 'hacker', 'oldstyle'
         let lastTypedIndex = -1; // Track index for keypress hit animation trigger
 
         // Single character progression order (1 key unlocked per level)
@@ -628,7 +759,46 @@
         }
 
         /* ----------------------------------------------------
-           4. INITIALIZATION & STORAGE
+           4. GLOBAL PAGE THEME SWITCHER
+        ---------------------------------------------------- */
+        function toggleThemeMenu() {
+            const menu = document.getElementById('theme-dropdown');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        function setAppTheme(themeName) {
+            currentAppTheme = themeName;
+            document.body.setAttribute('data-app-theme', themeName);
+            localStorage.setItem('chilltyper_app_theme', themeName);
+
+            // Update checks in theme menu
+            ['original', 'cyberpunk', 'hacker', 'oldstyle'].forEach(t => {
+                const checkEl = document.getElementById(`check-${t}`);
+                if (checkEl) {
+                    if (t === themeName) checkEl.classList.remove('hidden');
+                    else checkEl.classList.add('hidden');
+                }
+            });
+
+            // Close menu
+            const menu = document.getElementById('theme-dropdown');
+            if (menu) menu.classList.add('hidden');
+
+            renderPracticeText();
+            showToast("Oldal Témája Módosítva", `Kiválasztott téma: ${themeName.toUpperCase()}`, "⚙️");
+        }
+
+        // Close theme dropdown when clicking outside
+        window.addEventListener('click', (e) => {
+            const menuBtn = document.getElementById('theme-menu-btn');
+            const menu = document.getElementById('theme-dropdown');
+            if (menu && menuBtn && !menuBtn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        /* ----------------------------------------------------
+           5. INITIALIZATION & STORAGE
         ---------------------------------------------------- */
         function initApp() {
             loadProgress();
@@ -646,6 +816,13 @@
                 if (selectEl) selectEl.value = savedAnim;
             }
             changeTypingAnimation(currentAnimation);
+
+            const savedTheme = localStorage.getItem('chilltyper_app_theme');
+            if (savedTheme) {
+                setAppTheme(savedTheme);
+            } else {
+                setAppTheme('original');
+            }
         }
 
         function loadProgress() {
@@ -664,7 +841,7 @@
         }
 
         /* ----------------------------------------------------
-           5. GENERATE PRACTICE TEXT
+           6. GENERATE PRACTICE TEXT
         ---------------------------------------------------- */
         function generatePracticeText() {
             currentPracticeText = [];
@@ -699,7 +876,7 @@
         }
 
         /* ----------------------------------------------------
-           6. RENDER PRACTICE BOARD
+           7. RENDER PRACTICE BOARD
         ---------------------------------------------------- */
         function renderPracticeText() {
             if (currentPracticeText.length === 0) {
@@ -714,7 +891,7 @@
                 const isActive = idx === lineIndex;
                 const isPast = idx < lineIndex;
 
-                let modeFontClass = "text-xl sm:text-2xl md:text-3xl font-mono-code tracking-widest";
+                let modeFontClass = "text-xl sm:text-2xl md:text-3xl tracking-widest";
                 if (currentMode === 'sentence') {
                     modeFontClass = "text-base sm:text-lg md:text-xl font-medium tracking-normal leading-relaxed";
                 }
@@ -790,7 +967,7 @@
         }
 
         /* ----------------------------------------------------
-           7. VIRTUAL KEYBOARD RENDER & HIGHLIGHT
+           8. VIRTUAL KEYBOARD RENDER & HIGHLIGHT
         ---------------------------------------------------- */
         function renderKeyboard() {
             const kbContainer = document.getElementById('keyboard');
@@ -830,7 +1007,7 @@
         }
 
         /* ----------------------------------------------------
-           8. INPUT & KEYBOARD EVENTS
+           9. INPUT & KEYBOARD EVENTS
         ---------------------------------------------------- */
         function setupKeyboardListeners() {
             window.addEventListener('keydown', (e) => {
@@ -924,7 +1101,7 @@
         }
 
         /* ----------------------------------------------------
-           9. GAME CONTROL & COMPLETION
+           10. GAME CONTROL & COMPLETION
         ---------------------------------------------------- */
         function startNewGame() {
             if (timerInterval) clearInterval(timerInterval);
@@ -990,7 +1167,6 @@
             timerInterval = null;
 
             const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
-            const mod = MODULES[currentModuleIndex];
 
             if (acc >= 90) {
                 playSound('fanfare');
@@ -1041,7 +1217,7 @@
         }
 
         /* ----------------------------------------------------
-           10. MODE & LESSON MODALS
+           11. MODE & LESSON MODALS
         ---------------------------------------------------- */
         function switchAppMode(mode) {
             currentMode = mode;
@@ -1135,7 +1311,7 @@
                         <span class="font-extrabold text-sm text-cyan-300">${mod.id}. Szint</span>
                         <span>${isUnlocked ? '🔓' : '🔒'}</span>
                     </div>
-                    <p class="text-xs text-slate-300 font-medium">${mod.title}</p>
+                    <p class="text-xs font-medium">${mod.title}</p>
                 `;
 
                 if (isUnlocked) {
