@@ -167,7 +167,7 @@
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
                         ChillTyper
                     </h1>
-                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v4.2</span>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v4.7</span>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-400 font-semibold">Magyar QWERTZ Vakírás Tanuló & Gyakorló Program</p>
             </div>
@@ -216,6 +216,17 @@
                     </div>
                     <p class="text-xs sm:text-sm md:text-base text-slate-400 font-medium" id="module-desc">Gyűjtsd össze a szükséges leütéseket a következő betűk feloldásához!</p>
                 </div>
+            </div>
+
+            <!-- PROMINENT NEW KEY BADGE IN LEVEL HEADER -->
+            <div id="new-key-header-card" class="px-4 py-2.5 rounded-2xl bg-slate-900 border border-cyan-500/40 flex items-center gap-3 shadow-lg shrink-0">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400">Új betű ezen a szinten:</span>
+                <span id="header-newkey-box" class="w-9 h-9 rounded-xl font-mono-code font-black text-xl flex items-center justify-center bg-cyan-500/20 text-cyan-300 border border-cyan-400 shadow">
+                    F
+                </span>
+                <span id="header-newkey-finger" class="text-xs font-bold text-teal-300">
+                    Bal mutatóujj
+                </span>
             </div>
 
             <!-- LEVEL SELECTOR BUTTON (Only shown in Beginner & Advanced modes) -->
@@ -273,9 +284,9 @@
         <!-- TYPING BOARD CONTAINER -->
         <div class="glass-panel rounded-3xl p-5 sm:p-8 flex flex-col gap-5 shadow-2xl relative border-slate-800" id="typing-board">
             
-            <!-- ANIMATION SELECTOR (VISIBLE IN SENTENCE MODE) -->
-            <div id="anim-selector-container" class="absolute top-4 right-4 sm:top-5 sm:right-6 hidden flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 shadow-lg z-30">
-                <span class="text-xs font-black text-slate-400 uppercase tracking-wider hidden sm:inline">Leütési Animáció:</span>
+            <!-- ANIMATION & AUDIO THEME SELECTOR (VISIBLE IN ALL MODES) -->
+            <div id="anim-selector-container" class="absolute top-4 right-4 sm:top-5 sm:right-6 flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 shadow-lg z-30">
+                <span class="text-xs font-black text-slate-400 uppercase tracking-wider hidden sm:inline">Stílus & Hang:</span>
                 <select id="anim-style-select" onchange="changeTypingAnimation(this.value)" class="bg-slate-950 text-cyan-300 text-xs sm:text-sm font-extrabold rounded-lg px-2.5 py-1 border border-cyan-500/30 focus:outline-none cursor-pointer">
                     <option value="pulse">⚡ Villám Pulzus</option>
                     <option value="neon">✨ Neon Cyber</option>
@@ -317,7 +328,7 @@
         ChillTyper • Magyar QWERTZ Vakírás Oktató Program &copy; 2026
     </footer>
 
-    <!-- MODAL: LEVEL UNLOCKED (SUCCESS) -->
+    <!-- MODAL: LEVEL UNLOCKED (SUCCESS WITH PROMINENT NEW KEY SHOWCASE) -->
     <div id="modal-unlock" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
         <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center flex flex-col items-center gap-5 border-2 border-emerald-500/40 shadow-2xl">
             <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-3xl flex items-center justify-center text-4xl border border-emerald-500/40 shadow-inner">
@@ -326,9 +337,20 @@
             <div>
                 <span class="text-xs font-black uppercase text-emerald-400 tracking-widest block mb-1">Szint Teljesítve!</span>
                 <h3 class="text-2xl sm:text-3xl font-black text-white" id="modal-unlock-title">Kiváló Munkát Végeztél!</h3>
-                <p class="text-sm sm:text-base text-slate-300 mt-2 font-medium" id="modal-unlock-desc">
-                    A pontosságod <span id="modal-unlock-acc" class="font-extrabold text-emerald-400">98%</span> volt! Feloldottál egy új karaktert: <span id="modal-unlock-newkey" class="font-mono-code font-black text-cyan-300 text-xl underline">D</span>
+                <p class="text-sm sm:text-base text-slate-300 mt-1 font-medium">
+                    A pontosságod <span id="modal-unlock-acc" class="font-extrabold text-emerald-400">98%</span> volt!
                 </p>
+            </div>
+
+            <!-- PROMINENT NEW KEY PROMPT BOX -->
+            <div class="w-full bg-slate-900/90 border-2 border-cyan-500/50 rounded-2xl p-4 flex flex-col items-center gap-2 shadow-xl">
+                <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Újonnan Feloldott Karakter a Következő Szintre:</span>
+                <div id="modal-newkey-badge" class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-teal-500/20 border-2 border-cyan-400 text-cyan-300 text-3xl font-black font-mono-code flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    D
+                </div>
+                <span id="modal-newkey-finger" class="text-xs font-extrabold text-teal-300 uppercase tracking-wide">
+                    👉 Használt ujj: Bal középső ujj
+                </span>
             </div>
 
             <button onclick="nextLevel()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-slate-950 font-black text-lg sm:text-xl shadow-xl shadow-emerald-500/20 hover:brightness-110 active:scale-98 transition">
@@ -477,6 +499,7 @@
                 title: "1. Szint: F, J, Szóköz (Alapok)",
                 desc: "Helyezd a mutatósujjaidat az F és J billentyűkre!",
                 keys: ['f', 'j', ' '],
+                newKey: 'f',
                 targetHits: 128
             });
 
@@ -518,7 +541,7 @@
         let soundEnabled = true;
 
         /* ----------------------------------------------------
-           3. WEB AUDIO API SYNTHESIZER
+           3. WEB AUDIO API SYNTHESIZER (THEME DYNAMIC SOUNDS)
         ---------------------------------------------------- */
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
@@ -529,21 +552,50 @@
                 if (!audioCtx) audioCtx = new AudioCtx();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
 
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
                 const now = audioCtx.currentTime;
 
                 if (type === 'hit') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(440, now);
-                    gain.gain.setValueAtTime(0.04, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-                    osc.start(now);
-                    osc.stop(now + 0.06);
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    if (currentAnimation === 'neon') {
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(1100, now);
+                        osc.frequency.exponentialRampToValueAtTime(320, now + 0.08);
+                        gain.gain.setValueAtTime(0.06, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                        osc.start(now);
+                        osc.stop(now + 0.08);
+                    } else if (currentAnimation === 'bounce') {
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(750, now);
+                        osc.frequency.exponentialRampToValueAtTime(160, now + 0.05);
+                        gain.gain.setValueAtTime(0.09, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                        osc.start(now);
+                        osc.stop(now + 0.05);
+                    } else if (currentAnimation === 'terminal') {
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(220, now);
+                        gain.gain.setValueAtTime(0.05, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                        osc.start(now);
+                        osc.stop(now + 0.04);
+                    } else {
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(520, now);
+                        gain.gain.setValueAtTime(0.05, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                        osc.start(now);
+                        osc.stop(now + 0.05);
+                    }
                 } else if (type === 'error') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
                     osc.type = 'sawtooth';
                     osc.frequency.setValueAtTime(140, now);
                     gain.gain.setValueAtTime(0.08, now);
@@ -593,6 +645,7 @@
                 const selectEl = document.getElementById('anim-style-select');
                 if (selectEl) selectEl.value = savedAnim;
             }
+            changeTypingAnimation(currentAnimation);
         }
 
         function loadProgress() {
@@ -713,7 +766,8 @@
             board.classList.remove('anim-pulse', 'anim-neon', 'anim-bounce', 'anim-terminal');
             board.classList.add(`anim-${animName}`);
             
-            showToast("Leütési Animáció Módosítva", `Kiválasztva: ${animName.toUpperCase()}`, "✨");
+            playSound('hit');
+            showToast("Stílus & Hang Módosítva", `Kiválasztva: ${animName.toUpperCase()}`, "✨");
         }
 
         function updateTargetPrompt() {
@@ -780,7 +834,6 @@
         ---------------------------------------------------- */
         function setupKeyboardListeners() {
             window.addEventListener('keydown', (e) => {
-                // Check if modals are open
                 if (!document.getElementById('modal-unlock').classList.contains('hidden')) {
                     if (e.key === 'Enter') nextLevel();
                     return;
@@ -827,17 +880,32 @@
             if (key.toLowerCase() === targetChar.toLowerCase()) {
                 correctTyped++;
                 userInput += targetChar;
-                lastTypedIndex = userInput.length - 1; // Trigger animation on keypress
+                lastTypedIndex = userInput.length - 1;
                 playSound('hit');
 
-                // Completed the line!
+                // Completed the current line!
                 if (userInput.length >= currentLine.length) {
                     lineIndex++;
                     userInput = "";
                     lastTypedIndex = -1;
 
+                    // Completed all 3 lines in the current set
                     if (lineIndex >= currentPracticeText.length) {
-                        checkLevelCompletion();
+                        if (currentMode === 'sentence') {
+                            playSound('fanfare');
+                            showToast("Mondatok Teljesítve! 🎉", "Új mondatsorozat betöltve!", "🏆");
+                            generatePracticeText();
+                            renderPracticeText();
+                        } else {
+                            const mod = MODULES[currentModuleIndex];
+                            // If total typed hits are STILL LESS than the required target, keep refreshing lines continuous!
+                            if (totalTyped < mod.targetHits) {
+                                generatePracticeText();
+                                renderPracticeText();
+                            } else {
+                                checkLevelCompletion();
+                            }
+                        }
                     } else {
                         renderPracticeText();
                     }
@@ -919,24 +987,20 @@
 
         function checkLevelCompletion() {
             if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
 
             const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
             const mod = MODULES[currentModuleIndex];
 
-            if (currentMode === 'sentence') {
-                playSound('fanfare');
-                showToast("Mondatok Teljesítve! 🎉", "Új mondatsorozat betöltve!", "🏆");
-                startNewGame();
-                return;
-            }
-
-            // Must reach target hits AND maintain >= 90% accuracy
-            if (totalTyped >= mod.targetHits && acc >= 90) {
+            if (acc >= 90) {
                 playSound('fanfare');
 
                 if (currentModuleIndex < MODULES.length - 1) {
                     const nextMod = MODULES[currentModuleIndex + 1];
-                    const newKeyDisplay = KEY_NAMES_HU[nextMod.newKey] || nextMod.newKey?.toUpperCase() || '';
+                    const nextKeyChar = nextMod.newKey || nextMod.keys[nextMod.keys.length - 1];
+                    const newKeyDisplay = KEY_NAMES_HU[nextKeyChar] || nextKeyChar?.toUpperCase() || '';
+                    const fingerKey = KEY_FINGERS[nextKeyChar.toLowerCase()] || 'thumb';
+                    const fingerInfo = FINGER_MAP[fingerKey];
 
                     if (currentModuleIndex === highestUnlockedModule) {
                         highestUnlockedModule++;
@@ -944,14 +1008,18 @@
                     }
 
                     document.getElementById('modal-unlock-acc').textContent = `${acc}%`;
-                    document.getElementById('modal-unlock-newkey').textContent = newKeyDisplay;
+                    
+                    // PROMINENT NEW KEY SHOWCASE IN UNLOCK MODAL
+                    const modalBadge = document.getElementById('modal-newkey-badge');
+                    modalBadge.textContent = newKeyDisplay;
+                    
+                    const modalFinger = document.getElementById('modal-newkey-finger');
+                    modalFinger.textContent = `👉 Használt ujj: ${fingerInfo.name}`;
+
                     document.getElementById('modal-unlock').classList.remove('hidden');
                 } else {
                     showToast("Gratulálunk! 🎉", "Teljesítetted az összes szintet!", "🏆");
                 }
-            } else if (totalTyped < mod.targetHits) {
-                // Generates more lines to reach target hits without interrupting midway
-                renderPracticeText();
             } else {
                 playSound('error');
                 document.getElementById('modal-retry-acc').textContent = `${acc}%`;
@@ -1011,25 +1079,37 @@
             const title = document.getElementById('module-title');
             const desc = document.getElementById('module-desc');
             const animContainer = document.getElementById('anim-selector-container');
+            const newKeyHeaderCard = document.getElementById('new-key-header-card');
             const board = document.getElementById('typing-board');
 
-            // Apply selected animation class
             board.classList.remove('anim-pulse', 'anim-neon', 'anim-bounce', 'anim-terminal');
             board.classList.add(`anim-${currentAnimation}`);
+
+            if (animContainer) animContainer.classList.remove('hidden');
 
             if (currentMode === 'sentence') {
                 if (badge) badge.textContent = "💬";
                 if (title) title.textContent = "Mondat Mód";
                 if (desc) desc.textContent = "Gyakorold a gépelést értelmes magyar mondatokkal! A teljes billentyűzet nyitva áll.";
                 if (levelBtn) levelBtn.classList.add('hidden');
-                if (animContainer) animContainer.classList.remove('hidden');
+                if (newKeyHeaderCard) newKeyHeaderCard.classList.add('hidden');
             } else {
                 const mod = MODULES[currentModuleIndex];
                 if (badge) badge.textContent = mod.id;
                 if (title) title.textContent = mod.title;
                 if (desc) desc.textContent = mod.desc;
                 if (levelBtn) levelBtn.classList.remove('hidden');
-                if (animContainer) animContainer.classList.add('hidden');
+
+                if (newKeyHeaderCard) {
+                    newKeyHeaderCard.classList.remove('hidden');
+                    const newKeyChar = mod.newKey || mod.keys[mod.keys.length - 1];
+                    const keyDisplay = KEY_NAMES_HU[newKeyChar] || newKeyChar.toUpperCase();
+                    const fingerKey = KEY_FINGERS[newKeyChar.toLowerCase()] || 'thumb';
+                    const fingerInfo = FINGER_MAP[fingerKey];
+
+                    document.getElementById('header-newkey-box').textContent = keyDisplay;
+                    document.getElementById('header-newkey-finger').textContent = fingerInfo.name;
+                }
             }
 
             const unlockedBadge = document.getElementById('unlocked-count-badge');
