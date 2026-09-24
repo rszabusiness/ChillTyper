@@ -1,109 +1,102 @@
+# ⌨️ ChillTyper - Magyar QWERTZ Vakírás Tanuló & Gyakorló Program
 
-# ⌨️ ChillTyper - Magyar QWERTZ Vakírás Tanuló & Gyakorló
+A **ChillTyper** egy modern, interaktív és letisztult magyar vakírás-oktató webes alkalmazás. Segítségével lépésről lépésre, izommemóriára építve tanulhatsz meg tíz ujjal gépelni a standard magyar QWERTZ billentyűzetkiosztáson.
 
-**ChillTyper** egy modern, böngészőben futó, interaktív gépírás-oktató webalkalmazás, amelynek célja, hogy lépésről lépésre tanítsa meg a tízujjas vakírást a **magyar QWERTZ billentyűzetkiosztás** alapján.
+---
 
-## ✨ Főbb Funkciók
+## ✨ Főbb Jellemzők
 
-* **🎮 Új Játék Gomb**: Bármikor azonnal újratöltheted az aktuális kört tiszta statisztikákkal és friss gyakorlómondatokkal/karakterláncokkal anélkül, hogy elveszítenéd a már feloldott szintjeidet.
+* **🇭🇺 Eredeti Magyar ISO QWERTZ Kiosztás**: Helyes ujjrend-hozzárendelésekkel és az összes magyar ékezetes billentyűvel (`é`, `á`, `í`, `ö`, `ü`, `ó`, `ő`, `ú`, `ű`).
 
-* **🎨 SVG Favicon Integration**: Beépített, külső fájlt nem igénylő dinamikus böngészőikon.
+* **🧩 47 Lépcsőfokos Tanösvény (1 új betű / szint)**:
+  * **1. Szint**: Alappozíció (`F`, `J`, `Szóköz`).
+  * **2–47. Szint**: Minden egyes szint pontosan **1 új karaktert** nyit fel és gyakoroltat be fokozatosan.
 
-* **Magyar QWERTZ Kiosztás**: Eredeti magyar billentyűzet-elrendezés az összes ékezetes karakterrel (`á`, `é`, `í`, `ó`, `ö`, `ő`, `ú`, `ü`, `ű`).
+* **🎯 Izommemória-alapú Leütési Célok**: Kezdő szinten fix leütésszám (pl. 128 leütés) összegyűjtése a cél, ami a magasabb szinteken fokozatosan skálázódik.
 
-* **Ujjrendi Színkódolás**: A virtuális billentyűzeten minden billentyű az ahhoz rendelt ujj színével jelenik meg (8 ujj + hüvelykujjak).
+* **📏 Szigorú ≥90%-os Pontossági Szabály**: A következő szintre kizárólag legalább **90%-os gépelési pontossággal** lehet továbblépni.
 
-* **Vizuális Segítség ("Melyik Ujj")**: Valós idejű útmutató mutatja, hogy az éppen leütendő karaktert melyik ujjaddal kell megnyomnod.
+* **⌨️ Sorfolytonos Befejezés**: A leütési cél elérésekor nem szakad meg hirtelen a gépelés; a megkezdett sor végigírható, és a sor legvégén történik meg az ellenőrzés.
 
-* **Fokozatos Karakter-Feloldás**: 47 egymásra épülő szint. Az `F`, `J` és `Szóköz` alapoktól indulva szintről szintre **egyetlen új karakter** oldódik fel.
+* **🔤 3 Betűs Blokkok**: A gyakorlósorok kizárólag szabályos, 3 karakteres csoportokból és szóköztörésekből állnak (pl. `fjf jff fff jfj`).
 
-* **Strict Pontossági Feltétel**: A következő szint feloldásához legalább **90%-os pontosság** szükséges.
+* **↵ Gyors Továbbhaladás Enterrel**: A szintválasztó és újrapróbálkozási ablakokban elég az `Enter` billentyűt megnyomni a következő szint azonnali indításához.
 
-* **Beépített Hanghatások (Web Audio API)**: Lágy gombnyomás hangok, hibajelzések és fanfárok külső audiófájlok nélkül (némítási opcióval).
+* **🎮 Új Játék Gomb**: Bármikor újraindíthatod az aktuális kört tiszta statisztikákkal és friss gyakorlósorokkal anélkül, hogy elveszítenéd a feloldott szintjeidet.
 
-* **Adatmentés (localStorage)**: A feloldott szintek, kitüntetések és statisztikák automatikusan elmentődnek a böngésződben.
+* **🎨 Responsive UI & Beépített SVG Favicon**: Kijelzőmérethez igazodó, megnövelt billentyűzet és szövegméretek, beépített dinamikus böngészőikonnal.
 
-* **Single-File Architektúra**: Nem igényel telepítést, node modult vagy build lépést — egyetlen `.html` fájlként fut a böngészőben.
+---
 
-## 🎮 Játékmódok
+## 💬 Játékmódok
 
 ### 1. 🌱 Kezdő Mód (Dinamikus Cél)
-
-* **Célja**: Nyomásmentes izommemória-építés.
-
-* **Működése**: Nincs időkorlát vagy időmérés. Három sorban jelennek meg 3 betűs karakterblokkok.
-
-* **Skálázódó leütési cél**: A szintek haladtával emelkedik a szükséges leütésszám (pl. 128 leütés az 1. szinten).
-
-* **Sorfolytonosság**: A szint vége nem szakítja félbe a gépelést; mindig befejezheted az aktuális sort.
+* Szintről szintre nyitja fel a karaktereket.
+* Élő haladási sáv és valós idejű pontosságkijelzés.
+* Megadott leütési célok teljesítése szükséges a tovablépéshez.
 
 ### 2. ⚡ Haladó Mód (Mért Idő)
+* Nyomon követi a percenkénti leütésszámot (**CPM**), a percenkénti szószámot (**WPM**), a pontosságot és az eltelt időt.
 
-* **Célja**: A gépelési sebesség és ritmus fejlesztése.
+### 3. 💬 Mondat Mód (Kötetlen Gyakorlás)
+* **Összes gomb feloldva**: Nem igényel szinteket, a teljes magyar billentyűzet azonnal elérhető (a szintválasztó automatikusan elrejtődik).
+* Háromsoros elrendezésben generál értelmes magyar mondatokat.
+* **🎨 Gépelési Animáció & Betűtípus Választó**: A keret jobb felső sarkában 4-féle vizuális effekttel és hozzájuk illő egyedi betűtípussal teheted látványossá a mondatokat:
+  * ⚡ **Villám Pulzus**: *Space Grotesk* betűtípus, pulzáló fénnyel.
+  * ✨ **Neon Cyber**: *Orbitron* sci-fi betűtípus, neon fénnyel és magenta/cián effekttel.
+  * 🎈 **Pop & Ugrás**: *Fredoka* játékos, lekerekített betűtípus, ugráló animációval.
+  * 📟 **Terminál**: *VT323* retró mátrix/terminál pixeles betűtípus, villogó kurzorral.
 
-* **Működése**: Valós idejű statisztikákat mér:
-
-  * **CPM** (Characters Per Minute / Leütés per perc)
-
-  * **WPM** (Words Per Minute / Szó per perc)
-
-  * **Pontosság** (%)
-
-  * **Hibák száma**
-
-  * **Eltelt idő**
-
-### 3. 💬 Mondat Mód (Minden Betű Elérhető)
-
-* **Célja**: Értelmes magyar mondatok szabad gyakorlása.
-
-* **Működése**: Nem igényel feloldott szinteket, az összes magyar billentyű aktív. Három soros, keretbe illeszkedő elrendezésben generál véletlenszerű mondatokat.
+---
 
 ## 🏆 Kitüntetések (Badges System)
 
-A **Mondat Mód**-ban gépelve különféle sebességi, pontossági és kitartási kitüntetéseket szerezhetsz meg:
+A **Mondat Mód** teljesítményeit a rendszer automatikusan kitüntetésekkel jutalmazza:
 
-| İkon | Kitüntetés Neve | Feltétel / Leírás | 
- | ----- | ----- | ----- | 
-| 🐢 | **Kezdő Tempó** | Érj el 15 WPM (75 CPM) sebességet | 
-| 🏃 | **Mágus Író** | Érj el 30 WPM (150 CPM) sebességet | 
-| ⚡ | **Villám Gépíró** | Érj el 50 WPM (250 CPM) sebességet | 
-| 🚀 | **Hangsebesség** | Érj el 70 WPM (350 CPM) sebességet | 
-| 🎯 | **Pontos Szem** | Érj el legalább 95%-os pontosságot | 
-| 💎 | **Tökéletes Kéz** | 100% hibátlan gépelés egy körben | 
-| 💬 | **Mondat Mester** | Gépelj le legalább 3 teljes mondatsort | 
-| 🏆 | **Maratoni Író** | Gépelj le legalább 12 teljes mondatsort | 
+| İkon | Kitüntetés Neve | Feltétel / Leírás |
+| :---: | :--- | :--- |
+| 🐢 | **Kezdő Tempó** | Érj el 15 WPM (75 CPM) sebességet |
+| 🏃 | **Mágus Író** | Érj el 30 WPM (150 CPM) sebességet |
+| ⚡ | **Villám Gépíró** | Érj el 50 WPM (250 CPM) sebességet |
+| 🚀 | **Hangsebesség** | Érj el 70 WPM (350 CPM) sebességet |
+| 🎯 | **Pontos Szem** | Minimum 95%-os pontosság egy körben |
+| 💎 | **Tökéletes Kéz** | 100%-os hibátlan gépelés egy körben |
+| 💬 | **Mondat Mester** | Legalább 3 teljes mondat teljesítése |
+| 🏆 | **Maratoni Író** | Legalább 12 teljes mondat teljesítése |
+
+---
 
 ## ⌨️ Ujjrendi Kiosztás (Finger Mapping)
 
-| Ujj | Színkód | Példa Billentyűk | 
- | ----- | ----- | ----- | 
-| **Bal kisujj** | Rózsaszín/Piros | `1`, `Q`, `A`, `Y`, `Í` | 
-| **Bal gyűrűsujj** | Narancssárga | `2`, `W`, `S`, `X` | 
-| **Bal középső ujj** | Sárga | `3`, `E`, `D`, `C` | 
-| **Bal mutatóujj** | Zöld | `4`, `5`, `R`, `T`, `F`, `G`, `V`, `B` | 
-| **Jobb mutatóujj** | Ciánkék | `6`, `7`, `Z`, `U`, `H`, `J`, `N`, `M` | 
-| **Jobb középső ujj** | Kék | `8`, `I`, `K`, `,` | 
-| **Jobb gyűrűsujj** | Lila | `9`, `O`, `L`, `.` | 
-| **Jobb kisujj** | Rózsaszín | `0`, `Ö`, `Ü`, `Ó`, `P`, `Ő`, `Ú`, `É`, `Á`, `Ű`, `-` | 
-| **Hüvelykujjak** | Szürke | `Szóköz` (Space) | 
+| Ujj | Színkód | Példa Billentyűk |
+| :--- | :--- | :--- |
+| **Bal kisujj** | Rózsaszín / Piros | `1`, `Q`, `A`, `Y`, `Í` |
+| **Bal gyűrűsujj** | Narancssárga | `2`, `W`, `S`, `X` |
+| **Bal középső ujj** | Sárga | `3`, `E`, `D`, `C` |
+| **Bal mutatóujj** | Zöld | `4`, `5`, `R`, `T`, `F`, `G`, `V`, `B` |
+| **Jobb mutatóujj** | Ciánkék | `6`, `7`, `Z`, `U`, `H`, `J`, `N`, `M` |
+| **Jobb középső ujj** | Kék | `8`, `I`, `K`, `,` |
+| **Jobb gyűrűsujj** | Lila | `9`, `O`, `L`, `.` |
+| **Jobb kisujj** | Rózsaszín | `0`, `Ö`, `Ü`, `Ó`, `P`, `Ő`, `Ú`, `É`, `Á`, `Ű`, `-` |
+| **Hüvelykujjak** | Szürke | `Szóköz` (Space) |
 
-## 🛠️ Technológiai Háttér
+---
 
-* **HTML5 & Vanilla JavaScript (ES6+)**: Külső JS keretrendszerek nélkül.
+## 🛠️ Használt Technológiák
 
-* **Tailwind CSS (CDN)**: Modern, sötét tónusú, üveghatású (glassmorphism) felület.
+* **HTML5 / ES6+ Vanilla JavaScript**: Keretrendszer-független, gyors és önálló kód.
+* **Tailwind CSS**: Modern, üveghatású (glassmorphism) és reszponzív felület.
+* **Google Fonts**: *Plus Jakarta Sans*, *JetBrains Mono*, *Space Grotesk*, *Orbitron*, *Fredoka*, *VT323*.
+* **Web Audio API**: Szintetizált gépelési és siker-hangeffektek audio fájlok letöltése nélkül.
+* **LocalStorage**: Automatikus helyi mentés a feloldott szintekről, beállításokról és kitüntetésekről.
 
-* **Google Fonts**: *Plus Jakarta Sans* (felület) és *JetBrains Mono* (gépelési szöveg).
+---
 
-* **Web Audio API**: Belső szintetizált hangeffektek audio fájlok letöltése nélkül.
+## 💻 Használat és Indítás
 
-## 🚀 Használat és Indítás
+1. Mentsd el az `index.html` fájlt a számítógépedre.
+2. Nyisd meg dupla kattintással tetszőleges böngészőben (Chrome, Edge, Firefox, Safari).
+3. Helyezd az ujjaidat az **F** és **J** alapbillentyűkre, nyomd meg az **Új játék** gombot, és kezdd el a gépelést!
 
-1. Töltsd le vagy másold ki az `index.html` fájlt.
-
-2. Nyisd meg a fájlt tetszőleges modern böngészőben (Chrome, Firefox, Edge, Safari).
-
-3. Válaszd ki a kívánt játékmódot, nyomd meg az **Új játék** gombot, és kezdd el a gépelést!
-
+---
 *ChillTyper • Magyar QWERTZ Vakírás Oktató Program*

@@ -7,7 +7,8 @@
     <!-- Inline Data-URI SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%2306b6d4'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%23060911' font-family='sans-serif'>CT</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@600;800;900&family=Fredoka:wght@500;600;700&family=VT323&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -53,7 +54,7 @@
         .key-target {
             animation: pulse-glow 1.1s infinite alternate;
             border-width: 2px !important;
-            transform: translateY(-3px) scale(1.04);
+            transform: translateY(-3px) scale(1.05);
             z-index: 20;
             box-shadow: 0 0 24px currentColor;
         }
@@ -85,6 +86,50 @@
             30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
             40%, 60% { transform: translate3d(7px, 0, 0); }
         }
+
+        /* ----------------------------------------------------
+           KEYPRESS TRIGGERED ANIMATIONS & TYPOGRAPHY STYLES
+        ---------------------------------------------------- */
+        @keyframes key-hit-pulse {
+            0% { transform: scale(1.5) translateY(-4px); box-shadow: 0 0 25px #06b6d4; filter: brightness(1.8); color: #38bdf8; }
+            100% { transform: scale(1) translateY(0); box-shadow: none; filter: brightness(1); }
+        }
+
+        @keyframes key-hit-neon {
+            0% { transform: scale(1.6) rotate(-5deg); text-shadow: 0 0 20px #e879f9, 0 0 35px #d946ef; color: #f472b6; }
+            100% { transform: scale(1) rotate(0deg); text-shadow: none; }
+        }
+
+        @keyframes key-hit-bounce {
+            0% { transform: translateY(-14px) scale(1.45) rotate(6deg); color: #fbbf24; }
+            50% { transform: translateY(3px) scale(0.92); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        @keyframes key-hit-terminal {
+            0% { background-color: #22c55e; color: #022c22; transform: scale(1.28); border-radius: 3px; }
+            100% { background-color: transparent; transform: scale(1); }
+        }
+
+        /* 1. PULSE THEME (Space Grotesk) */
+        .anim-pulse #text-container { font-family: 'Space Grotesk', sans-serif; }
+        .anim-pulse .cursor-char { background-color: rgba(6, 182, 212, 0.3) !important; color: #67e8f9 !important; border-bottom: 3px solid #06b6d4; }
+        .anim-pulse .just-typed { animation: key-hit-pulse 0.32s ease-out forwards; display: inline-block; }
+
+        /* 2. NEON CYBER THEME (Orbitron) */
+        .anim-neon #text-container { font-family: 'Orbitron', sans-serif; letter-spacing: 0.08em; }
+        .anim-neon .cursor-char { background-color: rgba(168, 85, 247, 0.35) !important; color: #f0abfc !important; border: 2px solid #e879f9 !important; box-shadow: 0 0 14px #d946ef !important; }
+        .anim-neon .just-typed { animation: key-hit-neon 0.38s ease-out forwards; display: inline-block; }
+
+        /* 3. POP & UGRÁS THEME (Fredoka) */
+        .anim-bounce #text-container { font-family: 'Fredoka', cursive; letter-spacing: 0.05em; }
+        .anim-bounce .cursor-char { background-color: #f59e0b !important; color: #0f172a !important; border-radius: 6px; }
+        .anim-bounce .just-typed { animation: key-hit-bounce 0.42s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; display: inline-block; }
+
+        /* 4. TERMINÁL THEME (VT323) */
+        .anim-terminal #text-container { font-family: 'VT323', monospace; font-size: 1.28em; letter-spacing: 0.1em; }
+        .anim-terminal .cursor-char { background-color: #22c55e; color: #022c22; font-weight: 900; }
+        .anim-terminal .just-typed { animation: key-hit-terminal 0.28s ease-out forwards; display: inline-block; }
 
         .custom-scrollbar::-webkit-scrollbar {
             height: 8px;
@@ -122,7 +167,7 @@
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
                         ChillTyper
                     </h1>
-                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v3.3</span>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v4.2</span>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-400 font-semibold">Magyar QWERTZ Vakírás Tanuló & Gyakorló Program</p>
             </div>
@@ -173,7 +218,8 @@
                 </div>
             </div>
 
-            <button onclick="openLessonModal()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-extrabold border border-slate-700 flex items-center gap-2.5 transition shrink-0 shadow-md">
+            <!-- LEVEL SELECTOR BUTTON (Only shown in Beginner & Advanced modes) -->
+            <button id="level-select-btn" onclick="openLessonModal()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-extrabold border border-slate-700 flex items-center gap-2.5 transition shrink-0 shadow-md">
                 📚 Szintek Választása (<span id="unlocked-count-badge">1</span>/<span id="total-levels-badge">47</span>)
             </button>
         </div>
@@ -227,6 +273,17 @@
         <!-- TYPING BOARD CONTAINER -->
         <div class="glass-panel rounded-3xl p-5 sm:p-8 flex flex-col gap-5 shadow-2xl relative border-slate-800" id="typing-board">
             
+            <!-- ANIMATION SELECTOR (VISIBLE IN SENTENCE MODE) -->
+            <div id="anim-selector-container" class="absolute top-4 right-4 sm:top-5 sm:right-6 hidden flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 shadow-lg z-30">
+                <span class="text-xs font-black text-slate-400 uppercase tracking-wider hidden sm:inline">Leütési Animáció:</span>
+                <select id="anim-style-select" onchange="changeTypingAnimation(this.value)" class="bg-slate-950 text-cyan-300 text-xs sm:text-sm font-extrabold rounded-lg px-2.5 py-1 border border-cyan-500/30 focus:outline-none cursor-pointer">
+                    <option value="pulse">⚡ Villám Pulzus</option>
+                    <option value="neon">✨ Neon Cyber</option>
+                    <option value="bounce">🎈 Pop & Ugrás</option>
+                    <option value="terminal">📟 Terminál</option>
+                </select>
+            </div>
+
             <!-- FINGER PROMPT BANNER -->
             <div class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-2xl px-5 py-3 shadow-md">
                 <div class="flex items-center gap-3">
@@ -240,16 +297,16 @@
                 </div>
             </div>
 
-            <!-- 3-LINE TEXT CONTAINER -->
-            <div id="text-container" class="flex flex-col gap-3 py-2 sm:py-4 max-w-full overflow-hidden">
-                <!-- Lines will be dynamically generated here -->
+            <!-- 3-LINE TEXT CONTAINER (CENTERED & RESPONSIVE) -->
+            <div id="text-container" class="flex flex-col gap-3.5 py-2 sm:py-4 max-w-full overflow-hidden">
+                <!-- Lines generated dynamically -->
             </div>
         </div>
 
         <!-- VIRTUAL KEYBOARD -->
         <div class="glass-panel rounded-3xl p-3 sm:p-5 shadow-2xl border-slate-800/80 flex flex-col gap-2 max-w-full overflow-x-auto custom-scrollbar">
             <div id="keyboard" class="flex flex-col gap-1.5 min-w-[760px] mx-auto select-none p-1">
-                <!-- QWERTZ Keyboard Rows generated in JavaScript -->
+                <!-- Rows generated dynamically -->
             </div>
         </div>
 
@@ -317,13 +374,14 @@
         </div>
     </div>
 
-    <!-- MAIN JAVASCRIPT LOGIC -->
     <script>
         /* ----------------------------------------------------
            1. CORE DATA STRUCTURES & CONSTANTS
         ---------------------------------------------------- */
-        
-        // Single character progression order (1 letter unlocked per level)
+        let currentAnimation = 'pulse';
+        let lastTypedIndex = -1; // Track index for keypress hit animation trigger
+
+        // Single character progression order (1 key unlocked per level)
         const KEYS_SEQUENCE = [
             'f', 'j', ' ',
             'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'á', 'í',
@@ -364,7 +422,7 @@
             ' ': 'thumb'
         };
 
-        // Visual Keyboard Layout Setup
+        // Visual Keyboard Layout Setup (ISO Hungarian QWERTZ)
         const KEYBOARD_LAYOUT = [
             [
                 { key: '0', label: '0' }, { key: '1', label: '1' }, { key: '2', label: '2' },
@@ -412,7 +470,6 @@
             "A friss kávé illata betölti az egész szobát reggel."
         ];
 
-        // Dynamically build 47 modules
         function buildSingleKeyModules() {
             const modules = [];
             modules.push({
@@ -428,8 +485,6 @@
                 const availableKeys = KEYS_SEQUENCE.slice(0, i + 1);
                 const levelNum = i - 1;
                 const keyDisplay = KEY_NAMES_HU[newKey] || newKey.toUpperCase();
-                
-                // Dynamic hit targets scaling smoothly from 120 up to ~350
                 const calculatedHits = Math.min(380, 120 + (levelNum * 6));
 
                 modules.push({
@@ -531,76 +586,102 @@
             setupKeyboardListeners();
 
             document.getElementById('total-levels-badge').textContent = MODULES.length;
+            
+            const savedAnim = localStorage.getItem('chilltyper_anim_effect');
+            if (savedAnim) {
+                currentAnimation = savedAnim;
+                const selectEl = document.getElementById('anim-style-select');
+                if (selectEl) selectEl.value = savedAnim;
+            }
         }
 
         function loadProgress() {
-            const saved = localStorage.getItem('chilltyper_unlocked_level');
-            if (saved) {
-                highestUnlockedModule = Math.min(parseInt(saved, 10), MODULES.length - 1);
+            const saved = localStorage.getItem('chilltyper_highest_level');
+            if (saved !== null) {
+                highestUnlockedModule = parseInt(saved, 10);
+                if (isNaN(highestUnlockedModule) || highestUnlockedModule >= MODULES.length) {
+                    highestUnlockedModule = 0;
+                }
+                currentModuleIndex = highestUnlockedModule;
             }
-            currentModuleIndex = highestUnlockedModule;
         }
 
         function saveProgress() {
-            localStorage.setItem('chilltyper_unlocked_level', highestUnlockedModule.toString());
+            localStorage.setItem('chilltyper_highest_level', highestUnlockedModule);
         }
 
         /* ----------------------------------------------------
-           5. PRACTICE TEXT GENERATION
+           5. GENERATE PRACTICE TEXT
         ---------------------------------------------------- */
-        function generateSingleLineText(keys, count = 7) {
-            // Filter out space from character selection so 3-letter groups contain ONLY letters
-            const letterKeys = keys.filter(k => k !== ' ');
-            const pool = letterKeys.length > 0 ? letterKeys : keys;
-            let line = "";
-            for (let i = 0; i < count; i++) {
-                let group = "";
-                for (let j = 0; j < 3; j++) {
-                    const randKey = pool[Math.floor(Math.random() * pool.length)];
-                    group += randKey;
+        function generatePracticeText() {
+            currentPracticeText = [];
+            if (currentMode === 'sentence') {
+                const shuffled = [...HUNGARIAN_SENTENCES].sort(() => 0.5 - Math.random());
+                currentPracticeText = shuffled.slice(0, 3);
+            } else {
+                for (let i = 0; i < 3; i++) {
+                    currentPracticeText.push(generateSingleLineText());
                 }
-                line += group + (i < count - 1 ? " " : "");
             }
-            return line;
+            lineIndex = 0;
+            userInput = "";
+            lastTypedIndex = -1;
         }
 
-        function renderPracticeText() {
-            const container = document.getElementById('text-container');
-            container.innerHTML = "";
-            userInput = "";
-            lineIndex = 0;
-
+        function generateSingleLineText() {
             const mod = MODULES[currentModuleIndex];
+            const letterKeys = mod.keys.filter(k => k !== ' ');
+            const groupsCount = 8;
+            const lineArr = [];
 
-            if (currentMode === 'sentence') {
-                currentPracticeText = [
-                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)],
-                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)],
-                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)]
-                ];
-            } else {
-                currentPracticeText = [
-                    generateSingleLineText(mod.keys),
-                    generateSingleLineText(mod.keys),
-                    generateSingleLineText(mod.keys)
-                ];
+            for (let g = 0; g < groupsCount; g++) {
+                let triplet = "";
+                for (let c = 0; c < 3; c++) {
+                    const randomChar = letterKeys[Math.floor(Math.random() * letterKeys.length)];
+                    triplet += randomChar;
+                }
+                lineArr.push(triplet);
+            }
+            return lineArr.join(' ');
+        }
+
+        /* ----------------------------------------------------
+           6. RENDER PRACTICE BOARD
+        ---------------------------------------------------- */
+        function renderPracticeText() {
+            if (currentPracticeText.length === 0) {
+                generatePracticeText();
             }
 
-            currentPracticeText.forEach((line, idx) => {
+            const container = document.getElementById('text-container');
+            container.innerHTML = "";
+
+            currentPracticeText.forEach((lineText, idx) => {
                 const lineDiv = document.createElement('div');
-                lineDiv.id = `line-${idx}`;
-                lineDiv.className = `p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider transition-all duration-300 font-mono-code text-xl sm:text-2xl md:text-3xl font-bold ${
-                    idx === 0 ? 'line-active border-indigo-500' : 'bg-slate-900/50 border-slate-800 opacity-40'
+                const isActive = idx === lineIndex;
+                const isPast = idx < lineIndex;
+
+                let modeFontClass = "text-xl sm:text-2xl md:text-3xl font-mono-code tracking-widest";
+                if (currentMode === 'sentence') {
+                    modeFontClass = "text-base sm:text-lg md:text-xl font-medium tracking-normal leading-relaxed";
+                }
+
+                lineDiv.className = `p-4 sm:p-5 rounded-2xl border transition-all flex items-center justify-center flex-wrap break-words ${modeFontClass} ${
+                    isActive ? 'line-active bg-slate-900 border-indigo-500' : 'bg-slate-950/60 border-slate-800/80 opacity-50'
                 }`;
 
-                const textSpan = document.createElement('span');
-                textSpan.id = `line-text-${idx}`;
-                textSpan.innerHTML = formatLineHTML(line, idx === 0 ? "" : null);
-                lineDiv.appendChild(textSpan);
+                if (isPast) {
+                    lineDiv.innerHTML = `<span class="text-emerald-400 font-extrabold flex items-center justify-center gap-2">✓ ${lineText}</span>`;
+                } else if (isActive) {
+                    lineDiv.innerHTML = formatLineHTML(lineText, userInput);
+                } else {
+                    lineDiv.innerHTML = formatLineHTML(lineText, null);
+                }
+
                 container.appendChild(lineDiv);
             });
 
-            updateTargetHighlight();
+            updateTargetPrompt();
         }
 
         function formatLineHTML(targetLine, typedText) {
@@ -612,9 +693,11 @@
                 if (typedText === null) {
                     html += `<span class="text-slate-500">${charDisplay}</span>`;
                 } else if (i < typedText.length) {
-                    html += `<span class="text-emerald-400 font-black">${charDisplay}</span>`;
+                    const isJustTyped = (i === lastTypedIndex);
+                    const hitClass = isJustTyped ? 'just-typed' : '';
+                    html += `<span class="text-emerald-400 font-black ${hitClass}">${charDisplay}</span>`;
                 } else if (i === typedText.length) {
-                    html += `<span class="bg-cyan-500 text-slate-950 font-black px-1 rounded animate-pulse">${charDisplay}</span>`;
+                    html += `<span class="cursor-char px-1 rounded font-black">${charDisplay}</span>`;
                 } else {
                     html += `<span class="text-slate-300">${charDisplay}</span>`;
                 }
@@ -622,49 +705,62 @@
             return html;
         }
 
-        /* ----------------------------------------------------
-           6. NEW GAME FUNCTIONALITY
-        ---------------------------------------------------- */
-        function startNewGame() {
-            totalTyped = 0;
-            correctTyped = 0;
-            errorCount = 0;
-            startTime = null;
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = null;
+        function changeTypingAnimation(animName) {
+            currentAnimation = animName;
+            localStorage.setItem('chilltyper_anim_effect', animName);
+            
+            const board = document.getElementById('typing-board');
+            board.classList.remove('anim-pulse', 'anim-neon', 'anim-bounce', 'anim-terminal');
+            board.classList.add(`anim-${animName}`);
+            
+            showToast("Leütési Animáció Módosítva", `Kiválasztva: ${animName.toUpperCase()}`, "✨");
+        }
 
-            renderPracticeText();
-            updateStatsUI();
-            playSound('hit');
+        function updateTargetPrompt() {
+            const currentLine = currentPracticeText[lineIndex];
+            if (!currentLine) return;
 
-            showToast("Új játék elindítva!", "Sikeresen újratöltötted a kört", "🎮");
+            const targetChar = currentLine[userInput.length] || '';
+            const keyName = KEY_NAMES_HU[targetChar] || targetChar.toUpperCase();
+            
+            document.getElementById('target-key-name').textContent = keyName || '—';
+
+            const fingerKey = KEY_FINGERS[targetChar.toLowerCase()] || 'thumb';
+            const fingerInfo = FINGER_MAP[fingerKey];
+
+            const badge = document.getElementById('target-finger-badge');
+            badge.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wide border ${fingerInfo.class} flex items-center gap-2 shadow`;
+            badge.textContent = fingerInfo.name;
+
+            highlightKeyboardTarget(targetChar.toLowerCase());
         }
 
         /* ----------------------------------------------------
-           7. VIRTUAL KEYBOARD RENDERING & PROMPTS
+           7. VIRTUAL KEYBOARD RENDER & HIGHLIGHT
         ---------------------------------------------------- */
         function renderKeyboard() {
             const kbContainer = document.getElementById('keyboard');
             kbContainer.innerHTML = "";
 
-            const mod = MODULES[currentModuleIndex];
-            const activeKeysSet = new Set(currentMode === 'sentence' ? KEYS_SEQUENCE : mod.keys);
+            const modKeys = currentMode === 'sentence' ? KEYS_SEQUENCE : MODULES[currentModuleIndex].keys;
 
             KEYBOARD_LAYOUT.forEach(row => {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = "flex justify-center gap-1.5 w-full";
 
                 row.forEach(k => {
-                    const fingerInfo = FINGER_MAP[KEY_FINGERS[k.key]] || FINGER_MAP['thumb'];
-                    const isUnlocked = activeKeysSet.has(k.key) || k.key.length > 1;
-
                     const keyDiv = document.createElement('div');
-                    keyDiv.id = `key-${k.key === ' ' ? 'space' : k.key}`;
-                    keyDiv.className = `h-12 sm:h-14 md:h-16 border-2 rounded-xl flex items-center justify-center font-bold text-xs sm:text-base font-mono-code transition-all shadow-md ${
-                        k.width || 'w-10 sm:w-12 md:w-14'
-                    } ${fingerInfo.class} ${!isUnlocked ? 'key-locked' : ''}`;
+                    const widthClass = k.width || "w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14";
+                    const fingerKey = KEY_FINGERS[k.key] || 'thumb';
+                    const fingerInfo = FINGER_MAP[fingerKey];
+                    const isUnlocked = modKeys.includes(k.key) || k.key === 'backspace' || k.key === 'enter' || k.key === 'shift' || k.key === 'shift2' || k.key === 'tab' || k.key === 'caps';
 
+                    keyDiv.id = `key-${k.key === ' ' ? 'space' : k.key}`;
+                    keyDiv.className = `rounded-xl border font-bold flex items-center justify-center text-xs sm:text-sm transition-all duration-150 select-none ${widthClass} ${
+                        isUnlocked ? fingerInfo.class : 'key-locked'
+                    }`;
                     keyDiv.textContent = k.label;
+
                     rowDiv.appendChild(keyDiv);
                 });
 
@@ -672,179 +768,152 @@
             });
         }
 
-        function updateTargetHighlight() {
+        function highlightKeyboardTarget(targetChar) {
             document.querySelectorAll('.key-target').forEach(el => el.classList.remove('key-target'));
-
-            if (lineIndex >= currentPracticeText.length) return;
-
-            const activeLine = currentPracticeText[lineIndex];
-            const targetChar = activeLine[userInput.length]?.toLowerCase() || '';
-
-            if (!targetChar) return;
-
-            const targetKeyId = targetChar === ' ' ? 'key-space' : `key-${targetChar}`;
-            const targetEl = document.getElementById(targetKeyId);
-            if (targetEl) {
-                targetEl.classList.add('key-target');
-            }
-
-            // Finger guide banner update
-            const fingerIndex = KEY_FINGERS[targetChar] || 'thumb';
-            const fingerInfo = FINGER_MAP[fingerIndex];
-
-            const targetNameEl = document.getElementById('target-key-name');
-            const fingerBadgeEl = document.getElementById('target-finger-badge');
-
-            targetNameEl.textContent = KEY_NAMES_HU[targetChar] || targetChar.toUpperCase();
-            fingerBadgeEl.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wide border ${fingerInfo.class} flex items-center gap-2 shadow`;
-            fingerBadgeEl.textContent = fingerInfo.name;
+            const elementId = targetChar === ' ' ? 'key-space' : `key-${targetChar}`;
+            const targetEl = document.getElementById(elementId);
+            if (targetEl) targetEl.classList.add('key-target');
         }
 
         /* ----------------------------------------------------
-           8. KEYPRESS HANDLING & INPUT LOGIC
+           8. INPUT & KEYBOARD EVENTS
         ---------------------------------------------------- */
         function setupKeyboardListeners() {
             window.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') e.preventDefault();
-
-                // Enter Key Modal Shortcut
-                if (e.key === 'Enter') {
-                    if (!document.getElementById('modal-unlock').classList.contains('hidden')) {
-                        nextLevel();
-                        return;
-                    }
-                    if (!document.getElementById('modal-retry').classList.contains('hidden')) {
-                        retryLevel();
-                        return;
-                    }
+                // Check if modals are open
+                if (!document.getElementById('modal-unlock').classList.contains('hidden')) {
+                    if (e.key === 'Enter') nextLevel();
+                    return;
+                }
+                if (!document.getElementById('modal-retry').classList.contains('hidden')) {
+                    if (e.key === 'Enter') retryLevel();
+                    return;
+                }
+                if (!document.getElementById('modal-lesson').classList.contains('hidden')) {
+                    if (e.key === 'Escape') closeLessonModal();
+                    return;
                 }
 
-                if (lineIndex >= currentPracticeText.length) return;
-
-                const activeLine = currentPracticeText[lineIndex];
-                const expectedChar = activeLine[userInput.length];
-
-                if (!expectedChar) return;
-
-                let pressedChar = e.key;
-                if (pressedChar === 'Spacebar') pressedChar = ' ';
-
-                // Prevent space scrolling
-                if (e.key === ' ') e.preventDefault();
-
-                // Start timer
-                if (!startTime) {
-                    startTime = Date.now();
-                    if (currentMode !== 'beginner') {
-                        timerInterval = setInterval(updateStatsUI, 500);
-                    }
+                if (e.key === 'Tab' || e.key === 'Alt' || e.key === 'Control') {
+                    e.preventDefault();
                 }
 
-                const keyId = pressedChar === ' ' ? 'key-space' : `key-${pressedChar.toLowerCase()}`;
-                const keyEl = document.getElementById(keyId);
-
-                if (keyEl) {
-                    keyEl.classList.add('key-pressed');
-                    setTimeout(() => keyEl.classList.remove('key-pressed'), 120);
-                }
-
-                // Check key hit correctness
-                if (pressedChar === expectedChar) {
-                    playSound('hit');
-                    userInput += pressedChar;
-                    totalTyped++;
-                    correctTyped++;
-
-                    const activeSpan = document.getElementById(`line-text-${lineIndex}`);
-                    activeSpan.innerHTML = formatLineHTML(activeLine, userInput);
-
-                    // Finished current line
-                    if (userInput.length === activeLine.length) {
-                        advanceLine();
-                    }
-
-                    updateTargetHighlight();
-                    updateStatsUI();
-
-                } else if (pressedChar.length === 1) {
-                    // Error key hit
-                    playSound('error');
-                    totalTyped++;
-                    errorCount++;
-
-                    const board = document.getElementById('typing-board');
-                    board.classList.remove('shake');
-                    void board.offsetWidth; // Trigger reflow
-                    board.classList.add('shake');
-
-                    updateStatsUI();
+                if (e.key.length === 1) {
+                    handleKeyPress(e.key);
                 }
             });
         }
 
-        function advanceLine() {
-            lineIndex++;
-            userInput = "";
-
-            if (lineIndex < currentPracticeText.length) {
-                currentPracticeText.forEach((line, idx) => {
-                    const lineDiv = document.getElementById(`line-${idx}`);
-                    const textSpan = document.getElementById(`line-text-${idx}`);
-
-                    if (idx < lineIndex) {
-                        lineDiv.className = "p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider font-mono-code text-xl sm:text-2xl md:text-3xl font-bold bg-slate-900/30 border-slate-800 opacity-30";
-                        textSpan.innerHTML = `<span class="text-emerald-400 font-extrabold">${line}</span>`;
-                    } else if (idx === lineIndex) {
-                        lineDiv.className = "p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider font-mono-code text-xl sm:text-2xl md:text-3xl font-bold line-active border-indigo-500";
-                        textSpan.innerHTML = formatLineHTML(line, "");
-                    }
-                });
-            } else {
-                // Completed all 3 lines
-                checkLevelCompletion();
+        function handleKeyPress(key) {
+            if (!startTime) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateStats, 1000);
             }
+
+            const currentLine = currentPracticeText[lineIndex];
+            if (!currentLine) return;
+
+            const targetChar = currentLine[userInput.length];
+            const keyElId = key === ' ' ? 'key-space' : `key-${key.toLowerCase()}`;
+            const keyEl = document.getElementById(keyElId);
+
+            if (keyEl) {
+                keyEl.classList.add('key-pressed');
+                setTimeout(() => keyEl.classList.remove('key-pressed'), 120);
+            }
+
+            totalTyped++;
+
+            if (key.toLowerCase() === targetChar.toLowerCase()) {
+                correctTyped++;
+                userInput += targetChar;
+                lastTypedIndex = userInput.length - 1; // Trigger animation on keypress
+                playSound('hit');
+
+                // Completed the line!
+                if (userInput.length >= currentLine.length) {
+                    lineIndex++;
+                    userInput = "";
+                    lastTypedIndex = -1;
+
+                    if (lineIndex >= currentPracticeText.length) {
+                        checkLevelCompletion();
+                    } else {
+                        renderPracticeText();
+                    }
+                } else {
+                    renderPracticeText();
+                }
+            } else {
+                errorCount++;
+                playSound('error');
+                const board = document.getElementById('typing-board');
+                board.classList.add('shake');
+                setTimeout(() => board.classList.remove('shake'), 300);
+            }
+
+            updateStats();
         }
 
         /* ----------------------------------------------------
-           9. STATS & LEVEL PROGRESSION LOGIC
+           9. GAME CONTROL & COMPLETION
         ---------------------------------------------------- */
-        function updateStatsUI() {
+        function startNewGame() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            startTime = null;
+
+            userInput = "";
+            lineIndex = 0;
+            totalTyped = 0;
+            correctTyped = 0;
+            errorCount = 0;
+            lastTypedIndex = -1;
+
+            generatePracticeText();
+            renderPracticeText();
+            updateStats();
+
+            showToast("Új Gyakorlás Indítva", "Kezdheted a gépelést!", "🎮");
+        }
+
+        function updateStats() {
+            if (!startTime) return;
+            const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
             const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
-            const elapsedSeconds = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
 
             if (currentMode === 'beginner') {
                 const mod = MODULES[currentModuleIndex];
-                const targetHits = mod.targetHits;
-
-                document.getElementById('hits-current-display').textContent = totalTyped;
-                document.getElementById('hits-target-display').textContent = targetHits;
-
-                const progressPct = Math.min(100, Math.round((totalTyped / targetHits) * 100));
-                document.getElementById('beginner-progress-fill').style.width = `${progressPct}%`;
-
-                const rem = Math.max(0, targetHits - totalTyped);
-                document.getElementById('beginner-remaining-count').textContent = rem;
-                document.getElementById('beginner-live-acc').textContent = acc;
-
-                const accIndicator = document.getElementById('beginner-accuracy-indicator');
-                if (acc < 90) {
-                    accIndicator.className = "text-rose-400 font-black animate-pulse flex items-center gap-1.5";
-                } else {
-                    accIndicator.className = "text-emerald-400 font-extrabold flex items-center gap-1.5";
-                }
-
+                const target = mod.targetHits;
+                const progress = Math.min(100, Math.round((totalTyped / target) * 100));
+                
+                const fill = document.getElementById('beginner-progress-fill');
+                if (fill) fill.style.width = `${progress}%`;
+                
+                const hitsCurr = document.getElementById('hits-current-display');
+                if (hitsCurr) hitsCurr.textContent = totalTyped;
+                
+                const liveAcc = document.getElementById('beginner-live-acc');
+                if (liveAcc) liveAcc.textContent = acc;
+                
+                const remCount = document.getElementById('beginner-remaining-count');
+                if (remCount) remCount.textContent = Math.max(0, target - totalTyped);
             } else {
                 const minutes = elapsedSeconds / 60 || 0.001;
                 const cpm = Math.round(correctTyped / minutes);
                 const wpm = Math.round((correctTyped / 5) / minutes);
 
-                document.getElementById('stat-cpm').textContent = cpm;
-                document.getElementById('stat-wpm').textContent = wpm;
-                document.getElementById('stat-accuracy').textContent = `${acc}%`;
+                const cpmEl = document.getElementById('stat-cpm');
+                if (cpmEl) cpmEl.textContent = cpm;
+                const wpmEl = document.getElementById('stat-wpm');
+                if (wpmEl) wpmEl.textContent = wpm;
+                const accEl = document.getElementById('stat-accuracy');
+                if (accEl) accEl.textContent = `${acc}%`;
 
                 const minsStr = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
                 const secsStr = String(elapsedSeconds % 60).padStart(2, '0');
-                document.getElementById('stat-timer').textContent = `${minsStr}:${secsStr}`;
+                const timerEl = document.getElementById('stat-timer');
+                if (timerEl) timerEl.textContent = `${minsStr}:${secsStr}`;
             }
         }
 
@@ -854,8 +923,15 @@
             const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
             const mod = MODULES[currentModuleIndex];
 
-            // Strict >= 90% accuracy condition
-            if (acc >= 90) {
+            if (currentMode === 'sentence') {
+                playSound('fanfare');
+                showToast("Mondatok Teljesítve! 🎉", "Új mondatsorozat betöltve!", "🏆");
+                startNewGame();
+                return;
+            }
+
+            // Must reach target hits AND maintain >= 90% accuracy
+            if (totalTyped >= mod.targetHits && acc >= 90) {
                 playSound('fanfare');
 
                 if (currentModuleIndex < MODULES.length - 1) {
@@ -873,6 +949,9 @@
                 } else {
                     showToast("Gratulálunk! 🎉", "Teljesítetted az összes szintet!", "🏆");
                 }
+            } else if (totalTyped < mod.targetHits) {
+                // Generates more lines to reach target hits without interrupting midway
+                renderPracticeText();
             } else {
                 playSound('error');
                 document.getElementById('modal-retry-acc').textContent = `${acc}%`;
@@ -921,16 +1000,43 @@
                 badge.textContent = "Mondat Mód (Összes Gomb Elérhető)";
             }
 
+            updateModuleHeader();
             renderKeyboard();
             startNewGame();
         }
 
         function updateModuleHeader() {
-            const mod = MODULES[currentModuleIndex];
-            document.getElementById('module-badge').textContent = mod.id;
-            document.getElementById('module-title').textContent = mod.title;
-            document.getElementById('module-desc').textContent = mod.desc;
-            document.getElementById('unlocked-count-badge').textContent = highestUnlockedModule + 1;
+            const levelBtn = document.getElementById('level-select-btn');
+            const badge = document.getElementById('module-badge');
+            const title = document.getElementById('module-title');
+            const desc = document.getElementById('module-desc');
+            const animContainer = document.getElementById('anim-selector-container');
+            const board = document.getElementById('typing-board');
+
+            // Apply selected animation class
+            board.classList.remove('anim-pulse', 'anim-neon', 'anim-bounce', 'anim-terminal');
+            board.classList.add(`anim-${currentAnimation}`);
+
+            if (currentMode === 'sentence') {
+                if (badge) badge.textContent = "💬";
+                if (title) title.textContent = "Mondat Mód";
+                if (desc) desc.textContent = "Gyakorold a gépelést értelmes magyar mondatokkal! A teljes billentyűzet nyitva áll.";
+                if (levelBtn) levelBtn.classList.add('hidden');
+                if (animContainer) animContainer.classList.remove('hidden');
+            } else {
+                const mod = MODULES[currentModuleIndex];
+                if (badge) badge.textContent = mod.id;
+                if (title) title.textContent = mod.title;
+                if (desc) desc.textContent = mod.desc;
+                if (levelBtn) levelBtn.classList.remove('hidden');
+                if (animContainer) animContainer.classList.add('hidden');
+            }
+
+            const unlockedBadge = document.getElementById('unlocked-count-badge');
+            if (unlockedBadge) unlockedBadge.textContent = highestUnlockedModule + 1;
+            
+            const hitsDisplay = document.getElementById('hits-target-display');
+            if (hitsDisplay) hitsDisplay.textContent = MODULES[currentModuleIndex].targetHits;
         }
 
         function openLessonModal() {
