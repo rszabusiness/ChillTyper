@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChillTyper - Magyar QWERTZ Vakírás</title>
+    <!-- Inline Data-URI SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%2306b6d4'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%23060911' font-family='sans-serif'>CT</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #060911;
+            color: #f8fafc;
+            user-select: none;
+        }
+
+        .font-mono-code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Color assignments per finger */
+        .finger-0 { background-color: rgba(244, 63, 94, 0.22); border-color: rgba(244, 63, 94, 0.5); color: #fda4af; }
+        .finger-1 { background-color: rgba(249, 115, 22, 0.22); border-color: rgba(249, 115, 22, 0.5); color: #fdba74; }
+        .finger-2 { background-color: rgba(234, 179, 8, 0.22); border-color: rgba(234, 179, 8, 0.5); color: #fde047; }
+        .finger-3 { background-color: rgba(34, 197, 94, 0.22); border-color: rgba(34, 197, 94, 0.5); color: #86efac; }
+        .finger-4 { background-color: rgba(6, 182, 212, 0.22); border-color: rgba(6, 182, 212, 0.5); color: #67e8f9; }
+        .finger-5 { background-color: rgba(59, 130, 246, 0.22); border-color: rgba(59, 130, 246, 0.5); color: #93c5fd; }
+        .finger-6 { background-color: rgba(168, 85, 247, 0.22); border-color: rgba(168, 85, 247, 0.5); color: #d8b4fe; }
+        .finger-7 { background-color: rgba(236, 72, 153, 0.22); border-color: rgba(236, 72, 153, 0.5); color: #f472b6; }
+        .finger-thumb { background-color: rgba(148, 163, 184, 0.22); border-color: rgba(148, 163, 184, 0.5); color: #e2e8f0; }
+
+        .key-locked {
+            background-color: rgba(15, 23, 42, 0.9) !important;
+            border-color: rgba(51, 65, 85, 0.3) !important;
+            color: #334155 !important;
+            opacity: 0.35;
+            filter: grayscale(90%);
+        }
+
+        .key-target {
+            animation: pulse-glow 1.1s infinite alternate;
+            border-width: 2px !important;
+            transform: translateY(-3px) scale(1.04);
+            z-index: 20;
+            box-shadow: 0 0 24px currentColor;
+        }
+
+        .key-pressed {
+            transform: translateY(2px) scale(0.92) !important;
+            filter: brightness(1.7);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.8);
+        }
+
+        .line-active {
+            border-color: rgba(99, 102, 241, 0.8) !important;
+            background: rgba(30, 41, 59, 0.85) !important;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 8px currentColor, inset 0 0 6px currentColor; }
+            100% { box-shadow: 0 0 30px currentColor, inset 0 0 14px currentColor; }
+        }
+
+        .shake {
+            animation: shake 0.28s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-3px, 0, 0); }
+            20%, 80% { transform: translate3d(5px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
+            40%, 60% { transform: translate3d(7px, 0, 0); }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0b1120;
+            border-radius: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-slate-100 p-3 sm:p-5 md:p-8 overflow-x-hidden">
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="badge-toast" class="fixed top-6 right-6 z-50 transform -translate-y-36 opacity-0 transition-all duration-500 bg-amber-500/20 border-2 border-amber-400 text-amber-200 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-center gap-4">
+        <div id="toast-icon" class="text-4xl">🎮</div>
+        <div>
+            <span id="toast-subtitle" class="text-xs font-black uppercase text-amber-400 tracking-wider block">Új játék elindítva!</span>
+            <h4 id="toast-title" class="text-base font-extrabold text-white">Sok sikert a gépeléshez!</h4>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="max-w-7xl w-full mx-auto flex flex-col lg:flex-row justify-between items-center gap-4 mb-3">
+        <div class="flex items-center gap-3.5">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-cyan-500 via-indigo-500 to-teal-400 rounded-2xl flex items-center justify-center text-slate-950 font-black text-2xl sm:text-3xl shadow-xl shadow-cyan-500/25 tracking-tighter shrink-0">
+                CT
+            </div>
+            <div>
+                <div class="flex items-center gap-2.5">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
+                        ChillTyper
+                    </h1>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">v3.3</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 font-semibold">Magyar QWERTZ Vakírás Tanuló & Gyakorló Program</p>
+            </div>
+        </div>
+
+        <!-- Action Controls & Mode Selection Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-slate-900/90 p-2 sm:p-2.5 rounded-2xl border border-slate-800 shadow-lg">
+            <!-- NEW GAME BUTTON -->
+            <button id="new-game-btn" onclick="startNewGame()" class="px-4 sm:px-6 py-3 rounded-xl text-sm sm:text-base font-black transition flex items-center gap-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 text-slate-950 hover:brightness-110 shadow-lg shadow-orange-500/25 transform active:scale-95">
+                🎮 Új játék
+            </button>
+
+            <div class="h-7 w-px bg-slate-800 mx-1 hidden sm:block"></div>
+
+            <button id="tab-beginner" onclick="switchAppMode('beginner')" class="px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 shadow-lg">
+                🌱 Kezdő
+            </button>
+            <button id="tab-advanced" onclick="switchAppMode('advanced')" class="px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                ⚡ Haladó
+            </button>
+            <button id="tab-sentence" onclick="switchAppMode('sentence')" class="px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                💬 Mondatok
+            </button>
+
+            <button id="sound-btn" onclick="toggleSound()" class="p-3 rounded-xl glass-card hover:bg-slate-800 text-slate-200 transition flex items-center text-base font-bold" title="Hangjelzések Be/Ki">
+                <span id="sound-icon" class="text-xl">🔊</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="max-w-7xl w-full mx-auto flex flex-col gap-4 my-auto">
+
+        <!-- MODULE BANNER -->
+        <div class="glass-panel rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-cyan-500/20 border-2 border-cyan-500/40 flex items-center justify-center text-cyan-400 font-black text-2xl sm:text-3xl shadow-inner shrink-0" id="module-badge">
+                    1
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <h2 class="text-lg sm:text-2xl md:text-3xl font-black text-slate-100" id="module-title">1. Szint: F, J, Szóköz</h2>
+                        <span id="mode-status-badge" class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                            Kezdő Mód (Dinamikus Cél)
+                        </span>
+                    </div>
+                    <p class="text-xs sm:text-sm md:text-base text-slate-400 font-medium" id="module-desc">Gyűjtsd össze a szükséges leütéseket a következő betűk feloldásához!</p>
+                </div>
+            </div>
+
+            <button onclick="openLessonModal()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-extrabold border border-slate-700 flex items-center gap-2.5 transition shrink-0 shadow-md">
+                📚 Szintek Választása (<span id="unlocked-count-badge">1</span>/<span id="total-levels-badge">47</span>)
+            </button>
+        </div>
+
+        <!-- BEGINNER PROGRESS CARD -->
+        <div id="beginner-progress-card" class="glass-panel rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col gap-3">
+            <div class="flex justify-between items-center text-xs sm:text-sm md:text-base flex-wrap gap-2">
+                <span class="font-extrabold text-teal-300 flex items-center gap-2">
+                    <span class="text-xl">🎯</span> Gyakorlási cél (Izommemória): <span id="hits-target-display" class="font-mono-code font-black text-emerald-300 text-base sm:text-lg">128</span> leütés
+                </span>
+                <span class="font-bold text-slate-400">
+                    Összes leütés ebben a körben: <span id="hits-current-display" class="font-mono-code font-black text-cyan-300 text-base sm:text-lg">0</span> leütés
+                </span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-4 sm:h-5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-0.5 shadow-inner">
+                <div id="beginner-progress-fill" class="h-full bg-gradient-to-r from-teal-500 via-emerald-400 to-cyan-400 rounded-full transition-all duration-300 w-0"></div>
+            </div>
+
+            <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-400">
+                <span id="beginner-accuracy-indicator" class="text-emerald-400 font-extrabold flex items-center gap-1.5">
+                    ✨ Minimum 90% pontosság szükséges a tovablépéshez! (Jelenlegi: <span id="beginner-live-acc">100</span>%)
+                </span>
+                <span id="beginner-remaining-indicator" class="text-cyan-300">
+                    Még <span id="beginner-remaining-count">128</span> leütés van hátra
+                </span>
+            </div>
+        </div>
+
+        <!-- STATS BAR (ADVANCED & SENTENCE MODE) -->
+        <div id="advanced-stats-card" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 hidden">
+            <div class="glass-panel rounded-2xl p-4 text-center">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Sebesség (CPM)</span>
+                <span class="text-2xl sm:text-4xl font-black text-cyan-400 font-mono-code" id="stat-cpm">0</span>
+            </div>
+            <div class="glass-panel rounded-2xl p-4 text-center">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Szó / Perc (WPM)</span>
+                <span class="text-2xl sm:text-4xl font-black text-indigo-400 font-mono-code" id="stat-wpm">0</span>
+            </div>
+            <div class="glass-panel rounded-2xl p-4 text-center">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Pontosság</span>
+                <span class="text-2xl sm:text-4xl font-black text-emerald-400 font-mono-code" id="stat-accuracy">100%</span>
+            </div>
+            <div class="glass-panel rounded-2xl p-4 text-center">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400 block mb-1">Eltelt Idő</span>
+                <span class="text-2xl sm:text-4xl font-black text-amber-400 font-mono-code" id="stat-timer">00:00</span>
+            </div>
+        </div>
+
+        <!-- TYPING BOARD CONTAINER -->
+        <div class="glass-panel rounded-3xl p-5 sm:p-8 flex flex-col gap-5 shadow-2xl relative border-slate-800" id="typing-board">
+            
+            <!-- FINGER PROMPT BANNER -->
+            <div class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-2xl px-5 py-3 shadow-md">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl sm:text-2xl">👉</span>
+                    <span class="text-xs sm:text-sm md:text-base text-slate-300 font-extrabold">
+                        Következő gomb: <span id="target-key-name" class="text-cyan-300 font-black font-mono-code underline decoration-cyan-500 underline-offset-4 text-lg sm:text-xl">F</span>
+                    </span>
+                </div>
+                <div id="target-finger-badge" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wide border finger-3 flex items-center gap-2 shadow">
+                    <span>Bal mutatóujj</span>
+                </div>
+            </div>
+
+            <!-- 3-LINE TEXT CONTAINER -->
+            <div id="text-container" class="flex flex-col gap-3 py-2 sm:py-4 max-w-full overflow-hidden">
+                <!-- Lines will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- VIRTUAL KEYBOARD -->
+        <div class="glass-panel rounded-3xl p-3 sm:p-5 shadow-2xl border-slate-800/80 flex flex-col gap-2 max-w-full overflow-x-auto custom-scrollbar">
+            <div id="keyboard" class="flex flex-col gap-1.5 min-w-[760px] mx-auto select-none p-1">
+                <!-- QWERTZ Keyboard Rows generated in JavaScript -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-7xl w-full mx-auto text-center text-xs sm:text-sm text-slate-500 font-semibold mt-4">
+        ChillTyper • Magyar QWERTZ Vakírás Oktató Program &copy; 2026
+    </footer>
+
+    <!-- MODAL: LEVEL UNLOCKED (SUCCESS) -->
+    <div id="modal-unlock" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center flex flex-col items-center gap-5 border-2 border-emerald-500/40 shadow-2xl">
+            <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-3xl flex items-center justify-center text-4xl border border-emerald-500/40 shadow-inner">
+                🎉
+            </div>
+            <div>
+                <span class="text-xs font-black uppercase text-emerald-400 tracking-widest block mb-1">Szint Teljesítve!</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white" id="modal-unlock-title">Kiváló Munkát Végeztél!</h3>
+                <p class="text-sm sm:text-base text-slate-300 mt-2 font-medium" id="modal-unlock-desc">
+                    A pontosságod <span id="modal-unlock-acc" class="font-extrabold text-emerald-400">98%</span> volt! Feloldottál egy új karaktert: <span id="modal-unlock-newkey" class="font-mono-code font-black text-cyan-300 text-xl underline">D</span>
+                </p>
+            </div>
+
+            <button onclick="nextLevel()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-slate-950 font-black text-lg sm:text-xl shadow-xl shadow-emerald-500/20 hover:brightness-110 active:scale-98 transition">
+                Tovább a Következő Szintre (Nyomj ENTER-t) 🚀
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: RETRY LEVEL (ACCURACY TOO LOW) -->
+    <div id="modal-retry" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center flex flex-col items-center gap-5 border-2 border-rose-500/40 shadow-2xl">
+            <div class="w-20 h-20 bg-rose-500/20 text-rose-400 rounded-3xl flex items-center justify-center text-4xl border border-rose-500/40 shadow-inner">
+                🎯
+            </div>
+            <div>
+                <span class="text-xs font-black uppercase text-rose-400 tracking-widest block mb-1">Gyakoroljunk Még Egy Kicsit!</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white">Próbáld Meg Újra!</h3>
+                <p class="text-sm sm:text-base text-slate-300 mt-2 font-medium">
+                    A feloldáshoz legalább <span class="font-black text-amber-400">90%</span>-os pontosság szükséges. A jelenlegi pontosságod: <span id="modal-retry-acc" class="font-black text-rose-400">84%</span>.
+                </p>
+            </div>
+
+            <button onclick="retryLevel()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 text-slate-950 font-black text-lg sm:text-xl shadow-xl shadow-rose-500/20 hover:brightness-110 active:scale-98 transition">
+                Szint Újraindítása (Nyomj ENTER-t) 🔄
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: LESSON SELECTOR -->
+    <div id="modal-lesson" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-3xl w-full flex flex-col gap-5 border-slate-800 max-h-[85vh]">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-2xl font-black text-white">📚 Szintek Választása</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 font-semibold">Válassz egyet a már feloldott 47 szint közül!</p>
+                </div>
+                <button onclick="closeLessonModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-lg">✕</button>
+            </div>
+
+            <div id="lesson-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 overflow-y-auto custom-scrollbar p-1">
+                <!-- Generated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /* ----------------------------------------------------
+           1. CORE DATA STRUCTURES & CONSTANTS
+        ---------------------------------------------------- */
+        
+        // Single character progression order (1 letter unlocked per level)
+        const KEYS_SEQUENCE = [
+            'f', 'j', ' ',
+            'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'á', 'í',
+            'e', 'i', 'r', 'u', 'w', 'o', 'q', 'p', 'ö', 'ü', 'ó', 'ő', 'ú', 'ű',
+            'c', 'v', 'b', 'n', 'm', 'y', 'z', 'x',
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+            '.', ','
+        ];
+
+        const KEY_NAMES_HU = {
+            ' ': 'Szóköz (Space)',
+            'é': 'É', 'á': 'Á', 'í': 'Í', 'ö': 'Ö', 'ü': 'Ü', 'ó': 'Ó', 'ő': 'Ő', 'ú': 'Ú', 'ű': 'Ű',
+            '.': 'Pont', ',': 'Vessző'
+        };
+
+        // Standard Hungarian QWERTZ Finger Assignment
+        const FINGER_MAP = {
+            '0': { name: 'Bal kisujj', class: 'finger-0' },
+            '1': { name: 'Bal gyűrűsujj', class: 'finger-1' },
+            '2': { name: 'Bal középső ujj', class: 'finger-2' },
+            '3': { name: 'Bal mutatóujj', class: 'finger-3' },
+            '4': { name: 'Jobb mutatóujj', class: 'finger-4' },
+            '5': { name: 'Jobb középső ujj', class: 'finger-5' },
+            '6': { name: 'Jobb gyűrűsujj', class: 'finger-6' },
+            '7': { name: 'Jobb kisujj', class: 'finger-7' },
+            'thumb': { name: 'Hüvelykujj', class: 'finger-thumb' }
+        };
+
+        const KEY_FINGERS = {
+            '0': '0', 'q': '0', 'a': '0', 'y': '0', 'í': '0',
+            '2': '1', 'w': '1', 's': '1', 'x': '1',
+            '3': '2', 'e': '2', 'd': '2', 'c': '2',
+            '4': '3', '5': '3', 'r': '3', 't': '3', 'f': '3', 'g': '3', 'v': '3', 'b': '3',
+            '6': '4', '7': '4', 'z': '4', 'u': '4', 'h': '4', 'j': '4', 'n': '4', 'm': '4',
+            '8': '5', 'i': '5', 'k': '5', ',': '5',
+            '9': '6', 'o': '6', 'l': '6', '.': '6',
+            '1': '7', 'ö': '7', 'ü': '7', 'ó': '7', 'p': '7', 'ő': '7', 'ú': '7', 'é': '7', 'á': '7', 'ű': '7', '-': '7',
+            ' ': 'thumb'
+        };
+
+        // Visual Keyboard Layout Setup
+        const KEYBOARD_LAYOUT = [
+            [
+                { key: '0', label: '0' }, { key: '1', label: '1' }, { key: '2', label: '2' },
+                { key: '3', label: '3' }, { key: '4', label: '4' }, { key: '5', label: '5' },
+                { key: '6', label: '6' }, { key: '7', label: '7' }, { key: '8', label: '8' },
+                { key: '9', label: '9' }, { key: 'ö', label: 'Ö' }, { key: 'ü', label: 'Ü' },
+                { key: 'ó', label: 'Ó' }, { key: 'backspace', label: 'Törlés ⌫', width: 'w-24' }
+            ],
+            [
+                { key: 'tab', label: 'Tab ↹', width: 'w-20' },
+                { key: 'q', label: 'Q' }, { key: 'w', label: 'W' }, { key: 'e', label: 'E' },
+                { key: 'r', label: 'R' }, { key: 't', label: 'T' }, { key: 'z', label: 'Z' },
+                { key: 'u', label: 'U' }, { key: 'i', label: 'I' }, { key: 'o', label: 'O' },
+                { key: 'p', label: 'P' }, { key: 'ő', label: 'Ő' }, { key: 'ú', label: 'Ú' }
+            ],
+            [
+                { key: 'caps', label: 'Caps ⇪', width: 'w-24' },
+                { key: 'a', label: 'A' }, { key: 's', label: 'S' }, { key: 'd', label: 'D' },
+                { key: 'f', label: 'F' }, { key: 'g', label: 'G' }, { key: 'h', label: 'H' },
+                { key: 'j', label: 'J' }, { key: 'k', label: 'K' }, { key: 'l', label: 'L' },
+                { key: 'é', label: 'É' }, { key: 'á', label: 'Á' }, { key: 'ű', label: 'Ű' },
+                { key: 'enter', label: 'Enter ↵', width: 'w-24' }
+            ],
+            [
+                { key: 'shift', label: 'Shift ⇧', width: 'w-20' }, { key: 'í', label: 'Í' },
+                { key: 'y', label: 'Y' }, { key: 'x', label: 'X' }, { key: 'c', label: 'C' },
+                { key: 'v', label: 'V' }, { key: 'b', label: 'B' }, { key: 'n', label: 'N' },
+                { key: 'm', label: 'M' }, { key: ',', label: ',' }, { key: '.', label: '.' },
+                { key: '-', label: '-' }, { key: 'shift2', label: 'Shift ⇧', width: 'w-28' }
+            ],
+            [
+                { key: ' ', label: 'Szóköz (Space)', width: 'w-96' }
+            ]
+        ];
+
+        // Hungarian sentence pool for Sentence Mode
+        const HUNGARIAN_SENTENCES = [
+            "A vakírás gyorsítja a mindennapi munkát és a tanulást.",
+            "Gyakorlat teszi a mestert minden egyes nap.",
+            "A magyar nyelv gyönyörű és szép kifejezésekkel teli.",
+            "A szorgalom és a kitartás meghozza a várt eredményt.",
+            "Csendes tavaszi reggelen a madarak vidáman énekelnek.",
+            "A számítógépes gépelés tíz ujjal igazi élmény.",
+            "Minden helyes leütés egy lépés a siker felé.",
+            "A friss kávé illata betölti az egész szobát reggel."
+        ];
+
+        // Dynamically build 47 modules
+        function buildSingleKeyModules() {
+            const modules = [];
+            modules.push({
+                id: 1,
+                title: "1. Szint: F, J, Szóköz (Alapok)",
+                desc: "Helyezd a mutatósujjaidat az F és J billentyűkre!",
+                keys: ['f', 'j', ' '],
+                targetHits: 128
+            });
+
+            for (let i = 3; i < KEYS_SEQUENCE.length; i++) {
+                const newKey = KEYS_SEQUENCE[i];
+                const availableKeys = KEYS_SEQUENCE.slice(0, i + 1);
+                const levelNum = i - 1;
+                const keyDisplay = KEY_NAMES_HU[newKey] || newKey.toUpperCase();
+                
+                // Dynamic hit targets scaling smoothly from 120 up to ~350
+                const calculatedHits = Math.min(380, 120 + (levelNum * 6));
+
+                modules.push({
+                    id: levelNum,
+                    title: `${levelNum}. Szint: Új betű (+${keyDisplay})`,
+                    desc: `Új feloldott gomb: "${keyDisplay}". Gyakorold a pontos leütést!`,
+                    keys: availableKeys,
+                    newKey: newKey,
+                    targetHits: calculatedHits
+                });
+            }
+            return modules;
+        }
+
+        const MODULES = buildSingleKeyModules();
+
+        /* ----------------------------------------------------
+           2. APP STATE VARIABLES
+        ---------------------------------------------------- */
+        let currentMode = 'beginner'; // 'beginner', 'advanced', 'sentence'
+        let currentModuleIndex = 0;
+        let highestUnlockedModule = 0;
+        let currentPracticeText = [];
+        let lineIndex = 0;
+        let userInput = "";
+        let totalTyped = 0;
+        let correctTyped = 0;
+        let errorCount = 0;
+        let startTime = null;
+        let timerInterval = null;
+        let soundEnabled = true;
+
+        /* ----------------------------------------------------
+           3. WEB AUDIO API SYNTHESIZER
+        ---------------------------------------------------- */
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'hit') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, now);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(140, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                } else if (type === 'fanfare') {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50];
+                    freqs.forEach((freq, idx) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.frequency.setValueAtTime(freq, now + idx * 0.09);
+                        g.gain.setValueAtTime(0.06, now + idx * 0.09);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.25);
+                        o.start(now + idx * 0.09);
+                        o.stop(now + idx * 0.09 + 0.25);
+                    });
+                }
+            } catch (e) {
+                // Audio fallback
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+            showToast(soundEnabled ? 'Hangok Be' : 'Hangok Ki', soundEnabled ? 'Hangeffektek bekapcsolva' : 'Néma üzemmód', soundEnabled ? '🔊' : '🔇');
+        }
+
+        /* ----------------------------------------------------
+           4. INITIALIZATION & STORAGE
+        ---------------------------------------------------- */
+        function initApp() {
+            loadProgress();
+            renderKeyboard();
+            updateModuleHeader();
+            renderPracticeText();
+            setupKeyboardListeners();
+
+            document.getElementById('total-levels-badge').textContent = MODULES.length;
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('chilltyper_unlocked_level');
+            if (saved) {
+                highestUnlockedModule = Math.min(parseInt(saved, 10), MODULES.length - 1);
+            }
+            currentModuleIndex = highestUnlockedModule;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('chilltyper_unlocked_level', highestUnlockedModule.toString());
+        }
+
+        /* ----------------------------------------------------
+           5. PRACTICE TEXT GENERATION
+        ---------------------------------------------------- */
+        function generateSingleLineText(keys, count = 7) {
+            // Filter out space from character selection so 3-letter groups contain ONLY letters
+            const letterKeys = keys.filter(k => k !== ' ');
+            const pool = letterKeys.length > 0 ? letterKeys : keys;
+            let line = "";
+            for (let i = 0; i < count; i++) {
+                let group = "";
+                for (let j = 0; j < 3; j++) {
+                    const randKey = pool[Math.floor(Math.random() * pool.length)];
+                    group += randKey;
+                }
+                line += group + (i < count - 1 ? " " : "");
+            }
+            return line;
+        }
+
+        function renderPracticeText() {
+            const container = document.getElementById('text-container');
+            container.innerHTML = "";
+            userInput = "";
+            lineIndex = 0;
+
+            const mod = MODULES[currentModuleIndex];
+
+            if (currentMode === 'sentence') {
+                currentPracticeText = [
+                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)],
+                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)],
+                    HUNGARIAN_SENTENCES[Math.floor(Math.random() * HUNGARIAN_SENTENCES.length)]
+                ];
+            } else {
+                currentPracticeText = [
+                    generateSingleLineText(mod.keys),
+                    generateSingleLineText(mod.keys),
+                    generateSingleLineText(mod.keys)
+                ];
+            }
+
+            currentPracticeText.forEach((line, idx) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.id = `line-${idx}`;
+                lineDiv.className = `p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider transition-all duration-300 font-mono-code text-xl sm:text-2xl md:text-3xl font-bold ${
+                    idx === 0 ? 'line-active border-indigo-500' : 'bg-slate-900/50 border-slate-800 opacity-40'
+                }`;
+
+                const textSpan = document.createElement('span');
+                textSpan.id = `line-text-${idx}`;
+                textSpan.innerHTML = formatLineHTML(line, idx === 0 ? "" : null);
+                lineDiv.appendChild(textSpan);
+                container.appendChild(lineDiv);
+            });
+
+            updateTargetHighlight();
+        }
+
+        function formatLineHTML(targetLine, typedText) {
+            let html = "";
+            for (let i = 0; i < targetLine.length; i++) {
+                const char = targetLine[i];
+                const charDisplay = char === ' ' ? '␣' : char;
+
+                if (typedText === null) {
+                    html += `<span class="text-slate-500">${charDisplay}</span>`;
+                } else if (i < typedText.length) {
+                    html += `<span class="text-emerald-400 font-black">${charDisplay}</span>`;
+                } else if (i === typedText.length) {
+                    html += `<span class="bg-cyan-500 text-slate-950 font-black px-1 rounded animate-pulse">${charDisplay}</span>`;
+                } else {
+                    html += `<span class="text-slate-300">${charDisplay}</span>`;
+                }
+            }
+            return html;
+        }
+
+        /* ----------------------------------------------------
+           6. NEW GAME FUNCTIONALITY
+        ---------------------------------------------------- */
+        function startNewGame() {
+            totalTyped = 0;
+            correctTyped = 0;
+            errorCount = 0;
+            startTime = null;
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+
+            renderPracticeText();
+            updateStatsUI();
+            playSound('hit');
+
+            showToast("Új játék elindítva!", "Sikeresen újratöltötted a kört", "🎮");
+        }
+
+        /* ----------------------------------------------------
+           7. VIRTUAL KEYBOARD RENDERING & PROMPTS
+        ---------------------------------------------------- */
+        function renderKeyboard() {
+            const kbContainer = document.getElementById('keyboard');
+            kbContainer.innerHTML = "";
+
+            const mod = MODULES[currentModuleIndex];
+            const activeKeysSet = new Set(currentMode === 'sentence' ? KEYS_SEQUENCE : mod.keys);
+
+            KEYBOARD_LAYOUT.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = "flex justify-center gap-1.5 w-full";
+
+                row.forEach(k => {
+                    const fingerInfo = FINGER_MAP[KEY_FINGERS[k.key]] || FINGER_MAP['thumb'];
+                    const isUnlocked = activeKeysSet.has(k.key) || k.key.length > 1;
+
+                    const keyDiv = document.createElement('div');
+                    keyDiv.id = `key-${k.key === ' ' ? 'space' : k.key}`;
+                    keyDiv.className = `h-12 sm:h-14 md:h-16 border-2 rounded-xl flex items-center justify-center font-bold text-xs sm:text-base font-mono-code transition-all shadow-md ${
+                        k.width || 'w-10 sm:w-12 md:w-14'
+                    } ${fingerInfo.class} ${!isUnlocked ? 'key-locked' : ''}`;
+
+                    keyDiv.textContent = k.label;
+                    rowDiv.appendChild(keyDiv);
+                });
+
+                kbContainer.appendChild(rowDiv);
+            });
+        }
+
+        function updateTargetHighlight() {
+            document.querySelectorAll('.key-target').forEach(el => el.classList.remove('key-target'));
+
+            if (lineIndex >= currentPracticeText.length) return;
+
+            const activeLine = currentPracticeText[lineIndex];
+            const targetChar = activeLine[userInput.length]?.toLowerCase() || '';
+
+            if (!targetChar) return;
+
+            const targetKeyId = targetChar === ' ' ? 'key-space' : `key-${targetChar}`;
+            const targetEl = document.getElementById(targetKeyId);
+            if (targetEl) {
+                targetEl.classList.add('key-target');
+            }
+
+            // Finger guide banner update
+            const fingerIndex = KEY_FINGERS[targetChar] || 'thumb';
+            const fingerInfo = FINGER_MAP[fingerIndex];
+
+            const targetNameEl = document.getElementById('target-key-name');
+            const fingerBadgeEl = document.getElementById('target-finger-badge');
+
+            targetNameEl.textContent = KEY_NAMES_HU[targetChar] || targetChar.toUpperCase();
+            fingerBadgeEl.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wide border ${fingerInfo.class} flex items-center gap-2 shadow`;
+            fingerBadgeEl.textContent = fingerInfo.name;
+        }
+
+        /* ----------------------------------------------------
+           8. KEYPRESS HANDLING & INPUT LOGIC
+        ---------------------------------------------------- */
+        function setupKeyboardListeners() {
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') e.preventDefault();
+
+                // Enter Key Modal Shortcut
+                if (e.key === 'Enter') {
+                    if (!document.getElementById('modal-unlock').classList.contains('hidden')) {
+                        nextLevel();
+                        return;
+                    }
+                    if (!document.getElementById('modal-retry').classList.contains('hidden')) {
+                        retryLevel();
+                        return;
+                    }
+                }
+
+                if (lineIndex >= currentPracticeText.length) return;
+
+                const activeLine = currentPracticeText[lineIndex];
+                const expectedChar = activeLine[userInput.length];
+
+                if (!expectedChar) return;
+
+                let pressedChar = e.key;
+                if (pressedChar === 'Spacebar') pressedChar = ' ';
+
+                // Prevent space scrolling
+                if (e.key === ' ') e.preventDefault();
+
+                // Start timer
+                if (!startTime) {
+                    startTime = Date.now();
+                    if (currentMode !== 'beginner') {
+                        timerInterval = setInterval(updateStatsUI, 500);
+                    }
+                }
+
+                const keyId = pressedChar === ' ' ? 'key-space' : `key-${pressedChar.toLowerCase()}`;
+                const keyEl = document.getElementById(keyId);
+
+                if (keyEl) {
+                    keyEl.classList.add('key-pressed');
+                    setTimeout(() => keyEl.classList.remove('key-pressed'), 120);
+                }
+
+                // Check key hit correctness
+                if (pressedChar === expectedChar) {
+                    playSound('hit');
+                    userInput += pressedChar;
+                    totalTyped++;
+                    correctTyped++;
+
+                    const activeSpan = document.getElementById(`line-text-${lineIndex}`);
+                    activeSpan.innerHTML = formatLineHTML(activeLine, userInput);
+
+                    // Finished current line
+                    if (userInput.length === activeLine.length) {
+                        advanceLine();
+                    }
+
+                    updateTargetHighlight();
+                    updateStatsUI();
+
+                } else if (pressedChar.length === 1) {
+                    // Error key hit
+                    playSound('error');
+                    totalTyped++;
+                    errorCount++;
+
+                    const board = document.getElementById('typing-board');
+                    board.classList.remove('shake');
+                    void board.offsetWidth; // Trigger reflow
+                    board.classList.add('shake');
+
+                    updateStatsUI();
+                }
+            });
+        }
+
+        function advanceLine() {
+            lineIndex++;
+            userInput = "";
+
+            if (lineIndex < currentPracticeText.length) {
+                currentPracticeText.forEach((line, idx) => {
+                    const lineDiv = document.getElementById(`line-${idx}`);
+                    const textSpan = document.getElementById(`line-text-${idx}`);
+
+                    if (idx < lineIndex) {
+                        lineDiv.className = "p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider font-mono-code text-xl sm:text-2xl md:text-3xl font-bold bg-slate-900/30 border-slate-800 opacity-30";
+                        textSpan.innerHTML = `<span class="text-emerald-400 font-extrabold">${line}</span>`;
+                    } else if (idx === lineIndex) {
+                        lineDiv.className = "p-4 sm:p-5 rounded-2xl border flex items-center justify-center tracking-wider font-mono-code text-xl sm:text-2xl md:text-3xl font-bold line-active border-indigo-500";
+                        textSpan.innerHTML = formatLineHTML(line, "");
+                    }
+                });
+            } else {
+                // Completed all 3 lines
+                checkLevelCompletion();
+            }
+        }
+
+        /* ----------------------------------------------------
+           9. STATS & LEVEL PROGRESSION LOGIC
+        ---------------------------------------------------- */
+        function updateStatsUI() {
+            const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
+            const elapsedSeconds = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+
+            if (currentMode === 'beginner') {
+                const mod = MODULES[currentModuleIndex];
+                const targetHits = mod.targetHits;
+
+                document.getElementById('hits-current-display').textContent = totalTyped;
+                document.getElementById('hits-target-display').textContent = targetHits;
+
+                const progressPct = Math.min(100, Math.round((totalTyped / targetHits) * 100));
+                document.getElementById('beginner-progress-fill').style.width = `${progressPct}%`;
+
+                const rem = Math.max(0, targetHits - totalTyped);
+                document.getElementById('beginner-remaining-count').textContent = rem;
+                document.getElementById('beginner-live-acc').textContent = acc;
+
+                const accIndicator = document.getElementById('beginner-accuracy-indicator');
+                if (acc < 90) {
+                    accIndicator.className = "text-rose-400 font-black animate-pulse flex items-center gap-1.5";
+                } else {
+                    accIndicator.className = "text-emerald-400 font-extrabold flex items-center gap-1.5";
+                }
+
+            } else {
+                const minutes = elapsedSeconds / 60 || 0.001;
+                const cpm = Math.round(correctTyped / minutes);
+                const wpm = Math.round((correctTyped / 5) / minutes);
+
+                document.getElementById('stat-cpm').textContent = cpm;
+                document.getElementById('stat-wpm').textContent = wpm;
+                document.getElementById('stat-accuracy').textContent = `${acc}%`;
+
+                const minsStr = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+                const secsStr = String(elapsedSeconds % 60).padStart(2, '0');
+                document.getElementById('stat-timer').textContent = `${minsStr}:${secsStr}`;
+            }
+        }
+
+        function checkLevelCompletion() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            const acc = totalTyped > 0 ? Math.round((correctTyped / totalTyped) * 100) : 100;
+            const mod = MODULES[currentModuleIndex];
+
+            // Strict >= 90% accuracy condition
+            if (acc >= 90) {
+                playSound('fanfare');
+
+                if (currentModuleIndex < MODULES.length - 1) {
+                    const nextMod = MODULES[currentModuleIndex + 1];
+                    const newKeyDisplay = KEY_NAMES_HU[nextMod.newKey] || nextMod.newKey?.toUpperCase() || '';
+
+                    if (currentModuleIndex === highestUnlockedModule) {
+                        highestUnlockedModule++;
+                        saveProgress();
+                    }
+
+                    document.getElementById('modal-unlock-acc').textContent = `${acc}%`;
+                    document.getElementById('modal-unlock-newkey').textContent = newKeyDisplay;
+                    document.getElementById('modal-unlock').classList.remove('hidden');
+                } else {
+                    showToast("Gratulálunk! 🎉", "Teljesítetted az összes szintet!", "🏆");
+                }
+            } else {
+                playSound('error');
+                document.getElementById('modal-retry-acc').textContent = `${acc}%`;
+                document.getElementById('modal-retry').classList.remove('hidden');
+            }
+        }
+
+        function nextLevel() {
+            document.getElementById('modal-unlock').classList.add('hidden');
+            currentModuleIndex++;
+            updateModuleHeader();
+            renderKeyboard();
+            startNewGame();
+        }
+
+        function retryLevel() {
+            document.getElementById('modal-retry').classList.add('hidden');
+            startNewGame();
+        }
+
+        /* ----------------------------------------------------
+           10. MODE & LESSON MODALS
+        ---------------------------------------------------- */
+        function switchAppMode(mode) {
+            currentMode = mode;
+
+            document.getElementById('tab-beginner').className = mode === 'beginner' ? 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 shadow-lg' : 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-400 hover:text-white';
+            document.getElementById('tab-advanced').className = mode === 'advanced' ? 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 shadow-lg' : 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-400 hover:text-white';
+            document.getElementById('tab-sentence').className = mode === 'sentence' ? 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 shadow-lg' : 'px-4 sm:px-5 py-3 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-400 hover:text-white';
+
+            const begCard = document.getElementById('beginner-progress-card');
+            const advCard = document.getElementById('advanced-stats-card');
+            const badge = document.getElementById('mode-status-badge');
+
+            if (mode === 'beginner') {
+                begCard.classList.remove('hidden');
+                advCard.classList.add('hidden');
+                badge.textContent = "Kezdő Mód (Dinamikus Cél)";
+            } else if (mode === 'advanced') {
+                begCard.classList.add('hidden');
+                advCard.classList.remove('hidden');
+                badge.textContent = "Haladó Mód (Mért Idő)";
+            } else {
+                begCard.classList.add('hidden');
+                advCard.classList.remove('hidden');
+                badge.textContent = "Mondat Mód (Összes Gomb Elérhető)";
+            }
+
+            renderKeyboard();
+            startNewGame();
+        }
+
+        function updateModuleHeader() {
+            const mod = MODULES[currentModuleIndex];
+            document.getElementById('module-badge').textContent = mod.id;
+            document.getElementById('module-title').textContent = mod.title;
+            document.getElementById('module-desc').textContent = mod.desc;
+            document.getElementById('unlocked-count-badge').textContent = highestUnlockedModule + 1;
+        }
+
+        function openLessonModal() {
+            const grid = document.getElementById('lesson-grid');
+            grid.innerHTML = "";
+
+            MODULES.forEach((mod, idx) => {
+                const isUnlocked = idx <= highestUnlockedModule;
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border flex flex-col justify-between transition gap-2 ${
+                    isUnlocked ? 'glass-card border-cyan-500/30 hover:border-cyan-400 cursor-pointer' : 'bg-slate-900/40 border-slate-800 opacity-40 cursor-not-allowed'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-sm text-cyan-300">${mod.id}. Szint</span>
+                        <span>${isUnlocked ? '🔓' : '🔒'}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 font-medium">${mod.title}</p>
+                `;
+
+                if (isUnlocked) {
+                    card.onclick = () => {
+                        currentModuleIndex = idx;
+                        updateModuleHeader();
+                        renderKeyboard();
+                        closeLessonModal();
+                        startNewGame();
+                    };
+                }
+
+                grid.appendChild(card);
+            });
+
+            document.getElementById('modal-lesson').classList.remove('hidden');
+        }
+
+        function closeLessonModal() {
+            document.getElementById('modal-lesson').classList.add('hidden');
+        }
+
+        function showToast(title, subtitle, icon = "🎮") {
+            const toast = document.getElementById('badge-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-subtitle').textContent = subtitle;
+            document.getElementById('toast-icon').textContent = icon;
+
+            toast.classList.remove('-translate-y-36', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-36', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initialize App on DOM Ready
+        window.onload = initApp;
+    </script>
+</body>
+</html>
