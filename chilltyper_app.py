@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -24,6 +25,17 @@ def bundled_html_path() -> Path:
     if getattr(sys, "frozen", False) and bundle_dir:
         return Path(bundle_dir) / HTML_NAME
     return SOURCE_DIR / HTML_NAME
+
+
+def user_data_path() -> Path:
+    """Return a stable per-user directory for WebView cookies and local storage."""
+    if sys.platform == "win32":
+        base_dir = Path(os.environ.get("LOCALAPPDATA") or Path.home() / "AppData" / "Local")
+    elif sys.platform == "darwin":
+        base_dir = Path.home() / "Library" / "Application Support"
+    else:
+        base_dir = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local" / "share")
+    return base_dir / APP_NAME / "webview"
 
 
 def make_handler(page: bytes) -> type[BaseHTTPRequestHandler]:
@@ -92,7 +104,7 @@ def run_app() -> None:
             min_size=(920, 680),
             background_color="#323437",
         )
-        webview.start()
+        webview.start(private_mode=False, storage_path=str(user_data_path()))
     finally:
         server.shutdown()
         server.server_close()

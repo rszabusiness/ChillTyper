@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v4.9.8 - Magyar QWERTZ Vakírás</title>
+    <title>ChillTyper v4.9.9 - Magyar QWERTZ Vakírás</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -180,7 +180,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v4.9.8</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v4.9.9</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -324,7 +324,7 @@
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
         <div class="font-mono text-[11px] opacity-75">
-            ChillTyper v4.9.8 • Magyar QWERTZ
+            ChillTyper v4.9.9 • Magyar QWERTZ
         </div>
     </footer>
 
@@ -628,6 +628,7 @@
         let timerInterval = null;
 
         let sentenceHistoryIndexes = [];
+        const BEGINNER_PROGRESS_KEY = 'chilltyper_beginner_progress';
 
         // 48 keys sequence: Level 1 starts with 'f' and 'j' (2 keys), then adds 1 key per level
         const KEYS_SEQUENCE = ['f', 'j', 'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'e', 'i', 'r', 'u', 'v', 'm', 'c', ',', 'x', '.', 'z', 'o', 'w', 'p', 'q', 'ö', 'ü', 'ó', 'ő', 'ú', 'á', 'ű', 'í', 'y', 't', 'b', 'n', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
@@ -810,9 +811,62 @@
             return pool[randomIndex];
         }
 
+        function loadBeginnerProgress() {
+            const saved = localStorage.getItem(BEGINNER_PROGRESS_KEY);
+            if (!saved) return null;
+
+            let progress;
+            try {
+                progress = JSON.parse(saved);
+            } catch (error) {
+                console.warn('A mentett kezdő előrehaladás nem olvasható, ezért törölve lett.', error);
+                localStorage.removeItem(BEGINNER_PROGRESS_KEY);
+                return null;
+            }
+
+            const isValid = progress &&
+                progress.version === 1 &&
+                Number.isInteger(progress.moduleIndex) &&
+                progress.moduleIndex >= 0 &&
+                progress.moduleIndex <= highestUnlockedModule &&
+                typeof progress.currentText === 'string' &&
+                progress.currentText.length > 0 &&
+                Number.isInteger(progress.charIndex) &&
+                progress.charIndex >= 0 &&
+                progress.charIndex < progress.currentText.length &&
+                Number.isInteger(progress.totalHits) &&
+                progress.totalHits >= 0 &&
+                Number.isInteger(progress.totalErrors) &&
+                progress.totalErrors >= 0 &&
+                progress.charErrors && typeof progress.charErrors === 'object' &&
+                progress.keyErrorCounts && typeof progress.keyErrorCounts === 'object';
+
+            if (!isValid) {
+                console.warn('A mentett kezdő előrehaladás érvénytelen, ezért törölve lett.');
+                localStorage.removeItem(BEGINNER_PROGRESS_KEY);
+                return null;
+            }
+            return progress;
+        }
+
+        function saveBeginnerProgress() {
+            if (currentMode !== 'beginner') return;
+            localStorage.setItem(BEGINNER_PROGRESS_KEY, JSON.stringify({
+                version: 1,
+                moduleIndex: currentModuleIndex,
+                currentText,
+                charIndex,
+                totalHits,
+                totalErrors,
+                charErrors,
+                keyErrorCounts
+            }));
+        }
+
         function init() {
             highestUnlockedModule = parseInt(localStorage.getItem('chilltyper_highest_level') || '0', 10);
-            currentModuleIndex = highestUnlockedModule;
+            const savedProgress = loadBeginnerProgress();
+            currentModuleIndex = savedProgress ? savedProgress.moduleIndex : highestUnlockedModule;
             activeTheme = localStorage.getItem('chilltyper_theme') || 'serika_dark';
             currentFontSize = localStorage.getItem('chilltyper_fontsize') || 'medium';
             currentLanguage = localStorage.getItem('chilltyper_lang') || 'hu';
@@ -825,7 +879,21 @@
             document.addEventListener('keydown', handleKeyDown);
             document.addEventListener('keyup', handleKeyUp);
 
-            startNewGame(true);
+            if (savedProgress) {
+                currentText = savedProgress.currentText;
+                charIndex = savedProgress.charIndex;
+                totalHits = savedProgress.totalHits;
+                totalErrors = savedProgress.totalErrors;
+                charErrors = savedProgress.charErrors;
+                keyErrorCounts = savedProgress.keyErrorCounts;
+                renderKeyboard();
+                renderFloatingText();
+                highlightTargetKey();
+                updateRemainingHitsDisplay();
+                updateLiveStatsUI();
+            } else {
+                startNewGame(true);
+            }
         }
 
         function renderThemesGrid() {
@@ -1285,6 +1353,9 @@
                 keyErrorCounts = {};
                 elapsedTime = 0;
                 sentenceTimeRemaining = sentenceTimeLimit;
+                if (currentMode === 'beginner') {
+                    localStorage.removeItem(BEGINNER_PROGRESS_KEY);
+                }
                 updateRemainingHitsDisplay();
                 updateLiveStatsUI();
             }
@@ -1313,6 +1384,9 @@
             renderKeyboard();
             renderFloatingText();
             highlightTargetKey();
+            if (!resetProgress) {
+                saveBeginnerProgress();
+            }
         }
 
         function handleKeyDown(e) {
@@ -1363,6 +1437,7 @@
                     delete charErrors[charIndex];
                     renderFloatingText();
                     highlightTargetKey();
+                    saveBeginnerProgress();
                 }
                 return;
             }
@@ -1401,6 +1476,7 @@
                     } else {
                         renderFloatingText();
                         highlightTargetKey();
+                        saveBeginnerProgress();
                     }
                 } else {
                     totalErrors++;
@@ -1429,11 +1505,13 @@
                         updateLiveStatsUI();
                     }
                     renderFloatingText();
+                    saveBeginnerProgress();
                 }
             }
         }
 
         function checkLevelCompletion() {
+            localStorage.removeItem(BEGINNER_PROGRESS_KEY);
             const total = totalHits + totalErrors;
             const accuracy = total > 0 ? Math.round((totalHits / total) * 100) : 100;
             const passed = accuracy >= 90;

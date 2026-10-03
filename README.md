@@ -1,4 +1,4 @@
-# ⌨ ChillTyper v4.9.8 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
+# ⌨ ChillTyper v4.9.9 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
 
 **ChillTyper** egy modern, böngészőben futó, interaktív tízujjas gépírás-oktató és -fejlesztő webalkalmazás, amely a **magyar QWERTZ billentyűzetkiosztás** alapjaira épül.
 
@@ -80,10 +80,10 @@ Három különálló al-mód a sokoldalú gyakorláshoz:
 
 ## 🛠 Technikai Részletek
 
-* **Single-File Architektúra**: Az egész alkalmazás egyetlen önálló, hordozható `index.html` fájlból áll.
+* **Egyszerű asztali alkalmazás**: A Python-indító az önálló HTML-felületet asztali ablakban futtatja, és önálló EXE-vé csomagolható.
 
 * **Külső Függőségek**: Tailwind CSS (CDN), Google Fonts (Plus Jakarta Sans, JetBrains Mono, Orbitron, VT323, Space Grotesk, Courier Prime, Fredoka).
 
-* **Adattárolás**: LocalStorage-ban tárolja az aktív témát, betűméretet és a feloldott legmagasabb szintet.
+* **Adattárolás**: A témát, a betűméretet, a feloldott legmagasabb szintet és az aktuális kezdőszint részfeladatait tartósan elmenti. Bezárás után az utolsó gépelt karaktertől folytatható. Windows alatt az adatok a `%LOCALAPPDATA%\ChillTyper\webview` mappába kerülnek.
 
-*ChillTyper v4.9.8 • Magyar QWERTZ Vakírás Oktató Program © 2026*
+*ChillTyper v4.9.9 • Magyar QWERTZ Vakírás Oktató Program © 2026*
