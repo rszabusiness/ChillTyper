@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v4.9.2 - Magyar QWERTZ Vakírás</title>
+    <title>ChillTyper v4.9.3 - Magyar QWERTZ Vakírás</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -136,6 +136,17 @@
             </button>
             <button id="tab-sentence" onclick="switchAppMode('sentence')" class="px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
                 💬 Mondatok
+            </button>
+
+            <!-- USER PROFILE / CLOUD SYNC BUTTON -->
+            <button onclick="openProfileModal()" id="user-profile-btn" class="p-2 px-3 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5 border border-transparent hover:border-[var(--sub-color)]/30 text-xs font-bold" title="Fiók & Felhő Szinkron">
+                <span class="text-sm">👤</span>
+                <span id="user-profile-label" class="hidden sm:inline">Bejelentkezés...</span>
+            </button>
+
+            <!-- LEADERBOARD BUTTON -->
+            <button onclick="openLeaderboardModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Ranglista (Leaderboard)">
+                <span class="text-lg">🏆</span>
             </button>
 
             <!-- THEME SETTINGS TAB BUTTON -->
@@ -371,6 +382,453 @@
         </div>
     </div>
 
+    <!-- USER PROFILE & CLOUD SYNC MODAL -->
+    <div id="modal-profile" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
+        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full flex flex-col gap-5 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
+                <div>
+                    <h3 class="text-xl font-black text-[var(--text-color)] flex items-center gap-2">
+                        ☁️ Fiók & Felhő Szinkronizáció
+                    </h3>
+                    <p class="text-xs text-[var(--sub-color)] mt-0.5">Automata haladás mentés a felhőben</p>
+                </div>
+                <button onclick="closeProfileModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
+            </div>
+
+            <!-- SYNC STATUS BADGE -->
+            <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 font-extrabold text-lg flex items-center justify-center border border-emerald-500/30">
+                        ✓
+                    </div>
+                    <div>
+                        <div id="profile-status-title" class="text-sm font-bold text-[var(--text-color)]">Aktív felhő szinkronizáció</div>
+                        <div id="profile-status-desc" class="text-xs text-[var(--sub-color)]">Az adataid automatikusan mentésre kerülnek</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DISPLAY NAME INPUT -->
+            <div class="flex flex-col gap-1.5">
+                <label class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Becenév / Felhasználónév</label>
+                <div class="flex gap-2">
+                    <input type="text" id="profile-name-input" placeholder="pl. GépelőMester" class="flex-1 bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-xl px-3.5 py-2.5 text-sm text-[var(--text-color)] focus:outline-none focus:border-[var(--main-color)] font-medium">
+                    <button onclick="saveProfileName()" class="px-4 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-bold text-xs hover:brightness-110 transition">
+                        Mentés
+                    </button>
+                </div>
+            </div>
+
+            <!-- USER ID & COPY -->
+            <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Egyedi Felhasználói Azonosító (ID)</span>
+                    <button onclick="copyUserId()" id="copy-id-btn" class="text-xs text-[var(--main-color)] font-bold hover:underline">📋 Másolás</button>
+                </div>
+                <div id="profile-user-id" class="font-mono text-xs text-[var(--text-color)] bg-[var(--sub-alt-color)] p-2.5 rounded-xl border border-[var(--sub-color)]/20 break-all select-all">
+                    Betöltés...
+                </div>
+            </div>
+
+            <!-- CLOUD STATS SUMMARY -->
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Feloldott Szint</span>
+                    <span id="cloud-stat-level" class="text-lg font-black text-[var(--main-color)] mt-1">1</span>
+                </div>
+                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Legjobb WPM</span>
+                    <span id="cloud-stat-wpm" class="text-lg font-black text-[var(--text-color)] mt-1">0</span>
+                </div>
+                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Tesztek</span>
+                    <span id="cloud-stat-tests" class="text-lg font-black text-[var(--text-color)] mt-1">0</span>
+                </div>
+            </div>
+
+            <button onclick="closeProfileModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
+                Rendben
+            </button>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD MODAL -->
+    <div id="modal-leaderboard" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
+        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-xl w-full flex flex-col gap-5 shadow-2xl max-h-[85vh]">
+            <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
+                <div>
+                    <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">
+                        🏆 Globális Ranglista
+                    </h3>
+                    <p class="text-xs text-[var(--sub-color)] mt-0.5">A legjobb ChillTyper gépelők közössége</p>
+                </div>
+                <button onclick="closeLeaderboardModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
+            </div>
+
+            <!-- TAB FILTERS -->
+            <div class="flex items-center gap-2 bg-[var(--bg-color)] p-1 rounded-2xl border border-[var(--sub-color)]/20">
+                <button id="lb-tab-wpm" onclick="switchLeaderboardTab('wpm')" class="flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
+                    ⚡ Leggyorsabb WPM
+                </button>
+                <button id="lb-tab-level" onclick="switchLeaderboardTab('level')" class="flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
+                    🌱 Feloldott Szintek
+                </button>
+            </div>
+
+            <!-- LEADERBOARD LIST CONTAINER -->
+            <div id="leaderboard-list" class="flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-1 max-h-[380px]">
+                <!-- Dynamic Leaderboard Items -->
+            </div>
+
+            <!-- CURRENT USER RANK FOOTER -->
+            <div id="user-rank-banner" class="bg-[var(--bg-color)] border border-[var(--main-color)]/30 rounded-2xl p-3 flex items-center justify-between text-xs font-bold hidden">
+                <div class="flex items-center gap-2.5">
+                    <span id="user-rank-pos" class="px-2.5 py-1 rounded-lg bg-[var(--main-color)]/20 text-[var(--main-color)] font-black">#--</span>
+                    <span id="user-rank-name" class="text-[var(--text-color)]">Te</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span id="user-rank-val" class="text-[var(--main-color)] font-black text-sm">0 WPM</span>
+                </div>
+            </div>
+
+            <button onclick="closeLeaderboardModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
+                Bezárás
+            </button>
+        </div>
+    </div>
+
+    <!-- FIREBASE CLOUD SYNC MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'chilltyper-app';
+        let firebaseConfig = null;
+
+        try {
+            if (typeof __firebase_config !== 'undefined') {
+                firebaseConfig = JSON.parse(__firebase_config);
+            }
+        } catch (err) {
+            console.error("Firebase config parsing error:", err);
+        }
+
+        if (!firebaseConfig) {
+            firebaseConfig = {
+                apiKey: "dummy-api-key",
+                authDomain: "dummy-project.firebaseapp.com",
+                projectId: "dummy-project",
+                storageBucket: "dummy-project.appspot.com",
+                messagingSenderId: "123456789",
+                appId: "1:123456789:web:abcdef"
+            };
+        }
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let unsubscribeUserSnapshot = null;
+        let activeLeaderboardTab = 'wpm';
+
+        // Mock default leaderboard entries for instant display
+        const MOCK_LEADERBOARD = [
+            { name: "VakíróMester", wpm: 112, level: 47, uid: "bot-1" },
+            { name: "VillámUjjak", wpm: 98, level: 42, uid: "bot-2" },
+            { name: "QWERTZ_Pro", wpm: 89, level: 38, uid: "bot-3" },
+            { name: "PusztaiGépelő", wpm: 81, level: 31, uid: "bot-4" },
+            { name: "BillentyűKirály", wpm: 75, level: 25, uid: "bot-5" },
+            { name: "ChillTyper99", wpm: 68, level: 19, uid: "bot-6" }
+        ];
+
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.warn("Auth initialization fallback to anonymous:", error);
+                try {
+                    await signInAnonymously(auth);
+                } catch (e) {
+                    console.error("Anonymous auth failed:", e);
+                }
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                updateUserUI(user);
+                setupCloudSync(user);
+            } else {
+                currentUser = null;
+                updateUserUI(null);
+            }
+        });
+
+        function updateUserUI(user) {
+            const label = document.getElementById('user-profile-label');
+            const idEl = document.getElementById('profile-user-id');
+            if (user) {
+                const displayName = localStorage.getItem('chilltyper_display_name') || `Gépelő #${user.uid.slice(0, 5)}`;
+                if (label) label.textContent = displayName;
+                if (idEl) idEl.textContent = user.uid;
+            } else {
+                if (label) label.textContent = "Vendég";
+                if (idEl) idEl.textContent = "Nincs bejelentkezve";
+            }
+        }
+
+        function setupCloudSync(user) {
+            if (!user) return;
+            if (unsubscribeUserSnapshot) unsubscribeUserSnapshot();
+
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'user_data', 'stats');
+
+            unsubscribeUserSnapshot = onSnapshot(userDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.highestUnlockedModule !== undefined && data.highestUnlockedModule > highestUnlockedModule) {
+                        highestUnlockedModule = data.highestUnlockedModule;
+                        localStorage.setItem('chilltyper_highest_level', highestUnlockedModule);
+                        if (typeof updateModeUI === 'function' && currentMode === 'beginner') updateModeUI();
+                    }
+                    if (data.theme && data.theme !== activeTheme) {
+                        if (typeof setTheme === 'function') setTheme(data.theme);
+                    }
+                    if (data.displayName) {
+                        localStorage.setItem('chilltyper_display_name', data.displayName);
+                        const label = document.getElementById('user-profile-label');
+                        if (label) label.textContent = data.displayName;
+                    }
+
+                    const levelEl = document.getElementById('cloud-stat-level');
+                    const wpmEl = document.getElementById('cloud-stat-wpm');
+                    const testsEl = document.getElementById('cloud-stat-tests');
+                    if (levelEl) levelEl.textContent = (highestUnlockedModule || 0) + 1;
+                    if (wpmEl) wpmEl.textContent = data.bestWpm || 0;
+                    if (testsEl) testsEl.textContent = data.totalCompletedTests || 0;
+                } else {
+                    syncDataToCloud();
+                }
+            }, (error) => {
+                console.error("Cloud sync snapshot error:", error);
+            });
+        }
+
+        window.syncDataToCloud = async function(extraData = {}) {
+            if (!currentUser) return;
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'user_data', 'stats');
+                const lbDocRef = doc(db, 'artifacts', appId, 'leaderboard', currentUser.uid);
+                const savedName = localStorage.getItem('chilltyper_display_name') || `Gépelő #${currentUser.uid.slice(0, 5)}`;
+                
+                const currentBestWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
+                const currentTotalTests = parseInt(localStorage.getItem('chilltyper_total_tests') || '0', 10);
+                const newBestWpm = Math.max(currentBestWpm, extraData.wpm || 0);
+
+                const dataToSave = {
+                    highestUnlockedModule: highestUnlockedModule,
+                    theme: activeTheme,
+                    displayName: savedName,
+                    bestWpm: newBestWpm,
+                    totalCompletedTests: currentTotalTests + (extraData.completedTest ? 1 : 0),
+                    lastUpdated: new Date().toISOString()
+                };
+
+                if (extraData.wpm && extraData.wpm > currentBestWpm) {
+                    localStorage.setItem('chilltyper_best_wpm', extraData.wpm);
+                }
+                if (extraData.completedTest) {
+                    localStorage.setItem('chilltyper_total_tests', currentTotalTests + 1);
+                }
+
+                await setDoc(userDocRef, dataToSave, { merge: true });
+                await setDoc(lbDocRef, {
+                    uid: currentUser.uid,
+                    name: savedName,
+                    wpm: newBestWpm,
+                    level: (highestUnlockedModule || 0) + 1,
+                    lastUpdated: new Date().toISOString()
+                }, { merge: true });
+            } catch (e) {
+                console.error("Error saving data to cloud:", e);
+            }
+        };
+
+        window.openLeaderboardModal = function() {
+            document.getElementById('modal-leaderboard').classList.remove('hidden');
+            renderLeaderboard();
+        };
+
+        window.closeLeaderboardModal = function() {
+            document.getElementById('modal-leaderboard').classList.add('hidden');
+        };
+
+        window.switchLeaderboardTab = function(type) {
+            activeLeaderboardTab = type;
+            const wpmBtn = document.getElementById('lb-tab-wpm');
+            const levelBtn = document.getElementById('lb-tab-level');
+
+            if (type === 'wpm') {
+                wpmBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
+                levelBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
+            } else {
+                levelBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
+                wpmBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
+            }
+            renderLeaderboard();
+        };
+
+        async function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-list');
+            if (!container) return;
+
+            container.innerHTML = `<div class="p-4 text-center text-xs font-bold text-[var(--sub-color)] animate-pulse">Ranglista betöltése...</div>`;
+
+            let entries = [...MOCK_LEADERBOARD];
+
+            try {
+                const lbRef = collection(db, 'artifacts', appId, 'leaderboard');
+                const fieldName = activeLeaderboardTab === 'wpm' ? 'wpm' : 'level';
+                const q = query(lbRef, orderBy(fieldName, 'desc'), limit(20));
+                const querySnap = await getDocs(q);
+
+                if (!querySnap.empty) {
+                    const firestoreEntries = [];
+                    querySnap.forEach(d => firestoreEntries.push(d.data()));
+
+                    firestoreEntries.forEach(fe => {
+                        const idx = entries.findIndex(e => e.uid === fe.uid);
+                        if (idx !== -1) {
+                            entries[idx] = fe;
+                        } else {
+                            entries.push(fe);
+                        }
+                    });
+                }
+            } catch (err) {
+                console.warn("Firestore query fallback to local/mock:", err);
+            }
+
+            // Always add current user if present
+            const myWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
+            const myLevel = (highestUnlockedModule || 0) + 1;
+            const myName = localStorage.getItem('chilltyper_display_name') || (currentUser ? `Gépelő #${currentUser.uid.slice(0, 5)}` : 'Te');
+            const myUid = currentUser ? currentUser.uid : 'local-user';
+
+            const userIdx = entries.findIndex(e => e.uid === myUid);
+            if (userIdx !== -1) {
+                entries[userIdx].wpm = Math.max(entries[userIdx].wpm || 0, myWpm);
+                entries[userIdx].level = Math.max(entries[userIdx].level || 1, myLevel);
+                entries[userIdx].name = myName;
+            } else {
+                entries.push({ uid: myUid, name: myName, wpm: myWpm, level: myLevel });
+            }
+
+            // Sort entries based on active tab
+            if (activeLeaderboardTab === 'wpm') {
+                entries.sort((a, b) => (b.wpm || 0) - (a.wpm || 0));
+            } else {
+                entries.sort((a, b) => (b.level || 0) - (a.level || 0));
+            }
+
+            container.innerHTML = "";
+
+            entries.forEach((item, index) => {
+                const isCurrentUser = item.uid === myUid;
+                const rank = index + 1;
+                let rankBadge = `<span class="w-6 text-center text-xs font-black text-[var(--sub-color)]">#${rank}</span>`;
+
+                if (rank === 1) rankBadge = `<span class="w-6 text-center text-lg">🥇</span>`;
+                else if (rank === 2) rankBadge = `<span class="w-6 text-center text-lg">🥈</span>`;
+                else if (rank === 3) rankBadge = `<span class="w-6 text-center text-lg">🥉</span>`;
+
+                const valDisplay = activeLeaderboardTab === 'wpm' ? `${item.wpm || 0} WPM` : `${item.level || 1}. Szint`;
+
+                const row = document.createElement('div');
+                row.className = `p-3 rounded-2xl border flex items-center justify-between text-xs font-bold transition ${isCurrentUser ? 'bg-[var(--main-color)]/10 border-[var(--main-color)]/60 ring-1 ring-[var(--main-color)]/30' : 'bg-[var(--bg-color)]/60 border-[var(--sub-color)]/20'}`;
+
+                row.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        ${rankBadge}
+                        <span class="${isCurrentUser ? 'text-[var(--main-color)] font-black' : 'text-[var(--text-color)]'}">${item.name} ${isCurrentUser ? '<span class="text-[10px] opacity-70">(Te)</span>' : ''}</span>
+                    </div>
+                    <span class="font-mono font-black ${isCurrentUser ? 'text-[var(--main-color)]' : 'text-[var(--text-color)]'}">${valDisplay}</span>
+                `;
+                container.appendChild(row);
+            });
+
+            // Update user footer status
+            const myPos = entries.findIndex(e => e.uid === myUid) + 1;
+            const banner = document.getElementById('user-rank-banner');
+            if (banner) {
+                banner.classList.remove('hidden');
+                document.getElementById('user-rank-pos').textContent = myPos > 0 ? `#${myPos}` : '#--';
+                document.getElementById('user-rank-name').textContent = myName;
+                document.getElementById('user-rank-val').textContent = activeLeaderboardTab === 'wpm' ? `${myWpm} WPM` : `${myLevel}. Szint`;
+            }
+        }
+
+        window.openProfileModal = function() {
+            const modal = document.getElementById('modal-profile');
+            if (!modal) return;
+            const input = document.getElementById('profile-name-input');
+            const savedName = localStorage.getItem('chilltyper_display_name') || (currentUser ? `Gépelő #${currentUser.uid.slice(0, 5)}` : '');
+            if (input) input.value = savedName;
+
+            const levelEl = document.getElementById('cloud-stat-level');
+            const wpmEl = document.getElementById('cloud-stat-wpm');
+            const testsEl = document.getElementById('cloud-stat-tests');
+            if (levelEl) levelEl.textContent = (highestUnlockedModule || 0) + 1;
+            if (wpmEl) wpmEl.textContent = localStorage.getItem('chilltyper_best_wpm') || '0';
+            if (testsEl) testsEl.textContent = localStorage.getItem('chilltyper_total_tests') || '0';
+
+            modal.classList.remove('hidden');
+        };
+
+        window.closeProfileModal = function() {
+            document.getElementById('modal-profile').classList.add('hidden');
+        };
+
+        window.saveProfileName = function() {
+            const input = document.getElementById('profile-name-input');
+            if (!input) return;
+            const newName = input.value.trim();
+            if (newName) {
+                localStorage.setItem('chilltyper_display_name', newName);
+                const label = document.getElementById('user-profile-label');
+                if (label) label.textContent = newName;
+                window.syncDataToCloud();
+                closeProfileModal();
+            }
+        };
+
+        window.copyUserId = function() {
+            if (!currentUser) return;
+            const tempInput = document.createElement('input');
+            tempInput.value = currentUser.uid;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const btn = document.getElementById('copy-id-btn');
+            if (btn) {
+                const origText = btn.textContent;
+                btn.textContent = "✓ Másolva!";
+                setTimeout(() => { btn.textContent = origText; }, 1800);
+            }
+        };
+
+        initAuth();
+    </script>
+
     <!-- SCRIPT LOGIC -->
     <script>
         // Global Theme Definitions
@@ -539,6 +997,7 @@
             document.body.setAttribute('data-theme', themeId);
             localStorage.setItem('chilltyper_theme', themeId);
             renderThemesGrid();
+            if (window.syncDataToCloud) window.syncDataToCloud();
         }
 
         function openThemeModal() {
@@ -831,6 +1290,10 @@
             const rawWPM = Math.round(rawCPM / 5);
             const accuracy = total > 0 ? Math.round((totalHits / total) * 100) : 100;
 
+            if (window.syncDataToCloud) {
+                window.syncDataToCloud({ wpm: netWPM, completedTest: true });
+            }
+
             let consistency = 100;
             if (speedSnapshots.length > 1) {
                 const mean = speedSnapshots.reduce((a, b) => a + b, 0) / speedSnapshots.length;
@@ -1055,6 +1518,7 @@
                 if (currentModuleIndex === highestUnlockedModule && highestUnlockedModule < 46) {
                     highestUnlockedModule++;
                     localStorage.setItem('chilltyper_highest_level', highestUnlockedModule);
+                    if (window.syncDataToCloud) window.syncDataToCloud({ completedTest: true });
                 }
 
                 const nextModule = currentModuleIndex + 1;
