@@ -14,6 +14,7 @@ APP_NAME = "ChillTyper"
 HOST = "127.0.0.1"
 PORT = 8765
 HTML_NAME = "chilltyper.html"
+ICON_NAME = "chilltyper_icon.ico"
 SOURCE_DIR = Path(__file__).resolve().parent
 
 
@@ -103,6 +104,10 @@ def build_exe() -> None:
     if not html_path.is_file():
         raise SystemExit(f"Az EXE készítéséhez hiányzik a HTML-fájl: {html_path}")
 
+    icon_path = SOURCE_DIR / ICON_NAME
+    if not icon_path.is_file():
+        raise SystemExit(f"Az EXE ikonjához hiányzik az ikonfájl: {icon_path}")
+
     command = [
         sys.executable,
         "-m",
@@ -113,6 +118,8 @@ def build_exe() -> None:
         "--windowed",
         "--name",
         APP_NAME,
+        "--icon",
+        str(icon_path),
         "--specpath",
         str(SOURCE_DIR / "build"),
         "--workpath",
