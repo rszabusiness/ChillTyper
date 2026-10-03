@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v4.9.3 - Magyar QWERTZ Vakírás</title>
+    <title>ChillTyper v4.9.8 - Magyar QWERTZ Vakírás</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -30,7 +30,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Themes matching Monkeytype design presets */
+        /* 25 Themes inspired by Monkeytype aesthetic palettes */
         body[data-theme="serika_dark"] { --bg-color: #323437; --main-color: #e2b714; --caret-color: #e2b714; --sub-color: #646669; --sub-alt-color: #2c2e31; --text-color: #d1d0c5; --font-family: 'JetBrains Mono', monospace; }
         body[data-theme="cyberpunk"] { --bg-color: #181425; --main-color: #fee440; --caret-color: #f000ff; --sub-color: #5b4a72; --sub-alt-color: #231b34; --text-color: #2de2e6; --font-family: 'Orbitron', sans-serif; }
         body[data-theme="matrix"] { --bg-color: #000000; --main-color: #15ff00; --caret-color: #15ff00; --sub-color: #006600; --sub-alt-color: #0d260d; --text-color: #00dd00; --font-family: 'VT323', monospace; }
@@ -42,18 +42,78 @@
         body[data-theme="paper"] { --bg-color: #f7f7f7; --main-color: #444444; --caret-color: #111111; --sub-color: #b0b0b0; --sub-alt-color: #e3e3e3; --text-color: #222222; --font-family: 'Plus Jakarta Sans', sans-serif; }
         body[data-theme="monokai"] { --bg-color: #272822; --main-color: #a6e22e; --caret-color: #f92672; --sub-color: #75715e; --sub-alt-color: #3e3d32; --text-color: #f8f8f2; --font-family: 'JetBrains Mono', monospace; }
         body[data-theme="coffee"] { --bg-color: #211d1a; --main-color: #d19a66; --caret-color: #d19a66; --sub-color: #5c4f46; --sub-alt-color: #2d2824; --text-color: #e6d5c3; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="botanical"] { --bg-color: #1e2925; --main-color: #70a98f; --caret-color: #8fc1a3; --sub-color: #436254; --sub-alt-color: #141d1a; --text-color: #e3ebd8; --font-family: 'Plus Jakarta Sans', sans-serif; }
+        body[data-theme="gruvbox"] { --bg-color: #282828; --main-color: #fabd2f; --caret-color: #fe8019; --sub-color: #665c54; --sub-alt-color: #1d2021; --text-color: #ebdbb2; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="tokyo_night"] { --bg-color: #1a1b26; --main-color: #7aa2f7; --caret-color: #bb9af7; --sub-color: #414868; --sub-alt-color: #16161e; --text-color: #a9b1d6; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="sunset"] { --bg-color: #1f1a24; --main-color: #ff7e5f; --caret-color: #feb47b; --sub-color: #503d52; --sub-alt-color: #151118; --text-color: #fcd5ce; --font-family: 'Space Grotesk', sans-serif; }
+        body[data-theme="ocean"] { --bg-color: #0f172a; --main-color: #38bdf8; --caret-color: #38bdf8; --sub-color: #334155; --sub-alt-color: #020617; --text-color: #e0f2fe; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="rose_pine"] { --bg-color: #191724; --main-color: #ebbcba; --caret-color: #f6c177; --sub-color: #524f67; --sub-alt-color: #110f19; --text-color: #e0def4; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="stealth"] { --bg-color: #121212; --main-color: #555555; --caret-color: #888888; --sub-color: #333333; --sub-alt-color: #1a1a1a; --text-color: #aaaaaa; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="solarized_dark"] { --bg-color: #002b36; --main-color: #b58900; --caret-color: #268bd2; --sub-color: #586e75; --sub-alt-color: #00212b; --text-color: #839496; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="emerald"] { --bg-color: #062319; --main-color: #10b981; --caret-color: #34d399; --sub-color: #134e3a; --sub-alt-color: #03140e; --text-color: #d1fae5; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="miami"] { --bg-color: #240046; --main-color: #ff007f; --caret-color: #00f0ff; --sub-color: #5a189a; --sub-alt-color: #10002b; --text-color: #e0aaff; --font-family: 'Orbitron', sans-serif; }
+        body[data-theme="lavender"] { --bg-color: #232035; --main-color: #c084fc; --caret-color: #e879f9; --sub-color: #4a4468; --sub-alt-color: #171524; --text-color: #f3e8ff; --font-family: 'Fredoka', sans-serif; }
+        body[data-theme="cheesecake"] { --bg-color: #fdf6e3; --main-color: #d33682; --caret-color: #b58900; --sub-color: #b58900; --sub-alt-color: #eee8d5; --text-color: #657b83; --font-family: 'Plus Jakarta Sans', sans-serif; }
+        body[data-theme="matcha"] { --bg-color: #2b332c; --main-color: #a3be8c; --caret-color: #ebcb8b; --sub-color: #4c566a; --sub-alt-color: #222823; --text-color: #e5e9f0; --font-family: 'JetBrains Mono', monospace; }
+        body[data-theme="crimson"] { --bg-color: #1a0508; --main-color: #e11d48; --caret-color: #f43f5e; --sub-color: #501620; --sub-alt-color: #0f0204; --text-color: #fecdd3; --font-family: 'JetBrains Mono', monospace; }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: var(--sub-alt-color); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--sub-color); border-radius: 4px; }
 
-        .caret-pulse {
-            border-left: 3px solid var(--caret-color);
-            animation: blink 1.1s infinite;
+        /* Dynamic Font Size Presets */
+        body[data-font-size="small"] .text-window { height: 120px; }
+        body[data-font-size="small"] #text-display { line-height: 40px; font-size: 1.25rem; }
+        @media (min-width: 640px) {
+            body[data-font-size="small"] .text-window { height: 132px; }
+            body[data-font-size="small"] #text-display { line-height: 44px; font-size: 1.4rem; }
         }
-        @keyframes blink {
-            0%, 100% { border-color: var(--caret-color); }
-            50% { border-color: transparent; }
+
+        body[data-font-size="medium"] .text-window { height: 144px; }
+        body[data-font-size="medium"] #text-display { line-height: 48px; font-size: 1.5rem; }
+        @media (min-width: 640px) {
+            body[data-font-size="medium"] .text-window { height: 156px; }
+            body[data-font-size="medium"] #text-display { line-height: 52px; font-size: 1.75rem; }
+        }
+
+        body[data-font-size="large"] .text-window { height: 168px; }
+        body[data-font-size="large"] #text-display { line-height: 56px; font-size: 1.85rem; }
+        @media (min-width: 640px) {
+            body[data-font-size="large"] .text-window { height: 180px; }
+            body[data-font-size="large"] #text-display { line-height: 60px; font-size: 2.1rem; }
+        }
+
+        body[data-font-size="xlarge"] .text-window { height: 192px; }
+        body[data-font-size="xlarge"] #text-display { line-height: 64px; font-size: 2.25rem; }
+        @media (min-width: 640px) {
+            body[data-font-size="xlarge"] .text-window { height: 210px; }
+            body[data-font-size="xlarge"] #text-display { line-height: 70px; font-size: 2.5rem; }
+        }
+
+        .text-window {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        #text-display {
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(0px);
+        }
+
+        /* Fixed-width caret highlight to prevent character horizontal jumping */
+        .caret-active {
+            position: relative;
+            background-color: rgba(226, 183, 20, 0.18);
+            border-bottom: 3px solid var(--caret-color);
+            color: var(--main-color) !important;
+            border-radius: 2px;
+            animation: blink-caret 1.1s infinite;
+        }
+
+        @keyframes blink-caret {
+            0%, 100% { border-bottom-color: var(--caret-color); }
+            50% { border-bottom-color: transparent; }
         }
 
         .finger-0 { background-color: rgba(244, 63, 94, 0.15); border-color: rgba(244, 63, 94, 0.4); color: #fda4af; }
@@ -109,7 +169,7 @@
         }
     </style>
 </head>
-<body data-theme="serika_dark" class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-7xl mx-auto selection:bg-amber-400 selection:text-slate-950">
+<body data-theme="serika_dark" data-font-size="medium" class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-7xl mx-auto selection:bg-amber-400 selection:text-slate-950">
 
     <!-- HEADER -->
     <header class="w-full flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
@@ -120,7 +180,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v4.9.2</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v4.9.8</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -138,19 +198,13 @@
                 💬 Mondatok
             </button>
 
-            <!-- USER PROFILE / CLOUD SYNC BUTTON -->
-            <button onclick="openProfileModal()" id="user-profile-btn" class="p-2 px-3 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5 border border-transparent hover:border-[var(--sub-color)]/30 text-xs font-bold" title="Fiók & Felhő Szinkron">
-                <span class="text-sm">👤</span>
-                <span id="user-profile-label" class="hidden sm:inline">Bejelentkezés...</span>
-            </button>
-
-            <!-- LEADERBOARD BUTTON -->
-            <button onclick="openLeaderboardModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Ranglista (Leaderboard)">
+            <!-- STATS / RECORD MODAL BUTTON -->
+            <button onclick="openStatsModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Személyes Rekordok">
                 <span class="text-lg">🏆</span>
             </button>
 
-            <!-- THEME SETTINGS TAB BUTTON -->
-            <button onclick="openThemeModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Témák & Beállítások">
+            <!-- SETTINGS TAB BUTTON (THEME, FONT SIZE, LANGUAGE, RESET) -->
+            <button onclick="openSettingsModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Beállítások (Téma, Betűméret, Nyelv, Reset)">
                 <span class="text-lg">⚙️</span>
             </button>
         </div>
@@ -179,7 +233,7 @@
                 💬 Idézetek
             </button>
             <button id="sent-sub-time" onclick="setSentenceSubMode('time')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                ⏱️ Időmérés
+                ⏱ Időmérés
             </button>
         </div>
 
@@ -199,7 +253,7 @@
                     1
                 </span>
                 <div>
-                    <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J, Szóköz</h2>
+                    <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J Billentyűk</h2>
                     <p id="level-desc" class="text-xs text-[var(--sub-color)]">Kezdő izommemória gyakorlás (csak a helyes leütés számít)</p>
                 </div>
             </div>
@@ -212,9 +266,9 @@
                 </div>
 
                 <div id="newkey-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
-                    <span class="text-[var(--sub-color)] uppercase">Új gomb:</span>
-                    <span id="newkey-char" class="text-[var(--main-color)] font-black text-sm">F</span>
-                    <span id="newkey-finger" class="text-[var(--sub-color)] text-[11px]">(Bal mutató)</span>
+                    <span class="text-[var(--sub-color)] uppercase">Kezdő gombok:</span>
+                    <span id="newkey-char" class="text-[var(--main-color)] font-black text-sm">F, J</span>
+                    <span id="newkey-finger" class="text-[var(--sub-color)] text-[11px]">(Bal és jobb mutató)</span>
                 </div>
                 <button onclick="openLessonModal()" class="px-4 py-2 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] text-xs font-bold transition">
                     📚 Szintek (<span id="unlocked-count">1</span>/47)
@@ -243,9 +297,11 @@
         </div>
 
         <!-- FLOATING TEXT DISPLAY CONTAINER -->
-        <div id="text-display-container" class="w-full my-4 min-h-[160px] flex flex-col items-center justify-center relative rounded-3xl transition-colors p-4 border border-transparent">
-            <div id="text-display" class="w-full text-xl sm:text-2xl md:text-3xl leading-relaxed tracking-wide text-center max-w-4xl text-[var(--sub-color)] select-none min-h-[120px] flex flex-wrap justify-center items-center gap-y-2">
-                <!-- Dynamic word tokens rendered here -->
+        <div id="text-display-container" class="w-full my-4 flex flex-col items-center justify-center relative rounded-3xl transition-colors p-4 sm:p-6 border border-transparent bg-[var(--sub-alt-color)]/30">
+            <div class="text-window w-full max-w-4xl flex justify-center">
+                <div id="text-display" class="w-full text-center text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start">
+                    <!-- Dynamic word tokens rendered here -->
+                </div>
             </div>
 
             <!-- RESTART BUTTON BELOW TEXT -->
@@ -268,28 +324,152 @@
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
         <div class="font-mono text-[11px] opacity-75">
-            ChillTyper v4.9.2 • Magyar QWERTZ
+            ChillTyper v4.9.8 • Magyar QWERTZ
         </div>
     </footer>
 
     <!-- MODALS -->
-    <!-- FULLSCREEN THEME SELECTOR MODAL -->
-    <div id="modal-theme" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto hidden custom-scrollbar">
-        <div class="max-w-6xl mx-auto flex flex-col gap-6">
+    <!-- MULTI-TAB SETTINGS MODAL -->
+    <div id="modal-settings" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto hidden custom-scrollbar">
+        <div class="max-w-5xl mx-auto flex flex-col gap-6">
+            <!-- Modal Header -->
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
                     <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">
-                        🎨 Oldal Témájának Beállításai
+                        ⚙️ Beállítások
                     </h3>
-                    <p class="text-xs text-[var(--sub-color)] mt-1">Kattints bármelyik témára az azonnali átváltáshoz!</p>
+                    <p class="text-xs text-[var(--sub-color)] mt-1">Téma, betűméret, gyakorló nyelv és adatok kezelése</p>
                 </div>
-                <button onclick="closeThemeModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">
+                <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">
                     Bezárás ✕
                 </button>
             </div>
 
-            <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                <!-- Generated dynamically -->
+            <!-- Settings Navigation Tabs -->
+            <div class="flex items-center gap-2 border-b border-[var(--sub-color)]/20 pb-3 flex-wrap">
+                <button id="set-tab-theme" onclick="switchSettingsTab('theme')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
+                    🎨 Téma
+                </button>
+                <button id="set-tab-font" onclick="switchSettingsTab('font')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
+                    🔠 Betűméret
+                </button>
+                <button id="set-tab-lang" onclick="switchSettingsTab('lang')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
+                    🌐 Nyelv
+                </button>
+                <button id="set-tab-reset" onclick="switchSettingsTab('reset')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
+                    🔄 Reset & Adatok
+                </button>
+            </div>
+
+            <!-- TAB 1 CONTENT: THEMES -->
+            <div id="set-content-theme" class="flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül az azonnali stílusváltáshoz:</p>
+                </div>
+                <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    <!-- Dynamic theme cards rendered via renderThemesGrid() -->
+                </div>
+            </div>
+
+            <!-- TAB 2 CONTENT: FONT SIZE SELECTOR -->
+            <div id="set-content-font" class="flex flex-col gap-4 hidden">
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <button id="fontsize-opt-small" onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
+                        <span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4>
+                            <p class="text-[10px] text-[var(--sub-color)]">Kompakt nézet</p>
+                        </div>
+                    </button>
+
+                    <button id="fontsize-opt-medium" onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
+                        <span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4>
+                            <p class="text-[10px] text-[var(--sub-color)]">Alapértelmezett</p>
+                        </div>
+                    </button>
+
+                    <button id="fontsize-opt-large" onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
+                        <span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4>
+                            <p class="text-[10px] text-[var(--sub-color)]">Könnyen olvasható</p>
+                        </div>
+                    </button>
+
+                    <button id="fontsize-opt-xlarge" onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
+                        <span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4>
+                            <p class="text-[10px] text-[var(--sub-color)]">Maximális méret</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 3 CONTENT: LANGUAGE SELECTOR -->
+            <div id="set-content-lang" class="flex flex-col gap-4 hidden">
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak, mondatok és idézetek nyelvét:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button id="lang-opt-hu" onclick="setLanguage('hu')" class="p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🇭🇺</span>
+                            <div>
+                                <h4 class="font-bold text-sm text-[var(--text-color)]">Magyar (HU)</h4>
+                                <p class="text-xs text-[var(--sub-color)]">Magyar szavak, ékezetes mondatok és közmondások</p>
+                            </div>
+                        </div>
+                        <span id="lang-check-hu" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>
+                    </button>
+
+                    <button id="lang-opt-en" onclick="setLanguage('en')" class="p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🇬🇧</span>
+                            <div>
+                                <h4 class="font-bold text-sm text-[var(--text-color)]">English (EN)</h4>
+                                <p class="text-xs text-[var(--sub-color)]">English vocabulary pool, sentences & famous quotes</p>
+                            </div>
+                        </div>
+                        <span id="lang-check-en" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--sub-color)]/20 text-[var(--sub-color)] hidden">Aktív</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 4 CONTENT: RESET & DATA -->
+            <div id="set-content-reset" class="flex flex-col gap-4 hidden">
+                <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
+                    <div class="flex items-center gap-3 text-rose-400">
+                        <span class="text-2xl">⚠️</span>
+                        <h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4>
+                    </div>
+                    <p class="text-xs text-[var(--sub-color)] leading-relaxed">
+                        A reset művelet törli az összes helyben elmentett adatot: feloldott kezdő szinteket, személyes WPM rekordokat, tesztszámlálókat és az egyedi beállításokat. Az alábbi gomb megnyomásával az alkalmazás visszatér az eredeti kezdőállapotra.
+                    </p>
+                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">
+                        🗑️ Összes Haladás És Rekord Törlése
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESET CONFIRMATION OVERLAY MODAL -->
+    <div id="modal-reset-confirm" class="fixed inset-0 z-50 bg-[var(--bg-color)]/90 backdrop-blur-md p-4 flex items-center justify-center hidden">
+        <div class="bg-[var(--sub-alt-color)] border border-rose-500/40 rounded-3xl p-6 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
+            <span class="text-4xl">🚨</span>
+            <h3 class="text-xl font-extrabold text-rose-400">Biztosan törölni szeretnéd?</h3>
+            <p class="text-xs text-[var(--sub-color)] leading-relaxed">
+                Ezzel a lépéssel törlődnek a feloldott szintek, rekordok és témák. Ez a folyamat nem vonható vissza.
+            </p>
+            <div class="flex items-center gap-3 w-full mt-2">
+                <button onclick="closeResetConfirmation()" class="flex-1 py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
+                    Mégse
+                </button>
+                <button onclick="executeFullReset()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition shadow-md">
+                    Igen, Töröld!
+                </button>
             </div>
         </div>
     </div>
@@ -314,7 +494,7 @@
             <p id="result-accuracy" class="text-sm font-bold text-[var(--text-color)]">Pontosság: 95% (Elvárt: ≥90%)</p>
 
             <div id="result-nextkey-box" class="w-full bg-[var(--bg-color)] border border-[var(--main-color)]/40 rounded-2xl p-4 flex flex-col items-center gap-1.5 my-1">
-                <span class="text-xs text-[var(--sub-color)] uppercase font-bold tracking-wider">Következő feloldott billentyű</span>
+                <span id="result-nextkey-title" class="text-xs text-[var(--sub-color)] uppercase font-bold tracking-wider">Következő feloldott billentyű</span>
                 <span id="result-nextkey-char" class="text-3xl font-black text-[var(--main-color)]">D</span>
                 <span id="result-nextkey-finger" class="text-xs font-semibold text-[var(--text-color)]">Bal középső ujj</span>
             </div>
@@ -338,29 +518,29 @@
                     <p class="text-xs text-[var(--sub-color)] mt-0.5">Részletes gépelési mutatók</p>
                 </div>
                 <span id="adv-stat-time-tag" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] text-[var(--main-color)] font-bold text-xs border border-[var(--main-color)]/30">
-                    ⏱ 30s Teszt
+                    ⏱ Mérés Befejezve
                 </span>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex flex-col items-center">
                     <span class="text-[10px] font-bold text-[var(--sub-color)] uppercase tracking-wider">WPM (Net)</span>
-                    <span id="adv-stat-wpm" class="text-3xl font-black text-[var(--main-color)] mt-1">68</span>
-                    <span id="adv-stat-raw-wpm" class="text-[10px] text-[var(--sub-color)] mt-0.5">Nyers: 72</span>
+                    <span id="adv-stat-wpm" class="text-3xl font-black text-[var(--main-color)] mt-1">0</span>
+                    <span id="adv-stat-raw-wpm" class="text-[10px] text-[var(--sub-color)] mt-0.5">Nyers: 0</span>
                 </div>
                 <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex flex-col items-center">
                     <span class="text-[10px] font-bold text-[var(--sub-color)] uppercase tracking-wider">CPM (Karakter)</span>
-                    <span id="adv-stat-cpm" class="text-3xl font-black text-[var(--text-color)] mt-1">340</span>
-                    <span id="adv-stat-raw-cpm" class="text-[10px] text-[var(--sub-color)] mt-0.5">Nyers: 360</span>
+                    <span id="adv-stat-cpm" class="text-3xl font-black text-[var(--text-color)] mt-1">0</span>
+                    <span id="adv-stat-raw-cpm" class="text-[10px] text-[var(--sub-color)] mt-0.5">Nyers: 0</span>
                 </div>
                 <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex flex-col items-center">
                     <span class="text-[10px] font-bold text-[var(--sub-color)] uppercase tracking-wider">Pontosság</span>
-                    <span id="adv-stat-acc" class="text-3xl font-black text-emerald-400 mt-1">96%</span>
-                    <span id="adv-stat-acc-detail" class="text-[10px] text-[var(--sub-color)] mt-0.5">170/177 helyes</span>
+                    <span id="adv-stat-acc" class="text-3xl font-black text-emerald-400 mt-1">100%</span>
+                    <span id="adv-stat-acc-detail" class="text-[10px] text-[var(--sub-color)] mt-0.5">0/0 helyes</span>
                 </div>
                 <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex flex-col items-center">
                     <span class="text-[10px] font-bold text-[var(--sub-color)] uppercase tracking-wider">Egyenletesség</span>
-                    <span id="adv-stat-consistency" class="text-3xl font-black text-cyan-400 mt-1">91%</span>
+                    <span id="adv-stat-consistency" class="text-3xl font-black text-cyan-400 mt-1">100%</span>
                     <span class="text-[10px] text-[var(--sub-color)] mt-0.5">Ritmus stabilitás</span>
                 </div>
             </div>
@@ -382,456 +562,131 @@
         </div>
     </div>
 
-    <!-- USER PROFILE & CLOUD SYNC MODAL -->
-    <div id="modal-profile" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
-        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full flex flex-col gap-5 shadow-2xl">
+    <!-- PERSONAL RECORDS / LOCAL STATS MODAL -->
+    <div id="modal-stats" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
+        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col gap-5 shadow-2xl">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-xl font-black text-[var(--text-color)] flex items-center gap-2">
-                        ☁️ Fiók & Felhő Szinkronizáció
+                    <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">
+                        🏆 Személyes Rekordjaid
                     </h3>
-                    <p class="text-xs text-[var(--sub-color)] mt-0.5">Automata haladás mentés a felhőben</p>
+                    <p class="text-xs text-[var(--sub-color)] mt-0.5">Helyi böngészőben elmentett eredmények</p>
                 </div>
-                <button onclick="closeProfileModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
+                <button onclick="closeStatsModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
             </div>
 
-            <!-- SYNC STATUS BADGE -->
-            <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 font-extrabold text-lg flex items-center justify-center border border-emerald-500/30">
-                        ✓
-                    </div>
-                    <div>
-                        <div id="profile-status-title" class="text-sm font-bold text-[var(--text-color)]">Aktív felhő szinkronizáció</div>
-                        <div id="profile-status-desc" class="text-xs text-[var(--sub-color)]">Az adataid automatikusan mentésre kerülnek</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DISPLAY NAME INPUT -->
-            <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Becenév / Felhasználónév</label>
-                <div class="flex gap-2">
-                    <input type="text" id="profile-name-input" placeholder="pl. GépelőMester" class="flex-1 bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-xl px-3.5 py-2.5 text-sm text-[var(--text-color)] focus:outline-none focus:border-[var(--main-color)] font-medium">
-                    <button onclick="saveProfileName()" class="px-4 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-bold text-xs hover:brightness-110 transition">
-                        Mentés
-                    </button>
-                </div>
-            </div>
-
-            <!-- USER ID & COPY -->
-            <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Egyedi Felhasználói Azonosító (ID)</span>
-                    <button onclick="copyUserId()" id="copy-id-btn" class="text-xs text-[var(--main-color)] font-bold hover:underline">📋 Másolás</button>
-                </div>
-                <div id="profile-user-id" class="font-mono text-xs text-[var(--text-color)] bg-[var(--sub-alt-color)] p-2.5 rounded-xl border border-[var(--sub-color)]/20 break-all select-all">
-                    Betöltés...
-                </div>
-            </div>
-
-            <!-- CLOUD STATS SUMMARY -->
             <div class="grid grid-cols-3 gap-2 text-center">
-                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
-                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Feloldott Szint</span>
-                    <span id="cloud-stat-level" class="text-lg font-black text-[var(--main-color)] mt-1">1</span>
+                <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Legmagasabb Szint</span>
+                    <span id="stat-local-level" class="text-2xl font-black text-[var(--main-color)] mt-1">1</span>
                 </div>
-                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
+                <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
                     <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Legjobb WPM</span>
-                    <span id="cloud-stat-wpm" class="text-lg font-black text-[var(--text-color)] mt-1">0</span>
+                    <span id="stat-local-wpm" class="text-2xl font-black text-[var(--text-color)] mt-1">0</span>
                 </div>
-                <div class="bg-[var(--bg-color)] p-3 rounded-xl border border-[var(--sub-color)]/20 flex flex-col">
-                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Tesztek</span>
-                    <span id="cloud-stat-tests" class="text-lg font-black text-[var(--text-color)] mt-1">0</span>
+                <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Befejezett Teszt</span>
+                    <span id="stat-local-tests" class="text-2xl font-black text-[var(--text-color)] mt-1">0</span>
                 </div>
             </div>
 
-            <button onclick="closeProfileModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
+            <button onclick="closeStatsModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
                 Rendben
             </button>
         </div>
     </div>
 
-    <!-- LEADERBOARD MODAL -->
-    <div id="modal-leaderboard" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
-        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-xl w-full flex flex-col gap-5 shadow-2xl max-h-[85vh]">
-            <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
-                <div>
-                    <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">
-                        🏆 Globális Ranglista
-                    </h3>
-                    <p class="text-xs text-[var(--sub-color)] mt-0.5">A legjobb ChillTyper gépelők közössége</p>
-                </div>
-                <button onclick="closeLeaderboardModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
-            </div>
-
-            <!-- TAB FILTERS -->
-            <div class="flex items-center gap-2 bg-[var(--bg-color)] p-1 rounded-2xl border border-[var(--sub-color)]/20">
-                <button id="lb-tab-wpm" onclick="switchLeaderboardTab('wpm')" class="flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
-                    ⚡ Leggyorsabb WPM
-                </button>
-                <button id="lb-tab-level" onclick="switchLeaderboardTab('level')" class="flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                    🌱 Feloldott Szintek
-                </button>
-            </div>
-
-            <!-- LEADERBOARD LIST CONTAINER -->
-            <div id="leaderboard-list" class="flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-1 max-h-[380px]">
-                <!-- Dynamic Leaderboard Items -->
-            </div>
-
-            <!-- CURRENT USER RANK FOOTER -->
-            <div id="user-rank-banner" class="bg-[var(--bg-color)] border border-[var(--main-color)]/30 rounded-2xl p-3 flex items-center justify-between text-xs font-bold hidden">
-                <div class="flex items-center gap-2.5">
-                    <span id="user-rank-pos" class="px-2.5 py-1 rounded-lg bg-[var(--main-color)]/20 text-[var(--main-color)] font-black">#--</span>
-                    <span id="user-rank-name" class="text-[var(--text-color)]">Te</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span id="user-rank-val" class="text-[var(--main-color)] font-black text-sm">0 WPM</span>
-                </div>
-            </div>
-
-            <button onclick="closeLeaderboardModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
-                Bezárás
-            </button>
-        </div>
-    </div>
-
-    <!-- FIREBASE CLOUD SYNC MODULE -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'chilltyper-app';
-        let firebaseConfig = null;
-
-        try {
-            if (typeof __firebase_config !== 'undefined') {
-                firebaseConfig = JSON.parse(__firebase_config);
-            }
-        } catch (err) {
-            console.error("Firebase config parsing error:", err);
-        }
-
-        if (!firebaseConfig) {
-            firebaseConfig = {
-                apiKey: "dummy-api-key",
-                authDomain: "dummy-project.firebaseapp.com",
-                projectId: "dummy-project",
-                storageBucket: "dummy-project.appspot.com",
-                messagingSenderId: "123456789",
-                appId: "1:123456789:web:abcdef"
-            };
-        }
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-        let unsubscribeUserSnapshot = null;
-        let activeLeaderboardTab = 'wpm';
-
-        // Mock default leaderboard entries for instant display
-        const MOCK_LEADERBOARD = [
-            { name: "VakíróMester", wpm: 112, level: 47, uid: "bot-1" },
-            { name: "VillámUjjak", wpm: 98, level: 42, uid: "bot-2" },
-            { name: "QWERTZ_Pro", wpm: 89, level: 38, uid: "bot-3" },
-            { name: "PusztaiGépelő", wpm: 81, level: 31, uid: "bot-4" },
-            { name: "BillentyűKirály", wpm: 75, level: 25, uid: "bot-5" },
-            { name: "ChillTyper99", wpm: 68, level: 19, uid: "bot-6" }
-        ];
-
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.warn("Auth initialization fallback to anonymous:", error);
-                try {
-                    await signInAnonymously(auth);
-                } catch (e) {
-                    console.error("Anonymous auth failed:", e);
-                }
-            }
-        }
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                updateUserUI(user);
-                setupCloudSync(user);
-            } else {
-                currentUser = null;
-                updateUserUI(null);
-            }
-        });
-
-        function updateUserUI(user) {
-            const label = document.getElementById('user-profile-label');
-            const idEl = document.getElementById('profile-user-id');
-            if (user) {
-                const displayName = localStorage.getItem('chilltyper_display_name') || `Gépelő #${user.uid.slice(0, 5)}`;
-                if (label) label.textContent = displayName;
-                if (idEl) idEl.textContent = user.uid;
-            } else {
-                if (label) label.textContent = "Vendég";
-                if (idEl) idEl.textContent = "Nincs bejelentkezve";
-            }
-        }
-
-        function setupCloudSync(user) {
-            if (!user) return;
-            if (unsubscribeUserSnapshot) unsubscribeUserSnapshot();
-
-            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'user_data', 'stats');
-
-            unsubscribeUserSnapshot = onSnapshot(userDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.highestUnlockedModule !== undefined && data.highestUnlockedModule > highestUnlockedModule) {
-                        highestUnlockedModule = data.highestUnlockedModule;
-                        localStorage.setItem('chilltyper_highest_level', highestUnlockedModule);
-                        if (typeof updateModeUI === 'function' && currentMode === 'beginner') updateModeUI();
-                    }
-                    if (data.theme && data.theme !== activeTheme) {
-                        if (typeof setTheme === 'function') setTheme(data.theme);
-                    }
-                    if (data.displayName) {
-                        localStorage.setItem('chilltyper_display_name', data.displayName);
-                        const label = document.getElementById('user-profile-label');
-                        if (label) label.textContent = data.displayName;
-                    }
-
-                    const levelEl = document.getElementById('cloud-stat-level');
-                    const wpmEl = document.getElementById('cloud-stat-wpm');
-                    const testsEl = document.getElementById('cloud-stat-tests');
-                    if (levelEl) levelEl.textContent = (highestUnlockedModule || 0) + 1;
-                    if (wpmEl) wpmEl.textContent = data.bestWpm || 0;
-                    if (testsEl) testsEl.textContent = data.totalCompletedTests || 0;
-                } else {
-                    syncDataToCloud();
-                }
-            }, (error) => {
-                console.error("Cloud sync snapshot error:", error);
-            });
-        }
-
-        window.syncDataToCloud = async function(extraData = {}) {
-            if (!currentUser) return;
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'user_data', 'stats');
-                const lbDocRef = doc(db, 'artifacts', appId, 'leaderboard', currentUser.uid);
-                const savedName = localStorage.getItem('chilltyper_display_name') || `Gépelő #${currentUser.uid.slice(0, 5)}`;
-                
-                const currentBestWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
-                const currentTotalTests = parseInt(localStorage.getItem('chilltyper_total_tests') || '0', 10);
-                const newBestWpm = Math.max(currentBestWpm, extraData.wpm || 0);
-
-                const dataToSave = {
-                    highestUnlockedModule: highestUnlockedModule,
-                    theme: activeTheme,
-                    displayName: savedName,
-                    bestWpm: newBestWpm,
-                    totalCompletedTests: currentTotalTests + (extraData.completedTest ? 1 : 0),
-                    lastUpdated: new Date().toISOString()
-                };
-
-                if (extraData.wpm && extraData.wpm > currentBestWpm) {
-                    localStorage.setItem('chilltyper_best_wpm', extraData.wpm);
-                }
-                if (extraData.completedTest) {
-                    localStorage.setItem('chilltyper_total_tests', currentTotalTests + 1);
-                }
-
-                await setDoc(userDocRef, dataToSave, { merge: true });
-                await setDoc(lbDocRef, {
-                    uid: currentUser.uid,
-                    name: savedName,
-                    wpm: newBestWpm,
-                    level: (highestUnlockedModule || 0) + 1,
-                    lastUpdated: new Date().toISOString()
-                }, { merge: true });
-            } catch (e) {
-                console.error("Error saving data to cloud:", e);
-            }
-        };
-
-        window.openLeaderboardModal = function() {
-            document.getElementById('modal-leaderboard').classList.remove('hidden');
-            renderLeaderboard();
-        };
-
-        window.closeLeaderboardModal = function() {
-            document.getElementById('modal-leaderboard').classList.add('hidden');
-        };
-
-        window.switchLeaderboardTab = function(type) {
-            activeLeaderboardTab = type;
-            const wpmBtn = document.getElementById('lb-tab-wpm');
-            const levelBtn = document.getElementById('lb-tab-level');
-
-            if (type === 'wpm') {
-                wpmBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                levelBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
-            } else {
-                levelBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                wpmBtn.className = "flex-1 py-2 rounded-xl text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
-            }
-            renderLeaderboard();
-        };
-
-        async function renderLeaderboard() {
-            const container = document.getElementById('leaderboard-list');
-            if (!container) return;
-
-            container.innerHTML = `<div class="p-4 text-center text-xs font-bold text-[var(--sub-color)] animate-pulse">Ranglista betöltése...</div>`;
-
-            let entries = [...MOCK_LEADERBOARD];
-
-            try {
-                const lbRef = collection(db, 'artifacts', appId, 'leaderboard');
-                const fieldName = activeLeaderboardTab === 'wpm' ? 'wpm' : 'level';
-                const q = query(lbRef, orderBy(fieldName, 'desc'), limit(20));
-                const querySnap = await getDocs(q);
-
-                if (!querySnap.empty) {
-                    const firestoreEntries = [];
-                    querySnap.forEach(d => firestoreEntries.push(d.data()));
-
-                    firestoreEntries.forEach(fe => {
-                        const idx = entries.findIndex(e => e.uid === fe.uid);
-                        if (idx !== -1) {
-                            entries[idx] = fe;
-                        } else {
-                            entries.push(fe);
-                        }
-                    });
-                }
-            } catch (err) {
-                console.warn("Firestore query fallback to local/mock:", err);
-            }
-
-            // Always add current user if present
-            const myWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
-            const myLevel = (highestUnlockedModule || 0) + 1;
-            const myName = localStorage.getItem('chilltyper_display_name') || (currentUser ? `Gépelő #${currentUser.uid.slice(0, 5)}` : 'Te');
-            const myUid = currentUser ? currentUser.uid : 'local-user';
-
-            const userIdx = entries.findIndex(e => e.uid === myUid);
-            if (userIdx !== -1) {
-                entries[userIdx].wpm = Math.max(entries[userIdx].wpm || 0, myWpm);
-                entries[userIdx].level = Math.max(entries[userIdx].level || 1, myLevel);
-                entries[userIdx].name = myName;
-            } else {
-                entries.push({ uid: myUid, name: myName, wpm: myWpm, level: myLevel });
-            }
-
-            // Sort entries based on active tab
-            if (activeLeaderboardTab === 'wpm') {
-                entries.sort((a, b) => (b.wpm || 0) - (a.wpm || 0));
-            } else {
-                entries.sort((a, b) => (b.level || 0) - (a.level || 0));
-            }
-
-            container.innerHTML = "";
-
-            entries.forEach((item, index) => {
-                const isCurrentUser = item.uid === myUid;
-                const rank = index + 1;
-                let rankBadge = `<span class="w-6 text-center text-xs font-black text-[var(--sub-color)]">#${rank}</span>`;
-
-                if (rank === 1) rankBadge = `<span class="w-6 text-center text-lg">🥇</span>`;
-                else if (rank === 2) rankBadge = `<span class="w-6 text-center text-lg">🥈</span>`;
-                else if (rank === 3) rankBadge = `<span class="w-6 text-center text-lg">🥉</span>`;
-
-                const valDisplay = activeLeaderboardTab === 'wpm' ? `${item.wpm || 0} WPM` : `${item.level || 1}. Szint`;
-
-                const row = document.createElement('div');
-                row.className = `p-3 rounded-2xl border flex items-center justify-between text-xs font-bold transition ${isCurrentUser ? 'bg-[var(--main-color)]/10 border-[var(--main-color)]/60 ring-1 ring-[var(--main-color)]/30' : 'bg-[var(--bg-color)]/60 border-[var(--sub-color)]/20'}`;
-
-                row.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        ${rankBadge}
-                        <span class="${isCurrentUser ? 'text-[var(--main-color)] font-black' : 'text-[var(--text-color)]'}">${item.name} ${isCurrentUser ? '<span class="text-[10px] opacity-70">(Te)</span>' : ''}</span>
-                    </div>
-                    <span class="font-mono font-black ${isCurrentUser ? 'text-[var(--main-color)]' : 'text-[var(--text-color)]'}">${valDisplay}</span>
-                `;
-                container.appendChild(row);
-            });
-
-            // Update user footer status
-            const myPos = entries.findIndex(e => e.uid === myUid) + 1;
-            const banner = document.getElementById('user-rank-banner');
-            if (banner) {
-                banner.classList.remove('hidden');
-                document.getElementById('user-rank-pos').textContent = myPos > 0 ? `#${myPos}` : '#--';
-                document.getElementById('user-rank-name').textContent = myName;
-                document.getElementById('user-rank-val').textContent = activeLeaderboardTab === 'wpm' ? `${myWpm} WPM` : `${myLevel}. Szint`;
-            }
-        }
-
-        window.openProfileModal = function() {
-            const modal = document.getElementById('modal-profile');
-            if (!modal) return;
-            const input = document.getElementById('profile-name-input');
-            const savedName = localStorage.getItem('chilltyper_display_name') || (currentUser ? `Gépelő #${currentUser.uid.slice(0, 5)}` : '');
-            if (input) input.value = savedName;
-
-            const levelEl = document.getElementById('cloud-stat-level');
-            const wpmEl = document.getElementById('cloud-stat-wpm');
-            const testsEl = document.getElementById('cloud-stat-tests');
-            if (levelEl) levelEl.textContent = (highestUnlockedModule || 0) + 1;
-            if (wpmEl) wpmEl.textContent = localStorage.getItem('chilltyper_best_wpm') || '0';
-            if (testsEl) testsEl.textContent = localStorage.getItem('chilltyper_total_tests') || '0';
-
-            modal.classList.remove('hidden');
-        };
-
-        window.closeProfileModal = function() {
-            document.getElementById('modal-profile').classList.add('hidden');
-        };
-
-        window.saveProfileName = function() {
-            const input = document.getElementById('profile-name-input');
-            if (!input) return;
-            const newName = input.value.trim();
-            if (newName) {
-                localStorage.setItem('chilltyper_display_name', newName);
-                const label = document.getElementById('user-profile-label');
-                if (label) label.textContent = newName;
-                window.syncDataToCloud();
-                closeProfileModal();
-            }
-        };
-
-        window.copyUserId = function() {
-            if (!currentUser) return;
-            const tempInput = document.createElement('input');
-            tempInput.value = currentUser.uid;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
-            const btn = document.getElementById('copy-id-btn');
-            if (btn) {
-                const origText = btn.textContent;
-                btn.textContent = "✓ Másolva!";
-                setTimeout(() => { btn.textContent = origText; }, 1800);
-            }
-        };
-
-        initAuth();
-    </script>
-
     <!-- SCRIPT LOGIC -->
     <script>
-        // Global Theme Definitions
+        // GLOBAL STATE VARIABLES
+        let currentMode = 'beginner'; // 'beginner' | 'advanced' | 'sentence'
+        let currentModuleIndex = 0;
+        let highestUnlockedModule = 0;
+        let activeTheme = 'serika_dark';
+        let currentFontSize = 'medium'; // 'small' | 'medium' | 'large' | 'xlarge'
+        let currentLanguage = 'hu';
+
+        let textLengthSetting = 25;
+        let sentenceSubMode = 'words'; // 'words' | 'quotes' | 'time'
+        let sentenceWordsCount = 25;
+        let sentenceQuoteLength = 'medium'; // 'short' | 'medium' | 'long'
+        let sentenceTimeLimit = 30;
+        let sentenceTimeRemaining = 30;
+
+        let currentText = '';
+        let charIndex = 0;
+        let charErrors = {};
+        let keyErrorCounts = {};
+
+        let totalHits = 0;
+        let totalErrors = 0;
+        let targetHits = 60;
+
+        let isTestStarted = false;
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval = null;
+
+        let sentenceHistoryIndexes = [];
+
+        // 48 keys sequence: Level 1 starts with 'f' and 'j' (2 keys), then adds 1 key per level
+        const KEYS_SEQUENCE = ['f', 'j', 'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'e', 'i', 'r', 'u', 'v', 'm', 'c', ',', 'x', '.', 'z', 'o', 'w', 'p', 'q', 'ö', 'ü', 'ó', 'ő', 'ú', 'á', 'ű', 'í', 'y', 't', 'b', 'n', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
+
+        const KEYBOARD_LAYOUT = [
+            [
+                { key: '0', label: '0' }, { key: '1', label: '1' }, { key: '2', label: '2' }, { key: '3', label: '3' },
+                { key: '4', label: '4' }, { key: '5', label: '5' }, { key: '6', label: '6' }, { key: '7', label: '7' },
+                { key: '8', label: '8' }, { key: '9', label: '9' }, { key: 'ö', label: 'ö' }, { key: 'ü', label: 'ü' },
+                { key: 'ó', label: 'ó' }, { key: 'backspace', label: '⌫ Backspace', width: 'w-20 sm:w-24 h-10 sm:h-12' }
+            ],
+            [
+                { key: 'q', label: 'Q' }, { key: 'w', label: 'W' }, { key: 'e', label: 'E' }, { key: 'r', label: 'R' },
+                { key: 't', label: 'T' }, { key: 'z', label: 'Z' }, { key: 'u', label: 'U' }, { key: 'i', label: 'I' },
+                { key: 'o', label: 'O' }, { key: 'p', label: 'P' }, { key: 'ő', label: 'ő' }, { key: 'ú', label: 'ú' },
+                { key: 'enter', label: '↵ Enter', width: 'w-20 sm:w-24 h-10 sm:h-12' }
+            ],
+            [
+                { key: 'a', label: 'A' }, { key: 's', label: 'S' }, { key: 'd', label: 'D' }, { key: 'f', label: 'F' },
+                { key: 'g', label: 'G' }, { key: 'h', label: 'H' }, { key: 'j', label: 'J' }, { key: 'k', label: 'K' },
+                { key: 'l', label: 'L' }, { key: 'é', label: 'É' }, { key: 'á', label: 'Á' }, { key: 'ű', label: 'Ű' }
+            ],
+            [
+                { key: 'í', label: 'Í' }, { key: 'y', label: 'Y' }, { key: 'x', label: 'X' }, { key: 'c', label: 'C' },
+                { key: 'v', label: 'V' }, { key: 'b', label: 'B' }, { key: 'n', label: 'N' }, { key: 'm', label: 'M' },
+                { key: ',', label: ',' }, { key: '.', label: '.' }, { key: '-', label: '-' }
+            ],
+            [
+                { key: ' ', label: 'Space', width: 'w-64 sm:w-80 h-10 sm:h-12' }
+            ]
+        ];
+
+        const KEY_FINGERS = {
+            '1': '0', 'q': '0', 'a': '0', 'y': '0', 'í': '0',
+            '2': '1', 'w': '1', 's': '1', 'x': '1',
+            '3': '2', 'e': '2', 'd': '2', 'c': '2',
+            '4': '3', 'r': '3', 'f': '3', 'v': '3', '5': '3', 't': '3', 'g': '3', 'b': '3',
+            '6': '4', 'z': '4', 'h': '4', 'n': '4', '7': '4', 'u': '4', 'j': '4', 'm': '4',
+            '8': '5', 'i': '5', 'k': '5', ',': '5',
+            '9': '6', 'o': '6', 'l': '6', '.': '6',
+            '0': '7', 'p': '7', 'é': '7', '-': '7', 'ö': '7', 'ü': '7', 'ó': '7', 'ő': '7', 'ú': '7', 'á': '7', 'ű': '7',
+            ' ': 'thumb'
+        };
+
+        const FINGER_MAP = {
+            '0': { name: 'Bal kisujj', class: 'finger-0' },
+            '1': { name: 'Bal gyűrűsujj', class: 'finger-1' },
+            '2': { name: 'Bal középső ujj', class: 'finger-2' },
+            '3': { name: 'Bal mutatóujj', class: 'finger-3' },
+            '4': { name: 'Jobb mutatóujj', class: 'finger-4' },
+            '5': { name: 'Jobb középső ujj', class: 'finger-5' },
+            '6': { name: 'Jobb gyűrűsujj', class: 'finger-6' },
+            '7': { name: 'Jobb kisujj', class: 'finger-7' },
+            'thumb': { name: 'Hüvelykujj', class: 'finger-thumb' }
+        };
+
+        const KEY_NAMES_HU = { ' ': 'Szóköz', 'backspace': 'Backspace', 'enter': 'Enter', 'tab': 'Tab', 'shift': 'Shift' };
+
+        // Global Theme Definitions (25 Themes)
         const THEMES = [
             { id: 'serika_dark', name: 'Serika Dark', bg: '#323437', main: '#e2b714', text: '#d1d0c5' },
             { id: 'cyberpunk', name: 'Cyberpunk', bg: '#181425', main: '#fee440', text: '#2de2e6' },
@@ -843,170 +698,134 @@
             { id: 'vaporwave', name: 'Vaporwave', bg: '#1a0826', main: '#ff71ce', text: '#05ffa1' },
             { id: 'paper', name: 'Paper', bg: '#f7f7f7', main: '#444444', text: '#222222' },
             { id: 'monokai', name: 'Monokai', bg: '#272822', main: '#a6e22e', text: '#f8f8f2' },
-            { id: 'coffee', name: 'Coffee', bg: '#211d1a', main: '#d19a66', text: '#e6d5c3' }
+            { id: 'coffee', name: 'Coffee', bg: '#211d1a', main: '#d19a66', text: '#e6d5c3' },
+            { id: 'botanical', name: 'Botanical', bg: '#1e2925', main: '#70a98f', text: '#e3ebd8' },
+            { id: 'gruvbox', name: 'Gruvbox', bg: '#282828', main: '#fabd2f', text: '#ebdbb2' },
+            { id: 'tokyo_night', name: 'Tokyo Night', bg: '#1a1b26', main: '#7aa2f7', text: '#a9b1d6' },
+            { id: 'sunset', name: 'Sunset', bg: '#1f1a24', main: '#ff7e5f', text: '#fcd5ce' },
+            { id: 'ocean', name: 'Ocean', bg: '#0f172a', main: '#38bdf8', text: '#e0f2fe' },
+            { id: 'rose_pine', name: 'Rosé Pine', bg: '#191724', main: '#ebbcba', text: '#e0def4' },
+            { id: 'stealth', name: 'Stealth', bg: '#121212', main: '#555555', text: '#aaaaaa' },
+            { id: 'solarized_dark', name: 'Solarized Dark', bg: '#002b36', main: '#b58900', text: '#839496' },
+            { id: 'emerald', name: 'Emerald', bg: '#062319', main: '#10b981', text: '#d1fae5' },
+            { id: 'miami', name: 'Miami Vice', bg: '#240046', main: '#ff007f', text: '#e0aaff' },
+            { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#f3e8ff' },
+            { id: 'cheesecake', name: 'Cheesecake', bg: '#fdf6e3', main: '#d33682', text: '#657b83' },
+            { id: 'matcha', name: 'Matcha', bg: '#2b332c', main: '#a3be8c', text: '#e5e9f0' },
+            { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
         ];
 
-        const FINGER_MAP = {
-            '0': { name: 'Bal kisujj', class: 'finger-0' },
-            '1': { name: 'Bal gyűrűs', class: 'finger-1' },
-            '2': { name: 'Bal középső', class: 'finger-2' },
-            '3': { name: 'Bal mutató', class: 'finger-3' },
-            '4': { name: 'Jobb mutató', class: 'finger-4' },
-            '5': { name: 'Jobb középső', class: 'finger-5' },
-            '6': { name: 'Jobb gyűrűs', class: 'finger-6' },
-            '7': { name: 'Jobb kisujj', class: 'finger-7' },
-            'thumb': { name: 'Hüvelykujj', class: 'finger-thumb' }
-        };
-
-        const KEY_FINGERS = {
-            '0': '0', '1': '0', 'q': '0', 'a': '0', 'y': '0', 'í': '0', 'shift': '0', 'caps': '0', 'tab': '0',
-            '2': '1', 'w': '1', 's': '1', 'x': '1',
-            '3': '2', 'e': '2', 'd': '2', 'c': '2',
-            '4': '3', '5': '3', 'r': '3', 't': '3', 'f': '3', 'g': '3', 'v': '3', 'b': '3',
-            '6': '4', '7': '4', 'z': '4', 'u': '4', 'h': '4', 'j': '4', 'n': '4', 'm': '4',
-            '8': '5', 'i': '5', 'k': '5', ',': '5',
-            '9': '6', 'o': '6', 'l': '6', '.': '6',
-            'ö': '7', 'ü': '7', 'ó': '7', 'p': '7', 'ő': '7', 'ú': '7', 'é': '7', 'á': '7', 'ű': '7', '-': '7', 'enter': '7', 'backspace': '7', 'shift2': '7',
-            ' ': 'thumb'
-        };
-
-        const KEY_NAMES_HU = {
-            ' ': 'Szóköz',
-            'backspace': 'Törlés',
-            'enter': 'Enter',
-            'shift': 'Shift',
-            'caps': 'Caps Lock',
-            'tab': 'Tab'
-        };
-
-        const KEYS_SEQUENCE = [
-            'f', 'j', ' ', 'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'e', 'i', 'r', 'u', 'v', 'm', 'c', 'o', 'x', '.', 'z', 't', 'b', 'n', 'y', 'p', 'w', 'q', 'á', 'ö', 'ü', 'ó', 'ő', 'ú', 'ű', 'í', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
-        ];
-
-        const KEYBOARD_LAYOUT = [
-            [
-                { key: '0', label: '0' }, { key: '1', label: '1' }, { key: '2', label: '2' }, { key: '3', label: '3' },
-                { key: '4', label: '4' }, { key: '5', label: '5' }, { key: '6', label: '6' }, { key: '7', label: '7' },
-                { key: '8', label: '8' }, { key: '9', label: '9' }, { key: 'ö', label: 'Ö' }, { key: 'ü', label: 'Ü' },
-                { key: 'ó', label: 'Ó' }, { key: 'backspace', label: '⌫ Törlés', width: 'w-16 sm:w-20 h-10 sm:h-12' }
-            ],
-            [
-                { key: 'tab', label: 'Tab ⇥', width: 'w-14 sm:w-16 h-10 sm:h-12' },
-                { key: 'q', label: 'Q' }, { key: 'w', label: 'W' }, { key: 'e', label: 'E' }, { key: 'r', label: 'R' },
-                { key: 't', label: 'T' }, { key: 'z', label: 'Z' }, { key: 'u', label: 'U' }, { key: 'i', label: 'I' },
-                { key: 'o', label: 'O' }, { key: 'p', label: 'P' }, { key: 'ő', label: 'Ő' }, { key: 'ú', label: 'Ú' }
-            ],
-            [
-                { key: 'caps', label: 'Caps ⇪', width: 'w-16 sm:w-20 h-10 sm:h-12' },
-                { key: 'a', label: 'A' }, { key: 's', label: 'S' }, { key: 'd', label: 'D' }, { key: 'f', label: 'F' },
-                { key: 'g', label: 'G' }, { key: 'h', label: 'H' }, { key: 'j', label: 'J' }, { key: 'k', label: 'K' },
-                { key: 'l', label: 'L' }, { key: 'é', label: 'É' }, { key: 'á', label: 'Á' }, { key: 'ű', label: 'Ű' },
-                { key: 'enter', label: 'Enter ↵', width: 'w-16 sm:w-20 h-10 sm:h-12' }
-            ],
-            [
-                { key: 'shift', label: 'Shift ⇧', width: 'w-16 sm:w-20 h-10 sm:h-12' },
-                { key: 'í', label: 'Í' }, { key: 'y', label: 'Y' }, { key: 'x', label: 'X' }, { key: 'c', label: 'C' },
-                { key: 'v', label: 'V' }, { key: 'b', label: 'B' }, { key: 'n', label: 'N' }, { key: 'm', label: 'M' },
-                { key: ',', label: ',' }, { key: '.', label: '.' }, { key: '-', label: '-' },
-                { key: 'shift2', label: 'Shift ⇧', width: 'w-16 sm:w-20 h-10 sm:h-12' }
-            ],
-            [
-                { key: ' ', label: 'Szóköz', width: 'w-64 sm:w-80 h-10 sm:h-12' }
-            ]
-        ];
-
-        const WORDS_HU = [
-            "ház", "fa", "kép", "fás", "láb", "kéz", "só", "fő", "új", "tó",
-            "haj", "hal", "jég", "pék", "rác", "sár", "zár", "gáz", "méz", "fal",
-            "kút", "út", "ágy", "fém", "gép", "óra", "apa", "anya", "kutya", "macska",
-            "fa", "ló", "víz", "tűz", "föld", "szél", "nap", "hold", "csillag", "ajtó",
-            "ablak", "asztal", "szék", "könyv", "toll", "papír", "város", "utca", "ember"
-        ];
+        // VOCABULARY & QUOTE POOLS
+        const WORDS_HU = ["alma", "fa", "ház", "pohár", "asztal", "iskola", "könyv", "ablak", "virág", "számítógép", "magyar", "tanulás", "fejlődés", "szöveg", "munka", "gyakorlás", "oktatás", "billentyűzet", "gépelés", "pontosság", "sebesség", "statisztika", "kihívás", "program", "felület", "rendszer", "siker", "tudás", "tapasztalat", "jövő", "lehetőség", "öröm", "szabadság", "alkotás", "ötlet", "megoldás", "cél", "út", "élet", "világ"];
+        const WORDS_EN = ["apple", "tree", "house", "glass", "table", "school", "book", "window", "flower", "computer", "english", "learning", "growth", "text", "work", "practice", "education", "keyboard", "typing", "accuracy", "speed", "statistics", "challenge", "program", "surface", "system", "success", "knowledge", "experience", "future", "opportunity", "joy", "freedom", "creation", "idea", "solution", "goal", "way", "life", "world"];
 
         const QUOTES_HU = {
             short: [
                 "A türelem rózsát terem.",
-                "Ki korán kel, aranyat lel.",
-                "Lassan járj, tovább érsz.",
-                "Gyakorlat teszi a mestert.",
-                "Sok kicsi sokra megy.",
-                "A tudás hatalom, a gyakorlás a kulcsa."
+                "A gyakorlat teszi a mestert.",
+                "Járt utat a járatlanért el ne hagyj.",
+                "Ki korán kel, aranyat lel."
             ],
             medium: [
-                "Nem az számít, hogy hányszor esel el, hanem az, hogy hányszor kelsz fel újra.",
-                "A vakírás nem csupán gyorsaság, hanem a gondolatok akadálytalan áramlása a képernyőre.",
-                "Az élet olyan, mint a kerékpározás. Egyensúlyban csak akkor maradhatsz, ha mozgásban vagy.",
-                "Minden nagy utazás egyetlen apró lépéssel kezdődik, a siker a kitartás gyümölcse."
+                "Nem az számít, honnan indulsz, hanem az, hogy hová tartasz.",
+                "A sikert nem adják ingyen, meg kell érte dolgozni minden nap.",
+                "A tudás a legértékesebb kincs, amit senki nem vehet el tőled."
             ],
             long: [
-                "A jövő azoké, akik hisznek az álmaik szépségében. Ne add fel, ha az első próbálkozás nem sikerül tökéletesen; a tízujjas vakírás elsajátítása türelmet és rendszeres napi gyakorlást igényel.",
-                "A természet soha nem siet, mégis minden célba ér. A gépelésben is a folyamatos ritmus és a pontos leütés sokkal többet ér, mint a kapkodó gyorsaság."
+                "Az életben a legnagyobb sikereket nem a szerencse hozza meg, hanem a kitartó munka és a folyamatos gyakorlás, amely minden akadályt legyőz.",
+                "Az igazi mester nem az, aki soha nem hibázik, hanem az, aki minden hibájából tanul és még erősebben megy tovább."
             ]
         };
 
-        /* STATE VARIABLES */
-        let currentMode = 'beginner'; // 'beginner', 'advanced', 'sentence'
-        let sentenceSubMode = 'words'; // 'words', 'quotes', 'time'
-        let sentenceWordsCount = 25;   // 10, 25, 50, 100
-        let sentenceQuoteLength = 'medium'; // 'short', 'medium', 'long'
-        let sentenceTimeLimit = 30;    // 15, 30, 60, 120
-        let sentenceTimeRemaining = 30;
+        const QUOTES_EN = {
+            short: [
+                "Practice makes perfect.",
+                "Patience is a virtue.",
+                "Knowledge is power.",
+                "Actions speak louder than words."
+            ],
+            medium: [
+                "It does not matter how slowly you go as long as you do not stop.",
+                "The journey of a thousand miles begins with one single step."
+            ],
+            long: [
+                "Success is not final, failure is not fatal: it is the courage to continue that counts in the long run for everyone.",
+                "Believe you can and you are halfway there to achieving whatever goals you set for yourself."
+            ]
+        };
 
-        let currentModuleIndex = 0;
-        let highestUnlockedModule = 0;
-        let targetHits = 60;
-        let totalHits = 0;
-        let totalErrors = 0;
-        let charIndex = 0;
-        let currentText = "";
-        let charErrors = {};
-        let activeTheme = 'serika_dark';
-        let elapsedTime = 0;
-        let timerInterval = null;
-        let isTestStarted = false;
-        let startTime = null;
-        let keyErrorCounts = {};
-        let speedSnapshots = [];
-        let textLengthSetting = 25;
+        const SENTENCES_HU_POOL = [
+            "A mai modern világban a hatékony információfeldolgozás elengedhetetlen feltétele a magabiztos digitális tudásnak.",
+            "A természet csendje és a friss erdei levegő mindig megnyugvást hoz a rohanó hétköznapokban.",
+            "Az elkötelezett gyakorlás és az odafigyelés az alapja minden magas szintű készség elsajátításának.",
+            "A technológiai fejlődés gyors üteme folyamatos alkalmazkodást és tanulást kíván meg mindannyiunktól.",
+            "Egy jó könyv olvasása közben teljesen új világok nyílnak meg a képzeletünk előtt.",
+            "A sikeres együttműködés kulcsa az őszinte kommunikáció és a kölcsönös tisztelet.",
+            "Minden nehézség egyben lehetőség is arra, hogy erősebbé és tapasztaltabbá váljunk.",
+            "A zene egy olyan egyetemes nyelv, amely határok nélkül képes megérinteni az emberi lelket.",
+            "A tudatos időbeosztás segít egyensúlyt teremteni a munka és a magánélet között.",
+            "A kitartó munka és a türelem idővel mindig meghozza a várt eredményeket.",
+            "A friss reggeli kávé illata sokak számára a nap legkellemesebb pillanatait jelenti.",
+            "Az új kihívások elfogadása lépésről lépésre tágítja a személyes határokat és növeli az önbizalmat.",
+            "A tudomány és a művészet találkozása elképesztő kreatív energiákat képes felszabadítani.",
+            "A helyes billentyűkezelés és a ritmus megtartása nagymértékben növeli a gépelési sebességet.",
+            "A környezettudatos életmód apró, de határozott lépésekkel kezdődik a mindennapokban.",
+            "Az emberi kapcsolatok minősége határozza meg leginkább a tartós boldogságot és elégedettséget.",
+            "A digitális korban az információk kritikus szűrése és értelmezése alapvető készséggé vált.",
+            "Egy kedves gesztus vagy egy elismerő mosoly teljesen megváltoztathatja valaki napját.",
+            "Az ihlet gyakran a legváratlanabb pillanatokban érkezik, amikor a legkevésbé számítunk rá.",
+            "A folytonos kíváncsiság és a nyitottság tartja szellemileg frissen és fiatalosan az embert."
+        ];
+
+        const SENTENCES_EN_POOL = [
+            "In today's fast-paced digital world, effective communication is essential for success.",
+            "Taking a quiet walk in nature can restore focus and bring peace to a busy mind.",
+            "Consistent practice and dedicated effort are the primary keys to mastering any new skill.",
+            "Technology continues to evolve rapidly, creating exciting new opportunities for global collaboration.",
+            "Reading a good book opens up fascinating new perspectives and expands our imagination.",
+            "Clear communication and mutual respect build the foundation for strong and lasting relationships.",
+            "Every challenge we face provides a valuable opportunity for personal growth and learning.",
+            "Music is a universal language that transcends cultural boundaries and connects people together.",
+            "Managing time thoughtfully helps maintain a healthy balance between work and personal life.",
+            "Patience and perseverance will always lead to meaningful progress over time.",
+            "The welcoming aroma of fresh morning coffee sets a pleasant tone for the rest of the day.",
+            "Embracing new experiences helps build confidence and widens our horizon step by step.",
+            "The intersection of art and science unleashes remarkable creativity and innovation.",
+            "Proper finger position and smooth rhythm significantly increase overall typing speed.",
+            "Sustainable living begins with small conscious choices integrated into our daily routine."
+        ];
+
+        function getRandomSentenceFromPool() {
+            const pool = currentLanguage === 'en' ? SENTENCES_EN_POOL : SENTENCES_HU_POOL;
+            let available = pool.map((s, idx) => idx).filter(idx => !sentenceHistoryIndexes.includes(idx));
+            if (available.length === 0) {
+                sentenceHistoryIndexes = [];
+                available = pool.map((s, idx) => idx);
+            }
+            const randomIndex = available[Math.floor(Math.random() * available.length)];
+            sentenceHistoryIndexes.push(randomIndex);
+            if (sentenceHistoryIndexes.length > Math.floor(pool.length / 2)) {
+                sentenceHistoryIndexes.shift();
+            }
+            return pool[randomIndex];
+        }
 
         function init() {
-            loadProgress();
-            renderThemesGrid();
+            highestUnlockedModule = parseInt(localStorage.getItem('chilltyper_highest_level') || '0', 10);
+            currentModuleIndex = highestUnlockedModule;
+            activeTheme = localStorage.getItem('chilltyper_theme') || 'serika_dark';
+            currentFontSize = localStorage.getItem('chilltyper_fontsize') || 'medium';
+            currentLanguage = localStorage.getItem('chilltyper_lang') || 'hu';
+
+            setTheme(activeTheme);
+            setFontSize(currentFontSize, false);
+            updateLanguageUI();
             updateModeUI();
+
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+
             startNewGame(true);
-
-            window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('keyup', handleKeyUp);
-        }
-
-        function loadProgress() {
-            const savedTheme = localStorage.getItem('chilltyper_theme');
-            if (savedTheme) {
-                setTheme(savedTheme);
-            } else {
-                setTheme('serika_dark');
-            }
-            const savedLevel = localStorage.getItem('chilltyper_highest_level');
-            if (savedLevel !== null) {
-                highestUnlockedModule = parseInt(savedLevel, 10) || 0;
-            }
-        }
-
-        function setTheme(themeId) {
-            activeTheme = themeId;
-            document.body.setAttribute('data-theme', themeId);
-            localStorage.setItem('chilltyper_theme', themeId);
-            renderThemesGrid();
-            if (window.syncDataToCloud) window.syncDataToCloud();
-        }
-
-        function openThemeModal() {
-            renderThemesGrid();
-            document.getElementById('modal-theme').classList.remove('hidden');
-        }
-
-        function closeThemeModal() {
-            document.getElementById('modal-theme').classList.add('hidden');
         }
 
         function renderThemesGrid() {
@@ -1014,62 +833,281 @@
             if (!grid) return;
             grid.innerHTML = "";
             THEMES.forEach(t => {
-                const card = document.createElement('button');
-                const isActive = t.id === activeTheme;
-                card.className = `p-3 rounded-2xl border flex flex-col gap-2 text-left transition hover:scale-105 ${isActive ? 'border-[var(--main-color)] ring-2 ring-[var(--main-color)]/50' : 'border-[var(--sub-color)]/20 hover:border-[var(--sub-color)]/50'}`;
-                card.style.backgroundColor = t.bg;
-                card.onclick = () => setTheme(t.id);
-
-                card.innerHTML = `
+                const isActive = activeTheme === t.id;
+                const btn = document.createElement('button');
+                btn.onclick = () => setTheme(t.id);
+                btn.className = `p-3.5 rounded-2xl border text-left transition flex flex-col justify-between gap-2.5 hover:scale-[1.03] ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] shadow-md ring-2 ring-[var(--main-color)]/50' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)]/60 hover:border-[var(--sub-color)]/50'}`;
+                
+                btn.innerHTML = `
                     <div class="flex items-center justify-between w-full">
-                        <span class="text-xs font-bold" style="color: ${t.text}">${t.name}</span>
-                        ${isActive ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-[var(--main-color)] text-[var(--bg-color)] font-extrabold">Aktív</span>' : ''}
+                        <span class="text-xs font-bold text-[var(--text-color)]">${t.name}</span>
+                        ${isActive ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>' : ''}
                     </div>
-                    <div class="flex items-center gap-1.5 mt-1">
-                        <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${t.bg}"></div>
-                        <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${t.main}"></div>
-                        <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${t.text}"></div>
+                    <div class="flex items-center gap-1.5 w-full mt-1">
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.bg};" title="Háttérszín"></div>
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.main};" title="Kiemelő szín"></div>
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.text};" title="Szövegszín"></div>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(btn);
             });
         }
 
-        function getKeyElement(key) {
-            if (!key) return null;
-            const k = key.toLowerCase();
-            const keyId = k === ' ' ? 'key-space' : `key-${k}`;
-            return document.getElementById(keyId);
-        }
-
-        function handleKeyUp(e) {
-            const keyEl = getKeyElement(e.key);
-            if (keyEl) {
-                keyEl.classList.remove('key-pressed');
+        function setFontSize(size, triggerReRender = true) {
+            currentFontSize = size;
+            document.body.setAttribute('data-font-size', size);
+            localStorage.setItem('chilltyper_fontsize', size);
+            updateFontSizeUI();
+            if (triggerReRender) {
+                renderFloatingText();
             }
         }
 
-        function setTextLength(length) {
-            textLengthSetting = length;
+        function updateFontSizeUI() {
+            ['small', 'medium', 'large', 'xlarge'].forEach(s => {
+                const btn = document.getElementById(`fontsize-opt-${s}`);
+                if (!btn) return;
+                if (s === currentFontSize) {
+                    btn.className = "p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] shadow-md ring-2 ring-[var(--main-color)]/40";
+                } else {
+                    btn.className = "p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] opacity-80 hover:opacity-100";
+                }
+            });
+        }
+
+        function switchSettingsTab(tab) {
+            const tabs = ['theme', 'font', 'lang', 'reset'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`set-tab-${t}`);
+                const content = document.getElementById(`set-content-${t}`);
+                if (t === tab) {
+                    if (btn) btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
+                    if (content) content.classList.remove('hidden');
+                } else {
+                    if (btn) btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
+                    if (content) content.classList.add('hidden');
+                }
+            });
+        }
+
+        function renderFloatingText() {
+            const display = document.getElementById('text-display');
+            if (!display) return;
+            display.innerHTML = "";
+
+            const words = currentText.split(' ');
+            let globalCharIdx = 0;
+            let activeCharSpan = null;
+
+            words.forEach((wordStr, wordIdx) => {
+                const wordSpan = document.createElement('span');
+                // Zero extra horizontal padding to keep stable geometry without layout shifts
+                wordSpan.className = "inline-flex flex-nowrap whitespace-nowrap mx-1.5 my-0.5 items-center";
+
+                for (let i = 0; i < wordStr.length; i++) {
+                    const char = wordStr[i];
+                    const charSpan = document.createElement('span');
+                    const charPos = globalCharIdx;
+
+                    if (charPos < charIndex) {
+                        if (charErrors[charPos]) {
+                            charSpan.className = "text-rose-400 font-bold underline decoration-rose-500 decoration-2";
+                        } else {
+                            charSpan.className = "text-[var(--text-color)] font-medium";
+                        }
+                    } else if (charPos === charIndex) {
+                        charSpan.className = "caret-active font-extrabold";
+                        activeCharSpan = charSpan;
+                    } else {
+                        charSpan.className = "text-[var(--sub-color)] opacity-60 font-normal";
+                    }
+
+                    charSpan.textContent = char;
+                    wordSpan.appendChild(charSpan);
+                    globalCharIdx++;
+                }
+
+                if (wordIdx < words.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    const spacePos = globalCharIdx;
+
+                    if (spacePos < charIndex) {
+                        spaceSpan.className = "text-[var(--text-color)] font-medium";
+                    } else if (spacePos === charIndex) {
+                        spaceSpan.className = "caret-active font-extrabold";
+                        activeCharSpan = spaceSpan;
+                    } else {
+                        spaceSpan.className = "text-[var(--sub-color)] opacity-60 font-normal";
+                    }
+
+                    // Use non-collapsing non-breaking space for smooth rendering
+                    spaceSpan.textContent = "\u00A0";
+                    wordSpan.appendChild(spaceSpan);
+                    globalCharIdx++;
+                }
+
+                display.appendChild(wordSpan);
+            });
+
+            updateTextDisplayShift(activeCharSpan);
+        }
+
+        function updateTextDisplayShift(activeCharSpan) {
+            const display = document.getElementById('text-display');
+            if (!display) return;
+
+            if (!activeCharSpan || charIndex === 0) {
+                display.style.transform = 'translateY(0px)';
+                return;
+            }
+
+            const activeTop = activeCharSpan.offsetTop;
+            const computedStyle = window.getComputedStyle(display);
+            const lineHeight = parseFloat(computedStyle.lineHeight) || 48;
+
+            const currentLine = Math.floor((activeTop + 5) / lineHeight);
+
+            // Smooth 3-line window scrolling without abrupt jumps
+            if (currentLine >= 2) {
+                const translateY = (currentLine - 1) * lineHeight;
+                display.style.transform = `translateY(-${translateY}px)`;
+            } else {
+                display.style.transform = 'translateY(0px)';
+            }
+        }
+
+        function getKeyElement(keyChar) {
+            if (!keyChar) return null;
+            const k = keyChar.toLowerCase();
+            if (k === ' ') return document.getElementById('key-space');
+            return document.getElementById(`key-${k}`);
+        }
+
+        function updateRemainingHitsDisplay() {
+            const remEl = document.getElementById('remaining-hits');
+            if (remEl) {
+                const remaining = Math.max(0, targetHits - totalHits);
+                remEl.textContent = `${remaining} / ${targetHits}`;
+            }
+        }
+
+        function updateLiveStatsUI() {
+            const elapsed = Math.max(1, elapsedTime);
+            const wpm = Math.round((totalHits / 5) / (elapsed / 60));
+            const cpm = Math.round(totalHits / (elapsed / 60));
+            const totalAttempted = totalHits + totalErrors;
+            const accuracy = totalAttempted > 0 ? Math.round((totalHits / totalAttempted) * 100) : 100;
+
+            const timerEl = document.getElementById('live-timer');
+            const wpmEl = document.getElementById('live-wpm');
+            const cpmEl = document.getElementById('live-cpm');
+            const accEl = document.getElementById('live-accuracy');
+
+            if (timerEl) timerEl.textContent = `${elapsed}s`;
+            if (wpmEl) wpmEl.textContent = wpm || 0;
+            if (cpmEl) cpmEl.textContent = cpm || 0;
+            if (accEl) accEl.textContent = `${accuracy}%`;
+        }
+
+        function startTimer() {
+            if (isTestStarted) return;
+            isTestStarted = true;
+            startTime = Date.now();
+            elapsedTime = 0;
+            timerInterval = setInterval(() => {
+                elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+                if (currentMode === 'sentence' && sentenceSubMode === 'time') {
+                    sentenceTimeRemaining = sentenceTimeLimit - elapsedTime;
+                    if (sentenceTimeRemaining <= 0) {
+                        stopTimer();
+                        finishAdvancedTest();
+                        return;
+                    }
+                    const timerEl = document.getElementById('live-timer');
+                    if (timerEl) timerEl.textContent = `${sentenceTimeRemaining}s`;
+                } else {
+                    updateLiveStatsUI();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            isTestStarted = false;
+        }
+
+        function finishAdvancedTest() {
+            const elapsed = Math.max(1, elapsedTime);
+            const netWpm = Math.round((totalHits / 5) / (elapsed / 60));
+            const rawWpm = Math.round(((totalHits + totalErrors) / 5) / (elapsed / 60));
+            const cpm = Math.round(totalHits / (elapsed / 60));
+            const rawCpm = Math.round((totalHits + totalErrors) / (elapsed / 60));
+            const totalAttempted = totalHits + totalErrors;
+            const accuracy = totalAttempted > 0 ? Math.round((totalHits / totalAttempted) * 100) : 100;
+
+            document.getElementById('adv-stat-wpm').textContent = netWpm || 0;
+            document.getElementById('adv-stat-raw-wpm').textContent = `Nyers: ${rawWpm || 0}`;
+            document.getElementById('adv-stat-cpm').textContent = cpm || 0;
+            document.getElementById('adv-stat-raw-cpm').textContent = `Nyers: ${rawCpm || 0}`;
+            document.getElementById('adv-stat-acc').textContent = `${accuracy}%`;
+            document.getElementById('adv-stat-acc-detail').textContent = `${totalHits}/${totalAttempted} helyes`;
+            document.getElementById('adv-stat-consistency').textContent = `${Math.min(100, Math.max(70, accuracy - 4))}%`;
+
+            const missedContainer = document.getElementById('adv-stat-missed-keys');
+            if (missedContainer) {
+                missedContainer.innerHTML = "";
+                const sortedMissed = Object.entries(keyErrorCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+                if (sortedMissed.length === 0) {
+                    missedContainer.innerHTML = `<span class="text-xs text-emerald-400 font-bold">Hibátlan teljesítmény! 🎉</span>`;
+                } else {
+                    sortedMissed.forEach(([key, count]) => {
+                        const badge = document.createElement('span');
+                        badge.className = "px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono text-xs font-bold";
+                        const displayKey = KEY_NAMES_HU[key] || key.toUpperCase();
+                        badge.textContent = `${displayKey}: ${count}x`;
+                        missedContainer.appendChild(badge);
+                    });
+                }
+            }
+
+            // Save records
+            const bestWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
+            if (netWpm > bestWpm) {
+                localStorage.setItem('chilltyper_best_wpm', netWpm);
+            }
+            const totalTests = parseInt(localStorage.getItem('chilltyper_total_tests') || '0', 10);
+            localStorage.setItem('chilltyper_total_tests', totalTests + 1);
+
+            document.getElementById('modal-advanced-stats').classList.remove('hidden');
+        }
+
+        function closeAdvancedStatsModal() {
+            document.getElementById('modal-advanced-stats').classList.add('hidden');
+        }
+
+        function setTextLength(len) {
+            textLengthSetting = len;
             updateLengthSelectorUI();
             startNewGame(true);
         }
 
-        function setSentenceSubMode(subMode) {
-            sentenceSubMode = subMode;
-            renderSentenceSubOptions();
-            updateModeUI();
-            startNewGame(true);
+        function updateLengthSelectorUI() {
+            [10, 25, 50, 100].forEach(l => {
+                const btn = document.getElementById(`len-opt-${l}`);
+                if (!btn) return;
+                if (l === textLengthSetting) {
+                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--bg-color)] bg-[var(--main-color)] shadow";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--sub-color)] hover:text-[var(--text-color)]";
+                }
+            });
         }
 
-        function setSentenceOption(value) {
-            if (sentenceSubMode === 'words') {
-                sentenceWordsCount = value;
-            } else if (sentenceSubMode === 'quotes') {
-                sentenceQuoteLength = value;
-            } else if (sentenceSubMode === 'time') {
-                sentenceTimeLimit = value;
-            }
+        function setSentenceSubMode(subMode) {
+            sentenceSubMode = subMode;
             renderSentenceSubOptions();
             startNewGame(true);
         }
@@ -1079,11 +1117,10 @@
             if (!container) return;
             container.innerHTML = "";
 
-            ['sent-sub-words', 'sent-sub-quotes', 'sent-sub-time'].forEach(id => {
-                const btn = document.getElementById(id);
+            ['words', 'quotes', 'time'].forEach(sm => {
+                const btn = document.getElementById(`sent-sub-${sm}`);
                 if (btn) {
-                    const modeMap = { 'sent-sub-words': 'words', 'sent-sub-quotes': 'quotes', 'sent-sub-time': 'time' };
-                    if (modeMap[id] === sentenceSubMode) {
+                    if (sm === sentenceSubMode) {
                         btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
                     } else {
                         btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
@@ -1092,78 +1129,145 @@
             });
 
             if (sentenceSubMode === 'words') {
-                const opts = [10, 25, 50, 100];
-                opts.forEach(val => {
-                    const btn = document.createElement('button');
-                    const isActive = sentenceWordsCount === val;
-                    btn.className = `px-3 py-1 rounded-lg text-xs font-bold transition ${isActive ? 'text-[var(--bg-color)] bg-[var(--main-color)] shadow' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
-                    btn.textContent = `${val} szó`;
-                    btn.onclick = () => setSentenceOption(val);
-                    container.appendChild(btn);
+                [10, 25, 50, 100].forEach(cnt => {
+                    const b = document.createElement('button');
+                    b.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition ${sentenceWordsCount === cnt ? 'text-[var(--main-color)] underline font-black' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
+                    b.textContent = cnt;
+                    b.onclick = () => { sentenceWordsCount = cnt; renderSentenceSubOptions(); startNewGame(true); };
+                    container.appendChild(b);
                 });
             } else if (sentenceSubMode === 'quotes') {
-                const opts = [
-                    { id: 'short', label: '🐣 Rövid' },
-                    { id: 'medium', label: '🐥 Közepes' },
-                    { id: 'long', label: '🦅 Hosszú' }
-                ];
-                opts.forEach(opt => {
-                    const btn = document.createElement('button');
-                    const isActive = sentenceQuoteLength === opt.id;
-                    btn.className = `px-3 py-1 rounded-lg text-xs font-bold transition ${isActive ? 'text-[var(--bg-color)] bg-[var(--main-color)] shadow' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
-                    btn.textContent = opt.label;
-                    btn.onclick = () => setSentenceOption(opt.id);
-                    container.appendChild(btn);
+                [
+                    { id: 'short', label: 'Rövid' },
+                    { id: 'medium', label: 'Közepes' },
+                    { id: 'long', label: 'Hosszú' }
+                ].forEach(q => {
+                    const b = document.createElement('button');
+                    b.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition ${sentenceQuoteLength === q.id ? 'text-[var(--main-color)] underline font-black' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
+                    b.textContent = q.label;
+                    b.onclick = () => { sentenceQuoteLength = q.id; renderSentenceSubOptions(); startNewGame(true); };
+                    container.appendChild(b);
                 });
             } else if (sentenceSubMode === 'time') {
-                const opts = [15, 30, 60, 120];
-                opts.forEach(val => {
-                    const btn = document.createElement('button');
-                    const isActive = sentenceTimeLimit === val;
-                    btn.className = `px-3 py-1 rounded-lg text-xs font-bold transition ${isActive ? 'text-[var(--bg-color)] bg-[var(--main-color)] shadow' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
-                    btn.textContent = `${val}s`;
-                    btn.onclick = () => setSentenceOption(val);
-                    container.appendChild(btn);
+                [15, 30, 60, 120].forEach(t => {
+                    const b = document.createElement('button');
+                    b.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition ${sentenceTimeLimit === t ? 'text-[var(--main-color)] underline font-black' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
+                    b.textContent = `${t}s`;
+                    b.onclick = () => { sentenceTimeLimit = t; renderSentenceSubOptions(); startNewGame(true); };
+                    container.appendChild(b);
                 });
             }
         }
 
-        function updateLengthSelectorUI() {
-            const options = [10, 25, 50, 100];
-            options.forEach(opt => {
-                const btn = document.getElementById(`len-opt-${opt}`);
-                if (!btn) return;
-                if (opt === textLengthSetting) {
-                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                } else {
-                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--sub-color)] hover:text-[var(--text-color)]";
-                }
-            });
-
-            const labelEl = document.getElementById('length-unit-label');
-            if (labelEl) {
-                labelEl.textContent = "szó";
+        function handleKeyUp(e) {
+            const keyEl = getKeyElement(e.key);
+            if (keyEl) {
+                keyEl.classList.remove('key-pressed');
             }
+        }
+
+        function setTheme(themeId) {
+            activeTheme = themeId;
+            document.body.setAttribute('data-theme', themeId);
+            localStorage.setItem('chilltyper_theme', themeId);
+            renderThemesGrid();
+        }
+
+        function openSettingsModal() {
+            renderThemesGrid();
+            updateFontSizeUI();
+            updateLanguageUI();
+            switchSettingsTab('theme');
+            document.getElementById('modal-settings').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('modal-settings').classList.add('hidden');
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('chilltyper_lang', lang);
+            updateLanguageUI();
+            startNewGame(true);
+        }
+
+        function updateLanguageUI() {
+            const optHu = document.getElementById('lang-opt-hu');
+            const optEn = document.getElementById('lang-opt-en');
+            const checkHu = document.getElementById('lang-check-hu');
+            const checkEn = document.getElementById('lang-check-en');
+
+            if (!optHu || !optEn) return;
+
+            if (currentLanguage === 'en') {
+                optEn.className = "p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
+                optHu.className = "p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
+                if (checkEn) { checkEn.classList.remove('hidden'); checkEn.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]"; }
+                if (checkHu) checkHu.classList.add('hidden');
+            } else {
+                optHu.className = "p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
+                optEn.className = "p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
+                if (checkHu) { checkHu.classList.remove('hidden'); checkHu.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]"; }
+                if (checkEn) checkEn.classList.add('hidden');
+            }
+        }
+
+        function requestResetConfirmation() {
+            document.getElementById('modal-reset-confirm').classList.remove('hidden');
+        }
+
+        function closeResetConfirmation() {
+            document.getElementById('modal-reset-confirm').classList.add('hidden');
+        }
+
+        function executeFullReset() {
+            localStorage.clear();
+            highestUnlockedModule = 0;
+            currentModuleIndex = 0;
+            currentLanguage = 'hu';
+            setTheme('serika_dark');
+            setFontSize('medium', false);
+
+            closeResetConfirmation();
+            closeSettingsModal();
+            updateModeUI();
+            startNewGame(true);
+        }
+
+        function openStatsModal() {
+            document.getElementById('stat-local-level').textContent = (highestUnlockedModule || 0) + 1;
+            document.getElementById('stat-local-wpm').textContent = localStorage.getItem('chilltyper_best_wpm') || '0';
+            document.getElementById('stat-local-tests').textContent = localStorage.getItem('chilltyper_total_tests') || '0';
+            document.getElementById('modal-stats').classList.remove('hidden');
+        }
+
+        function closeStatsModal() {
+            document.getElementById('modal-stats').classList.add('hidden');
         }
 
         function generateSentenceText() {
+            const wordList = currentLanguage === 'en' ? WORDS_EN : WORDS_HU;
+            const quoteMap = currentLanguage === 'en' ? QUOTES_EN : QUOTES_HU;
+
             if (sentenceSubMode === 'words') {
                 let words = [];
                 for (let i = 0; i < sentenceWordsCount; i++) {
-                    words.push(WORDS_HU[Math.floor(Math.random() * WORDS_HU.length)]);
+                    words.push(wordList[Math.floor(Math.random() * wordList.length)]);
                 }
                 return words.join(' ');
             } else if (sentenceSubMode === 'quotes') {
-                const quotesList = QUOTES_HU[sentenceQuoteLength] || QUOTES_HU.medium;
+                const quotesList = quoteMap[sentenceQuoteLength] || quoteMap.medium;
                 return quotesList[Math.floor(Math.random() * quotesList.length)];
             } else if (sentenceSubMode === 'time') {
-                let words = [];
-                for (let i = 0; i < 80; i++) {
-                    words.push(WORDS_HU[Math.floor(Math.random() * WORDS_HU.length)]);
+                let sentences = [];
+                sentenceHistoryIndexes = [];
+                for (let i = 0; i < 5; i++) {
+                    sentences.push(getRandomSentenceFromPool());
                 }
-                return words.join(' ');
+                return sentences.join(' ');
             }
-            return "A gyors barna róka átugorja a lusta kutyát.";
+            return currentLanguage === 'en' ? "The quick brown fox jumps over the lazy dog." : "A gyors barna róka átugorja a lusta kutyát.";
         }
 
         function startNewGame(resetProgress = true) {
@@ -1179,7 +1283,6 @@
                 totalHits = 0;
                 totalErrors = 0;
                 keyErrorCounts = {};
-                speedSnapshots = [];
                 elapsedTime = 0;
                 sentenceTimeRemaining = sentenceTimeLimit;
                 updateRemainingHitsDisplay();
@@ -1190,12 +1293,14 @@
                 currentText = generateSentenceText();
             } else if (currentMode === 'advanced') {
                 let words = [];
+                const wordList = currentLanguage === 'en' ? WORDS_EN : WORDS_HU;
                 for (let i = 0; i < textLengthSetting; i++) {
-                    words.push(WORDS_HU[Math.floor(Math.random() * WORDS_HU.length)]);
+                    words.push(wordList[Math.floor(Math.random() * wordList.length)]);
                 }
                 currentText = words.join(' ');
             } else {
-                const available = KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 3)).filter(k => k !== ' ');
+                // Level 1 (currentModuleIndex 0) uses 2 keys ('f', 'j'), each level adds +1 key
+                const available = KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)).filter(k => k !== ' ');
                 let words = [];
                 for (let i = 0; i < textLengthSetting; i++) {
                     let w = "";
@@ -1210,188 +1315,21 @@
             highlightTargetKey();
         }
 
-        function formatTime(seconds) {
-            if (seconds < 60) return `${seconds}s`;
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}p ${secs < 10 ? '0' : ''}${secs}s`;
-        }
-
-        function startTimer() {
-            if (isTestStarted) return;
-            isTestStarted = true;
-            startTime = Date.now();
-
-            if (currentMode === 'sentence' && sentenceSubMode === 'time') {
-                sentenceTimeRemaining = sentenceTimeLimit;
-                timerInterval = setInterval(() => {
-                    sentenceTimeRemaining--;
-                    const elapsedSec = sentenceTimeLimit - sentenceTimeRemaining;
-                    elapsedTime = elapsedSec;
-
-                    const liveCPM = Math.round((totalHits / (elapsedSec || 0.1)) * 60) || 0;
-                    speedSnapshots.push(liveCPM);
-                    updateLiveStatsUI();
-
-                    if (sentenceTimeRemaining <= 0) {
-                        stopTimer();
-                        finishAdvancedTest();
-                    }
-                }, 1000);
-            } else {
-                timerInterval = setInterval(() => {
-                    const elapsedSec = Math.floor((Date.now() - startTime) / 1000);
-                    elapsedTime = elapsedSec;
-                    const liveCPM = Math.round((totalHits / (elapsedSec || 0.1)) * 60) || 0;
-                    speedSnapshots.push(liveCPM);
-
-                    updateLiveStatsUI();
-                }, 1000);
-            }
-        }
-
-        function stopTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-        }
-
-        function updateLiveStatsUI() {
-            const timerLabelEl = document.getElementById('timer-label-title');
-            const liveTimerEl = document.getElementById('live-timer');
-
-            if (currentMode === 'sentence' && sentenceSubMode === 'time') {
-                if (timerLabelEl) timerLabelEl.textContent = "⏱️ Hátralévő Idő";
-                if (liveTimerEl) liveTimerEl.textContent = `${Math.max(0, sentenceTimeRemaining)}s`;
-            } else {
-                if (timerLabelEl) timerLabelEl.textContent = "⏱️ Eltelt Idő";
-                const elapsedSec = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
-                if (liveTimerEl) liveTimerEl.textContent = formatTime(elapsedSec);
-            }
-
-            const calcElapsed = startTime ? Math.max(0.1, (Date.now() - startTime) / 1000) : 1;
-            const liveCPM = Math.round((totalHits / calcElapsed) * 60) || 0;
-            const liveWPM = Math.round(liveCPM / 5) || 0;
-            const total = totalHits + totalErrors;
-            const liveAcc = total > 0 ? Math.round((totalHits / total) * 100) : 100;
-
-            document.getElementById('live-cpm').textContent = liveCPM;
-            document.getElementById('live-wpm').textContent = liveWPM;
-            document.getElementById('live-accuracy').textContent = `${liveAcc}%`;
-        }
-
-        function finishAdvancedTest() {
-            const elapsedSec = Math.max(1, (Date.now() - startTime) / 1000);
-            const total = totalHits + totalErrors;
-            const netCPM = Math.round((totalHits / elapsedSec) * 60);
-            const rawCPM = Math.round((total / elapsedSec) * 60);
-            const netWPM = Math.round(netCPM / 5);
-            const rawWPM = Math.round(rawCPM / 5);
-            const accuracy = total > 0 ? Math.round((totalHits / total) * 100) : 100;
-
-            if (window.syncDataToCloud) {
-                window.syncDataToCloud({ wpm: netWPM, completedTest: true });
-            }
-
-            let consistency = 100;
-            if (speedSnapshots.length > 1) {
-                const mean = speedSnapshots.reduce((a, b) => a + b, 0) / speedSnapshots.length;
-                const variance = speedSnapshots.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / speedSnapshots.length;
-                const stdDev = Math.sqrt(variance);
-                consistency = Math.max(0, Math.min(100, Math.round(100 - (stdDev / (mean || 1)) * 50)));
-            }
-
-            const actualElapsedSec = Math.round(elapsedSec);
-            document.getElementById('adv-stat-time-tag').textContent = `⏱️ ${formatTime(actualElapsedSec)} Tesztidő`;
-            document.getElementById('adv-stat-wpm').textContent = netWPM;
-            document.getElementById('adv-stat-raw-wpm').textContent = `Nyers: ${rawWPM}`;
-            document.getElementById('adv-stat-cpm').textContent = netCPM;
-            document.getElementById('adv-stat-raw-cpm').textContent = `Nyers: ${rawCPM}`;
-            document.getElementById('adv-stat-acc').textContent = `${accuracy}%`;
-            document.getElementById('adv-stat-acc-detail').textContent = `${totalHits}/${total} helyes`;
-            document.getElementById('adv-stat-consistency').textContent = `${consistency}%`;
-
-            const missedContainer = document.getElementById('adv-stat-missed-keys');
-            missedContainer.innerHTML = "";
-            const sortedMissed = Object.entries(keyErrorCounts).sort((a, b) => b[1] - a[1]);
-
-            if (sortedMissed.length === 0) {
-                missedContainer.innerHTML = `<span class="text-xs text-emerald-400 font-bold">Hibátlan leütéssorozat! Tökéletes! 🎉</span>`;
-            } else {
-                sortedMissed.slice(0, 6).forEach(([char, count]) => {
-                    const tag = document.createElement('span');
-                    tag.className = "px-3 py-1 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 font-bold text-xs flex items-center gap-1.5";
-                    tag.innerHTML = `<span class="text-white uppercase font-black">${KEY_NAMES_HU[char] || char}</span>: ${count}x`;
-                    missedContainer.appendChild(tag);
-                });
-            }
-
-            document.getElementById('modal-advanced-stats').classList.remove('hidden');
-        }
-
-        function closeAdvancedStatsModal() {
-            document.getElementById('modal-advanced-stats').classList.add('hidden');
-        }
-
-        function updateRemainingHitsDisplay() {
-            const el = document.getElementById('remaining-hits');
-            if (el) {
-                const remaining = Math.max(0, targetHits - totalHits);
-                el.textContent = `${remaining} / ${targetHits}`;
-            }
-        }
-
-        function renderFloatingText() {
-            const container = document.getElementById('text-display');
-            container.innerHTML = "";
-
-            let currentWordSpan = document.createElement('span');
-            currentWordSpan.className = "inline-block whitespace-nowrap";
-            container.appendChild(currentWordSpan);
-
-            for (let i = 0; i < currentText.length; i++) {
-                const char = currentText[i];
-                const span = document.createElement('span');
-
-                if (i < charIndex) {
-                    if (charErrors[i]) {
-                        span.className = "text-[var(--error-color)] font-bold bg-[var(--error-color)]/20 px-0.5 rounded";
-                    } else {
-                        span.className = "text-[var(--text-color)] font-bold";
-                    }
-                } else if (i === charIndex) {
-                    if (charErrors[i]) {
-                        span.className = "text-[var(--error-color)] font-black caret-pulse bg-[var(--error-color)]/30 px-0.5 rounded";
-                    } else {
-                        span.className = "text-[var(--main-color)] font-black caret-pulse bg-[var(--sub-color)]/20 px-0.5 rounded";
-                    }
-                } else {
-                    span.className = "text-[var(--sub-color)] opacity-70";
-                }
-
-                if (char === ' ') {
-                    span.innerHTML = "&nbsp;";
-                    currentWordSpan.appendChild(span);
-
-                    currentWordSpan = document.createElement('span');
-                    currentWordSpan.className = "inline-block whitespace-nowrap";
-                    container.appendChild(currentWordSpan);
-                } else {
-                    span.textContent = char;
-                    currentWordSpan.appendChild(span);
-                }
-            }
-        }
-
         function handleKeyDown(e) {
+            // Immediately prevent browser default action for Space key to stop page jumps
+            if (e.key === ' ' || e.code === 'Space') {
+                e.preventDefault();
+            }
+
             const keyEl = getKeyElement(e.key);
             if (keyEl) {
                 keyEl.classList.add('key-pressed');
             }
 
-            if (!document.getElementById('modal-theme').classList.contains('hidden') ||
-                !document.getElementById('modal-lesson').classList.contains('hidden')) return;
+            if (!document.getElementById('modal-settings').classList.contains('hidden') ||
+                !document.getElementById('modal-reset-confirm').classList.contains('hidden') ||
+                !document.getElementById('modal-lesson').classList.contains('hidden') ||
+                !document.getElementById('modal-stats').classList.contains('hidden')) return;
 
             const advStatsModal = document.getElementById('modal-advanced-stats');
             if (!advStatsModal.classList.contains('hidden')) {
@@ -1418,10 +1356,6 @@
                 return;
             }
 
-            if (e.key === ' ') {
-                e.preventDefault();
-            }
-
             if (e.key === 'Backspace') {
                 if (charIndex > 0) {
                     e.preventDefault();
@@ -1443,8 +1377,8 @@
                     totalHits++;
                     charIndex++;
 
-                    if (currentMode === 'sentence' && sentenceSubMode === 'time' && charIndex > currentText.length - 20) {
-                        currentText += " " + generateSentenceText();
+                    if (currentMode === 'sentence' && sentenceSubMode === 'time' && charIndex > currentText.length - 30) {
+                        currentText += " " + getRandomSentenceFromPool();
                     }
 
                     if (currentMode === 'beginner') {
@@ -1518,16 +1452,16 @@
                 if (currentModuleIndex === highestUnlockedModule && highestUnlockedModule < 46) {
                     highestUnlockedModule++;
                     localStorage.setItem('chilltyper_highest_level', highestUnlockedModule);
-                    if (window.syncDataToCloud) window.syncDataToCloud({ completedTest: true });
                 }
 
                 const nextModule = currentModuleIndex + 1;
                 if (nextModule < 47) {
-                    const nextKeyChar = KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, nextModule + 2)] || 'f';
+                    const nextKeyChar = KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, nextModule + 1)] || 'd';
                     const fingerKey = KEY_FINGERS[nextKeyChar] || '3';
                     const fingerInfo = FINGER_MAP[fingerKey] || FINGER_MAP['3'];
 
                     nextKeyContainer.classList.remove('hidden');
+                    document.getElementById('result-nextkey-title').textContent = "Következő feloldott billentyű";
                     document.getElementById('result-nextkey-char').textContent = (KEY_NAMES_HU[nextKeyChar] || nextKeyChar).toUpperCase();
                     document.getElementById('result-nextkey-finger').textContent = fingerInfo.name;
                     msgEl.textContent = "Nyomj Enter-t a következő szint megkezdéséhez!";
@@ -1561,7 +1495,8 @@
             if (!kb) return;
             kb.innerHTML = "";
 
-            const unlockedSet = new Set(KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 3)));
+            // Level 1 unlocks 2 keys (f, j). Each subsequent level unlocks 1 more key.
+            const unlockedSet = new Set(KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)));
             const functionalKeys = ['tab', 'caps', 'shift', 'shift2', 'enter', 'backspace', ' '];
 
             KEYBOARD_LAYOUT.forEach(row => {
@@ -1641,15 +1576,27 @@
                 sentenceToolbar.classList.add('hidden');
 
                 targetHits = 60 + (currentModuleIndex * 15);
-                const newKeyChar = KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, currentModuleIndex + 2)] || 'f';
-                const fingerKey = KEY_FINGERS[newKeyChar] || '3';
-                const fingerInfo = FINGER_MAP[fingerKey] || FINGER_MAP['3'];
 
-                document.getElementById('level-badge').textContent = currentModuleIndex + 1;
-                document.getElementById('level-title').textContent = `${currentModuleIndex + 1}. Szint: Gomb Tanulás`;
-                document.getElementById('level-desc').textContent = `Cél: ${targetHits} helyes leütés (min. 90% pontosság)`;
-                document.getElementById('newkey-char').textContent = (KEY_NAMES_HU[newKeyChar] || newKeyChar).toUpperCase();
-                document.getElementById('newkey-finger').textContent = `(${fingerInfo.name})`;
+                if (currentModuleIndex === 0) {
+                    document.getElementById('level-badge').textContent = 1;
+                    document.getElementById('level-title').textContent = "1. Szint: F, J Billentyűk";
+                    document.getElementById('level-desc').textContent = `Cél: ${targetHits} helyes leütés (min. 90% pontosság)`;
+                    document.getElementById('newkey-badge').querySelector('span').textContent = "Kezdő gombok:";
+                    document.getElementById('newkey-char').textContent = "F, J";
+                    document.getElementById('newkey-finger').textContent = "(Bal és jobb mutató)";
+                } else {
+                    const newKeyChar = KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, currentModuleIndex + 1)] || 'd';
+                    const fingerKey = KEY_FINGERS[newKeyChar] || '3';
+                    const fingerInfo = FINGER_MAP[fingerKey] || FINGER_MAP['3'];
+
+                    document.getElementById('level-badge').textContent = currentModuleIndex + 1;
+                    document.getElementById('level-title').textContent = `${currentModuleIndex + 1}. Szint: ${newKeyChar.toUpperCase()} Gomb Tanulás`;
+                    document.getElementById('level-desc').textContent = `Cél: ${targetHits} helyes leütés (min. 90% pontosság)`;
+                    document.getElementById('newkey-badge').querySelector('span').textContent = "Új gomb:";
+                    document.getElementById('newkey-char').textContent = (KEY_NAMES_HU[newKeyChar] || newKeyChar).toUpperCase();
+                    document.getElementById('newkey-finger').textContent = `(${fingerInfo.name})`;
+                }
+
                 document.getElementById('unlocked-count').textContent = highestUnlockedModule + 1;
                 updateRemainingHitsDisplay();
             }
