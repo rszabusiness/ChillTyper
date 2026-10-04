@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v5.0.1 - Vakírás Oktató</title>
+    <title>ChillTyper v5.2.1 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -101,7 +101,6 @@
             transform: translateY(0px);
         }
 
-        /* Fixed-width caret highlight to prevent character horizontal jumping */
         .caret-active {
             position: relative;
             background-color: rgba(226, 183, 20, 0.18);
@@ -180,7 +179,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.0.1</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.2.1</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -222,8 +221,8 @@
         <span id="length-unit-label" class="text-[11px] text-[var(--main-color)] font-extrabold uppercase tracking-wider">szó</span>
     </div>
 
-    <!-- MONDATOK SUB-MODE TOOLBAR -->
-    <div id="sentence-toolbar" class="w-full max-w-2xl mx-auto bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 rounded-2xl p-2.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bold shadow-lg mb-4 hidden">
+    <!-- MONDATOK SUB-MODE TOOLBAR (With Sudden Death Toggle) -->
+    <div id="sentence-toolbar" class="w-full max-w-3xl mx-auto bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 rounded-2xl p-2.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bold shadow-lg mb-4 hidden">
         <div class="flex items-center gap-1 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
             <button id="sent-sub-words" onclick="setSentenceSubMode('words')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
                 📝 Szavak
@@ -236,8 +235,16 @@
             </button>
         </div>
 
-        <div id="sentence-sub-options" class="flex items-center gap-1.5 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
-            <!-- Dynamic Sub-options -->
+        <div class="flex items-center gap-2">
+            <!-- INSTANT DEATH / SUDDEN DEATH TOGGLE BUTTON -->
+            <button id="sudden-death-btn" onclick="toggleSuddenDeath()" class="px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5 font-bold text-xs" title="Ha melléütsz, azonnal vége a játéknak!">
+                <span>☠️ Instant Halál:</span>
+                <span id="sudden-death-status" class="uppercase font-black text-rose-500">KI</span>
+            </button>
+
+            <div id="sentence-sub-options" class="flex items-center gap-1.5 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
+                <!-- Dynamic Sub-options -->
+            </div>
         </div>
     </div>
 
@@ -341,19 +348,32 @@
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
         <div class="font-mono text-[11px] opacity-75">
-            ChillTyper v5.0.1 • Vakírás
+            ChillTyper v5.2.1 • Vakírás
         </div>
     </footer>
 
     <!-- MODALS -->
-    <!-- SETTINGS MODAL WITH MULTI-LANGUAGE SELECTOR -->
+    <!-- INSTANT DEATH / GAME OVER MODAL -->
+    <div id="modal-sudden-death" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
+        <div class="bg-[var(--sub-alt-color)] border border-rose-500 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
+            <span class="text-5xl animate-bounce">☠️</span>
+            <h3 class="text-2xl font-black text-rose-500">Game Over!</h3>
+            <p class="text-sm font-extrabold text-[var(--text-color)]">Legyél pontosabb!</p>
+            <p class="text-xs text-[var(--sub-color)] leading-relaxed">
+                Az Instant Halál mód be van kapcsolva. Egyetlen elgépelés esetén a teszt azonnal elölről kezdődik.
+            </p>
+            <button onclick="closeSuddenDeathModal(); startNewGame(true);" class="w-full mt-2 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-sm transition shadow-lg flex items-center justify-center gap-2">
+                🔄 Újrapróbálkozás (Enter / Tab)
+            </button>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
     <div id="modal-settings" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto hidden custom-scrollbar">
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">
-                        ⚙️ Beállítások
-                    </h3>
+                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙️ Beállítások</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-1">Téma, betűméret, gyakorló nyelv és adatok kezelése</p>
                 </div>
                 <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">
@@ -362,27 +382,17 @@
             </div>
 
             <div class="flex items-center gap-2 border-b border-[var(--sub-color)]/20 pb-3 flex-wrap">
-                <button id="set-tab-theme" onclick="switchSettingsTab('theme')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
-                    🎨 Téma
-                </button>
-                <button id="set-tab-font" onclick="switchSettingsTab('font')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                    🔠 Betűméret
-                </button>
-                <button id="set-tab-lang" onclick="switchSettingsTab('lang')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                    🌐 Nyelv
-                </button>
-                <button id="set-tab-reset" onclick="switchSettingsTab('reset')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                    🔄 Reset & Adatok
-                </button>
+                <button id="set-tab-theme" onclick="switchSettingsTab('theme')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">🎨 Téma</button>
+                <button id="set-tab-font" onclick="switchSettingsTab('font')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🔠 Betűméret</button>
+                <button id="set-tab-lang" onclick="switchSettingsTab('lang')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🌐 Nyelv</button>
+                <button id="set-tab-reset" onclick="switchSettingsTab('reset')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🔄 Reset & Adatok</button>
             </div>
 
-            <!-- TAB 1 CONTENT: THEMES -->
             <div id="set-content-theme" class="flex flex-col gap-4">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül az azonnali stílusváltáshoz:</p>
                 <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
             </div>
 
-            <!-- TAB 2 CONTENT: FONT SIZE -->
             <div id="set-content-font" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -405,15 +415,11 @@
                 </div>
             </div>
 
-            <!-- TAB 3 CONTENT: EXPANDED MULTI-LANGUAGE SELECTOR -->
             <div id="set-content-lang" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak, mondatok és idézetek nyelvét:</p>
-                <div id="languages-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <!-- Populated dynamically via JS renderLanguagesGrid() -->
-                </div>
+                <div id="languages-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
-            <!-- TAB 4 CONTENT: RESET & DATA -->
             <div id="set-content-reset" class="flex flex-col gap-4 hidden">
                 <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
                     <div class="flex items-center gap-3 text-rose-400">
@@ -436,16 +442,10 @@
         <div class="bg-[var(--sub-alt-color)] border border-rose-500/40 rounded-3xl p-6 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
             <span class="text-4xl">🚨</span>
             <h3 class="text-xl font-extrabold text-rose-400">Biztosan törölni szeretnéd?</h3>
-            <p class="text-xs text-[var(--sub-color)] leading-relaxed">
-                Ezzel a lépéssel törlődnek a feloldott szintek, rekordok és témák. Ez a folyamat nem vonható vissza.
-            </p>
+            <p class="text-xs text-[var(--sub-color)] leading-relaxed">Ezzel a lépéssel törlődnek a feloldott szintek, rekordok és témák. Ez a folyamat nem vonható vissza.</p>
             <div class="flex items-center gap-3 w-full mt-2">
-                <button onclick="closeResetConfirmation()" class="flex-1 py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
-                    Mégse
-                </button>
-                <button onclick="executeFullReset()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition shadow-md">
-                    Igen, Töröld!
-                </button>
+                <button onclick="closeResetConfirmation()" class="flex-1 py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">Mégse</button>
+                <button onclick="executeFullReset()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition shadow-md">Igen, Töröld!</button>
             </div>
         </div>
     </div>
@@ -457,9 +457,7 @@
                 <h3 class="text-lg font-bold text-[var(--text-color)]">📚 Szintek Választása</h3>
                 <button onclick="closeLessonModal()" class="text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold">✕</button>
             </div>
-            <div id="lesson-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 overflow-y-auto custom-scrollbar p-1">
-                <!-- Generated dynamically -->
-            </div>
+            <div id="lesson-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 overflow-y-auto custom-scrollbar p-1"></div>
         </div>
     </div>
 
@@ -488,9 +486,7 @@
         <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-2xl w-full flex flex-col gap-6 shadow-2xl">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-2xl font-black text-[var(--main-color)] flex items-center gap-2">
-                        📊 Teszt Eredmény Elemzés
-                    </h3>
+                    <h3 class="text-2xl font-black text-[var(--main-color)] flex items-center gap-2">📊 Teszt Eredmény Elemzés</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-0.5">Részletes gépelési mutatók</p>
                 </div>
                 <span id="adv-stat-time-tag" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] text-[var(--main-color)] font-bold text-xs border border-[var(--main-color)]/30">
@@ -522,12 +518,8 @@
             </div>
 
             <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-2">
-                <span class="text-xs font-bold text-[var(--text-color)] flex items-center gap-1.5">
-                    🎯 Leggyakrabban hibázott billentyűk:
-                </span>
-                <div id="adv-stat-missed-keys" class="flex flex-wrap gap-2 pt-1">
-                    <!-- Populated dynamically -->
-                </div>
+                <span class="text-xs font-bold text-[var(--text-color)] flex items-center gap-1.5">🎯 Leggyakrabban hibázott billentyűk:</span>
+                <div id="adv-stat-missed-keys" class="flex flex-wrap gap-2 pt-1"></div>
             </div>
 
             <div class="flex items-center gap-3 pt-2">
@@ -543,9 +535,7 @@
         <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col gap-5 shadow-2xl">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">
-                        🏆 Személyes Rekordjaid
-                    </h3>
+                    <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">🏆 Személyes Rekordjaid</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-0.5">Helyi böngészőben elmentett eredmények</p>
                 </div>
                 <button onclick="closeStatsModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
@@ -566,26 +556,25 @@
                 </div>
             </div>
 
-            <button onclick="closeStatsModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">
-                Rendben
-            </button>
+            <button onclick="closeStatsModal()" class="w-full py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">Rendben</button>
         </div>
     </div>
 
     <!-- SCRIPT LOGIC -->
     <script>
-        // GLOBAL STATE VARIABLES
-        let currentMode = 'beginner'; // 'beginner' | 'advanced' | 'sentence'
+        let currentMode = 'beginner'; 
         let currentModuleIndex = 0;
         let highestUnlockedModule = 0;
         let activeTheme = 'serika_dark';
-        let currentFontSize = 'medium'; // 'small' | 'medium' | 'large' | 'xlarge'
-        let currentLanguage = 'hu'; // 'hu' | 'en' | 'de' | 'es' | 'fr' | 'it' | 'ro'
+        let currentFontSize = 'medium'; 
+        let currentLanguage = 'hu'; 
+
+        let isSuddenDeathEnabled = false; // Instant Death State
 
         let textLengthSetting = 25;
-        let sentenceSubMode = 'words'; // 'words' | 'quotes' | 'time'
+        let sentenceSubMode = 'words'; 
         let sentenceWordsCount = 25;
-        let sentenceQuoteLength = 'medium'; // 'short' | 'medium' | 'long'
+        let sentenceQuoteLength = 'medium'; 
         let sentenceTimeLimit = 30;
         let sentenceTimeRemaining = 30;
 
@@ -690,7 +679,6 @@
             { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
         ];
 
-        // EXPANDED MULTI-LANGUAGE DATA POOLS
         const SUPPORTED_LANGUAGES = [
             { id: 'hu', flag: '🇭🇺', name: 'Magyar (HU)', desc: 'Magyar szavak, ékezetes mondatok és közmondások' },
             { id: 'en', flag: '🇬🇧', name: 'English (EN)', desc: 'English vocabulary pool, sentences & famous quotes' },
@@ -706,9 +694,9 @@
             en: ["apple", "tree", "house", "glass", "table", "school", "book", "window", "flower", "computer", "english", "learning", "growth", "text", "work", "practice", "education", "keyboard", "typing", "accuracy", "speed", "statistics", "challenge", "program", "surface", "system", "success", "knowledge", "experience", "future", "opportunity", "joy", "freedom", "creation", "idea", "solution", "goal", "way", "life", "world"],
             de: ["haus", "baum", "schule", "buch", "fenster", "blume", "computer", "lernen", "arbeit", "übung", "tastatur", "genauigkeit", "zeit", "erfolg", "wissen", "zukunft", "freude", "freiheit", "ziel", "leben", "welt", "sprache", "denken", "freiheit", "reise", "system", "lösung", "mensch"],
             es: ["casa", "árbol", "escuela", "libro", "ventana", "flor", "ordenador", "trabajo", "práctica", "teclado", "precisión", "velocidad", "éxito", "futuro", "alegría", "libertad", "solución", "meta", "vida", "mundo", "tiempo", "camino", "pensamiento", "creación"],
-            fr: ["maison", "arbre", "école", "livre", "fenêtre", "fleur", "ordinateur", "travail", "pratique", "clavier", "précision", "vitesse", "succès", "avenir", "joie", "liberté", "solution", "objectif", "vie", "monde", "temps", "chemin", "pensée", "pensée"],
+            fr: ["maison", "arbre", "école", "livre", "fenêtre", "fleur", "ordinateur", "travail", "pratique", "clavier", "précision", "vitesse", "succès", "avenir", "joie", "liberté", "solution", "objectif", "vie", "monde", "temps", "chemin", "pensée"],
             it: ["casa", "albero", "scuola", "libro", "finestra", "fiore", "computer", "lavoro", "pratica", "tastiera", "precisione", "velocità", "successo", "futuro", "gioia", "libertà", "soluzione", "obiettivo", "vita", "mondo", "tempo", "strada", "pensiero"],
-            ro: ["casă", "copac", "școală", "carte", "fereastră", "floare", "calculator", "muncă", "practică", "tastatură", "precizie", "viteză", "succes", "viitor", "bucurie", "libertate", "soluție", "scop", "viață", "lume", "timp", "drum", "gândire"]
+            ro: ["casă", "copac", "școală", "carte", "fereastră", "floare", "calculator", "muncă", "practică", "tastură", "precizie", "viteză", "succes", "viitor", "bucurie", "libertate", "soluție", "scop", "viață", "lume", "timp", "drum", "gândire"]
         };
 
         const QUOTES_POOL = {
@@ -725,7 +713,7 @@
             de: {
                 short: ["Übung macht den Meister.", "Wissen ist Macht.", "Geduld bringt Rosen.", "Zeit ist Geld."],
                 medium: ["Der Weg ist das Ziel, egal wie langsam du gehst.", "Man lernt nie aus und jede Erfahrung bringt uns weiter."],
-                long: ["Erfolg ist nicht final, Scheitern ist nem fatal: Es ist der Mut weiterzumachen, der letztendlich zählt."]
+                long: ["Erfolg ist nicht final, Scheitern ist nicht fatal: Es ist der Mut weiterzumachen, der letztendlich zählt."]
             },
             es: {
                 short: ["La práctica hace al maestro.", "El saber es poder.", "La paciencia todo lo alcanza."],
@@ -789,6 +777,29 @@
             ]
         };
 
+        function toggleSuddenDeath() {
+            isSuddenDeathEnabled = !isSuddenDeathEnabled;
+            const btn = document.getElementById('sudden-death-btn');
+            const status = document.getElementById('sudden-death-status');
+            if (isSuddenDeathEnabled) {
+                btn.className = "px-3 py-1.5 rounded-xl border border-rose-500 bg-rose-500 text-white transition flex items-center gap-1.5 font-bold text-xs shadow-md shadow-rose-500/20";
+                status.textContent = "BE";
+            } else {
+                btn.className = "px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5 font-bold text-xs";
+                status.textContent = "KI";
+            }
+            startNewGame(true);
+        }
+
+        function triggerSuddenDeathGameOver() {
+            stopTimer();
+            document.getElementById('modal-sudden-death').classList.remove('hidden');
+        }
+
+        function closeSuddenDeathModal() {
+            document.getElementById('modal-sudden-death').classList.add('hidden');
+        }
+
         function getRandomSentenceFromPool() {
             const pool = SENTENCES_POOL[currentLanguage] || SENTENCES_POOL.hu;
             let available = pool.map((s, idx) => idx).filter(idx => !sentenceHistoryIndexes.includes(idx));
@@ -812,7 +823,6 @@
             try {
                 progress = JSON.parse(saved);
             } catch (error) {
-                console.warn('A mentett kezdő előrehaladás nem olvasható, ezért törölve lett.', error);
                 localStorage.removeItem(BEGINNER_PROGRESS_KEY);
                 return null;
             }
@@ -835,7 +845,6 @@
                 progress.keyErrorCounts && typeof progress.keyErrorCounts === 'object';
 
             if (!isValid) {
-                console.warn('A mentett kezdő előrehaladás érvénytelen, ezért törölve lett.');
                 localStorage.removeItem(BEGINNER_PROGRESS_KEY);
                 return null;
             }
@@ -952,11 +961,9 @@
             ['small', 'medium', 'large', 'xlarge'].forEach(s => {
                 const btn = document.getElementById(`fontsize-opt-${s}`);
                 if (!btn) return;
-                if (s === currentFontSize) {
-                    btn.className = "p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] shadow-md ring-2 ring-[var(--main-color)]/40";
-                } else {
-                    btn.className = "p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] opacity-80 hover:opacity-100";
-                }
+                btn.className = s === currentFontSize 
+                    ? "p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] shadow-md ring-2 ring-[var(--main-color)]/40" 
+                    : "p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] opacity-80 hover:opacity-100";
             });
         }
 
@@ -1409,6 +1416,17 @@
                 keyEl.classList.add('key-pressed');
             }
 
+            // INSTANT DEATH MODAL KEYBOARD HANDLING
+            const suddenDeathModal = document.getElementById('modal-sudden-death');
+            if (!suddenDeathModal.classList.contains('hidden')) {
+                if (e.key === 'Enter' || e.key === 'Tab') {
+                    e.preventDefault();
+                    closeSuddenDeathModal();
+                    startNewGame(true);
+                }
+                return;
+            }
+
             if (!document.getElementById('modal-settings').classList.contains('hidden') ||
                 !document.getElementById('modal-reset-confirm').classList.contains('hidden') ||
                 !document.getElementById('modal-lesson').classList.contains('hidden') ||
@@ -1470,6 +1488,12 @@
                         totalHits++;
                     }
                 } else {
+                    // INSTANT DEATH CHECK IN SENTENCE MODE
+                    if (currentMode === 'sentence' && isSuddenDeathEnabled) {
+                        triggerSuddenDeathGameOver();
+                        return;
+                    }
+
                     totalErrors++;
                     charErrors[charIndex] = true;
                     keyErrorCounts[targetChar.toLowerCase()] = (keyErrorCounts[targetChar.toLowerCase()] || 0) + 1;
