@@ -448,7 +448,7 @@
                         A reset művelet törli az összes helyben elmentett adatot: feloldott kezdő szinteket, személyes WPM rekordokat, tesztszámlálókat és az egyedi beállításokat. Az alábbi gomb megnyomásával az alkalmazás visszatér az eredeti kezdőállapotra.
                     </p>
                     <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">
-                        🗑️ Összes Haladás És Rekord Törlése
+                        🗑️️ Összes Haladás És Rekord Törlése
                     </button>
                 </div>
             </div>
@@ -1000,7 +1000,11 @@
                     const spacePos = globalCharIdx;
 
                     if (spacePos < charIndex) {
-                        spaceSpan.className = "text-[var(--text-color)] font-medium";
+                        if (charErrors[spacePos]) {
+                            spaceSpan.className = "text-rose-400 font-bold underline decoration-rose-500 decoration-2";
+                        } else {
+                            spaceSpan.className = "text-[var(--text-color)] font-medium";
+                        }
                     } else if (spacePos === charIndex) {
                         spaceSpan.className = "caret-active font-extrabold";
                         activeCharSpan = spaceSpan;
@@ -1448,44 +1452,20 @@
                 }
 
                 const targetChar = currentText[charIndex];
+                const currentNewKeys = currentModuleIndex === 0 
+                    ? ['f', 'j'] 
+                    : [KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, currentModuleIndex + 1)]];
+
+                // MEGFELELŐ/HELYES LEÜTÉS
                 if (e.key.toLowerCase() === targetChar.toLowerCase()) {
-                    totalHits++;
-                    charIndex++;
-
-                    if (currentMode === 'sentence' && sentenceSubMode === 'time' && charIndex > currentText.length - 30) {
-                        currentText += " " + getRandomSentenceFromPool();
-                    }
-
-                    if (currentMode === 'beginner') {
-                        updateRemainingHitsDisplay();
-                    } else {
-                        updateLiveStatsUI();
-                    }
-
-                    if (charIndex >= currentText.length) {
-                        if (currentMode === 'beginner') {
-                            if (totalHits < targetHits) {
-                                startNewGame(false);
-                            } else {
-                                checkLevelCompletion();
-                            }
-                        } else {
-                            stopTimer();
-                            finishAdvancedTest();
-                        }
-                    } else {
-                        renderFloatingText();
-                        highlightTargetKey();
-                        saveBeginnerProgress();
+                    if (currentMode !== 'beginner' || currentNewKeys.includes(targetChar.toLowerCase())) {
+                        totalHits++;
                     }
                 } else {
+                    // HIBÁS LEÜTÉS
                     totalErrors++;
                     charErrors[charIndex] = true;
                     keyErrorCounts[targetChar.toLowerCase()] = (keyErrorCounts[targetChar.toLowerCase()] || 0) + 1;
-
-                    if (currentMode === 'beginner') {
-                        updateRemainingHitsDisplay();
-                    }
 
                     const container = document.getElementById('text-display-container');
                     if (container) {
@@ -1500,11 +1480,35 @@
                         wrongKeyEl.classList.add('key-error');
                         setTimeout(() => wrongKeyEl.classList.remove('key-error'), 250);
                     }
+                }
 
-                    if (currentMode !== 'beginner') {
-                        updateLiveStatsUI();
+                // A KURZOR MINDENKÉPPEN HALAD ELŐRE
+                charIndex++;
+
+                if (currentMode === 'sentence' && sentenceSubMode === 'time' && charIndex > currentText.length - 30) {
+                    currentText += " " + getRandomSentenceFromPool();
+                }
+
+                if (currentMode === 'beginner') {
+                    updateRemainingHitsDisplay();
+                } else {
+                    updateLiveStatsUI();
+                }
+
+                if (charIndex >= currentText.length) {
+                    if (currentMode === 'beginner') {
+                        if (totalHits < targetHits) {
+                            startNewGame(false);
+                        } else {
+                            checkLevelCompletion();
+                        }
+                    } else {
+                        stopTimer();
+                        finishAdvancedTest();
                     }
+                } else {
                     renderFloatingText();
+                    highlightTargetKey();
                     saveBeginnerProgress();
                 }
             }
@@ -1548,7 +1552,7 @@
                     msgEl.textContent = "Gratulálunk! Az összes szintet teljesítetted!";
                 }
             } else {
-                titleEl.textContent = "⚠️ Próbáld Újra!";
+                titleEl.textContent = "⚠️️ Próbáld Újra!";
                 titleEl.className = "text-xl font-extrabold text-rose-400";
                 accuracyEl.textContent = `Pontosság: ${accuracy}% (Sajnos kevesebb mint 90%)`;
                 nextKeyContainer.classList.add('hidden');
