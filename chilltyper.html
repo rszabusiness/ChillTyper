@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v4.9.9 - Magyar QWERTZ Vakírás</title>
+    <title>ChillTyper v5.0.1 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -180,7 +180,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v4.9.9</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.0.1</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -203,14 +203,14 @@
                 <span class="text-lg">🏆</span>
             </button>
 
-            <!-- SETTINGS TAB BUTTON (THEME, FONT SIZE, LANGUAGE, RESET) -->
+            <!-- SETTINGS TAB BUTTON -->
             <button onclick="openSettingsModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Beállítások (Téma, Betűméret, Nyelv, Reset)">
                 <span class="text-lg">⚙️</span>
             </button>
         </div>
     </header>
 
-    <!-- STANDARD LENGTH SELECTOR BAR (For Beginner & Advanced Modes) -->
+    <!-- STANDARD LENGTH SELECTOR BAR -->
     <div id="length-selector-bar" class="w-full max-w-xl mx-auto bg-[var(--sub-alt-color)]/80 backdrop-blur border border-[var(--sub-color)]/20 rounded-2xl p-2 flex items-center justify-center gap-3 text-xs font-bold text-[var(--sub-color)] shadow-lg mb-4">
         <span class="text-[var(--sub-color)] font-bold text-[11px] uppercase tracking-wider hidden sm:inline">📏 Szöveghossz:</span>
         <div class="flex items-center gap-1.5 bg-[var(--bg-color)]/60 p-1 rounded-xl border border-[var(--sub-color)]/10">
@@ -222,9 +222,8 @@
         <span id="length-unit-label" class="text-[11px] text-[var(--main-color)] font-extrabold uppercase tracking-wider">szó</span>
     </div>
 
-    <!-- MONDATOK SUB-MODE TOOLBAR (Shown ONLY in Mondatok Mode) -->
+    <!-- MONDATOK SUB-MODE TOOLBAR -->
     <div id="sentence-toolbar" class="w-full max-w-2xl mx-auto bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 rounded-2xl p-2.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bold shadow-lg mb-4 hidden">
-        <!-- Sub-mode Selector (Words vs Quotes vs Time Countdown) -->
         <div class="flex items-center gap-1 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
             <button id="sent-sub-words" onclick="setSentenceSubMode('words')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
                 📝 Szavak
@@ -237,9 +236,8 @@
             </button>
         </div>
 
-        <!-- Dynamic Options based on Sentence Sub-mode -->
         <div id="sentence-sub-options" class="flex items-center gap-1.5 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
-            <!-- Populated dynamically via JS -->
+            <!-- Dynamic Sub-options -->
         </div>
     </div>
 
@@ -247,32 +245,51 @@
     <main class="w-full max-w-5xl mx-auto flex flex-col gap-4 my-auto">
 
         <!-- LEVEL HEADER BAR (BEGINNER ONLY) -->
-        <div id="beginner-level-bar" class="w-full bg-[var(--sub-alt-color)]/60 border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <span id="level-badge" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg">
-                    1
-                </span>
-                <div>
-                    <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J Billentyűk</h2>
-                    <p id="level-desc" class="text-xs text-[var(--sub-color)]">Kezdő izommemória gyakorlás (csak a helyes leütés számít)</p>
+        <div id="beginner-level-bar" class="w-full bg-[var(--sub-alt-color)]/60 border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="level-badge" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg">
+                        1
+                    </span>
+                    <div>
+                        <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J Billentyűk</h2>
+                        <p id="level-desc" class="text-xs text-[var(--sub-color)]">Kezdő izommemória gyakorlás (csak a helyes leütés számít)</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div id="hits-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
+                        <span class="text-[var(--sub-color)] uppercase">Hátralévő:</span>
+                        <span id="remaining-hits" class="text-[var(--main-color)] font-black text-sm">60 / 60</span>
+                        <span class="text-[var(--sub-color)] text-[11px]">helyes leütés</span>
+                    </div>
+
+                    <div id="acc-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
+                        <span class="text-[var(--sub-color)] uppercase">Pontosság:</span>
+                        <span id="live-accuracy-beginner" class="text-emerald-400 font-black text-sm">100%</span>
+                    </div>
+
+                    <div id="newkey-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
+                        <span class="text-[var(--sub-color)] uppercase">Kezdő gombok:</span>
+                        <span id="newkey-char" class="text-[var(--main-color)] font-black text-sm">F, J</span>
+                        <span id="newkey-finger" class="text-[var(--sub-color)] text-[11px]">(Bal és jobb mutató)</span>
+                    </div>
+                    <button onclick="openLessonModal()" class="px-4 py-2 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] text-xs font-bold transition">
+                        📚 Szintek (<span id="unlocked-count">1</span>/47)
+                    </button>
                 </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-3">
-                <div id="hits-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
-                    <span class="text-[var(--sub-color)] uppercase">Hátralévő:</span>
-                    <span id="remaining-hits" class="text-[var(--main-color)] font-black text-sm">60 / 60</span>
-                    <span class="text-[var(--sub-color)] text-[11px]">helyes leütés</span>
+            <!-- REAL-TIME ACCURACY PROGRESS BAR WITH 90% THRESHOLD LINE -->
+            <div class="w-full flex flex-col gap-1.5 pt-1">
+                <div class="flex justify-between items-center text-[11px] font-bold">
+                    <span class="text-[var(--sub-color)]">Cél pontosság sáv:</span>
+                    <span class="text-[var(--sub-color)]">Elvárt: <span class="text-emerald-400">≥ 90%</span></span>
                 </div>
-
-                <div id="newkey-badge" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] border border-[var(--sub-color)]/30 flex items-center gap-2 text-xs font-bold">
-                    <span class="text-[var(--sub-color)] uppercase">Kezdő gombok:</span>
-                    <span id="newkey-char" class="text-[var(--main-color)] font-black text-sm">F, J</span>
-                    <span id="newkey-finger" class="text-[var(--sub-color)] text-[11px]">(Bal és jobb mutató)</span>
+                <div class="w-full h-3.5 bg-[var(--bg-color)] rounded-full overflow-hidden border border-[var(--sub-color)]/30 relative p-0.5">
+                    <div class="absolute top-0 bottom-0 left-[90%] w-0.5 bg-white/80 z-10 border-r border-dashed border-slate-900 shadow" title="90% Elvárt Küszöb"></div>
+                    <div id="accuracy-progress-bar" class="h-full rounded-full transition-all duration-300 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" style="width: 100%;"></div>
                 </div>
-                <button onclick="openLessonModal()" class="px-4 py-2 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] text-xs font-bold transition">
-                    📚 Szintek (<span id="unlocked-count">1</span>/47)
-                </button>
             </div>
         </div>
 
@@ -300,11 +317,11 @@
         <div id="text-display-container" class="w-full my-4 flex flex-col items-center justify-center relative rounded-3xl transition-colors p-4 sm:p-6 border border-transparent bg-[var(--sub-alt-color)]/30">
             <div class="text-window w-full max-w-4xl flex justify-center">
                 <div id="text-display" class="w-full text-center text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start">
-                    <!-- Dynamic word tokens rendered here -->
+                    <!-- Dynamic word tokens -->
                 </div>
             </div>
 
-            <!-- RESTART BUTTON BELOW TEXT -->
+            <!-- RESTART BUTTON -->
             <button onclick="startNewGame()" class="mt-4 p-3 rounded-full text-[var(--sub-color)] hover:text-[var(--main-color)] transition hover:rotate-180 duration-300" title="Kör Újraindítása (Tab)">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
@@ -324,15 +341,14 @@
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
         <div class="font-mono text-[11px] opacity-75">
-            ChillTyper v4.9.9 • Magyar QWERTZ
+            ChillTyper v5.0.1 • Vakírás
         </div>
     </footer>
 
     <!-- MODALS -->
-    <!-- MULTI-TAB SETTINGS MODAL -->
+    <!-- SETTINGS MODAL WITH MULTI-LANGUAGE SELECTOR -->
     <div id="modal-settings" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto hidden custom-scrollbar">
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
-            <!-- Modal Header -->
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
                     <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">
@@ -345,7 +361,6 @@
                 </button>
             </div>
 
-            <!-- Settings Navigation Tabs -->
             <div class="flex items-center gap-2 border-b border-[var(--sub-color)]/20 pb-3 flex-wrap">
                 <button id="set-tab-theme" onclick="switchSettingsTab('theme')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
                     🎨 Téma
@@ -363,77 +378,38 @@
 
             <!-- TAB 1 CONTENT: THEMES -->
             <div id="set-content-theme" class="flex flex-col gap-4">
-                <div class="flex items-center justify-between">
-                    <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül az azonnali stílusváltáshoz:</p>
-                </div>
-                <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                    <!-- Dynamic theme cards rendered via renderThemesGrid() -->
-                </div>
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül az azonnali stílusváltáshoz:</p>
+                <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
             </div>
 
-            <!-- TAB 2 CONTENT: FONT SIZE SELECTOR -->
+            <!-- TAB 2 CONTENT: FONT SIZE -->
             <div id="set-content-font" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                     <button id="fontsize-opt-small" onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
                         <span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div>
-                            <h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4>
-                            <p class="text-[10px] text-[var(--sub-color)]">Kompakt nézet</p>
-                        </div>
+                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4><p class="text-[10px] text-[var(--sub-color)]">Kompakt nézet</p></div>
                     </button>
-
                     <button id="fontsize-opt-medium" onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
                         <span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div>
-                            <h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4>
-                            <p class="text-[10px] text-[var(--sub-color)]">Alapértelmezett</p>
-                        </div>
+                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4><p class="text-[10px] text-[var(--sub-color)]">Alapértelmezett</p></div>
                     </button>
-
                     <button id="fontsize-opt-large" onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
                         <span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div>
-                            <h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4>
-                            <p class="text-[10px] text-[var(--sub-color)]">Könnyen olvasható</p>
-                        </div>
+                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4><p class="text-[10px] text-[var(--sub-color)]">Könnyen olvasható</p></div>
                     </button>
-
                     <button id="fontsize-opt-xlarge" onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
                         <span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div>
-                            <h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4>
-                            <p class="text-[10px] text-[var(--sub-color)]">Maximális méret</p>
-                        </div>
+                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4><p class="text-[10px] text-[var(--sub-color)]">Maximális méret</p></div>
                     </button>
                 </div>
             </div>
 
-            <!-- TAB 3 CONTENT: LANGUAGE SELECTOR -->
+            <!-- TAB 3 CONTENT: EXPANDED MULTI-LANGUAGE SELECTOR -->
             <div id="set-content-lang" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak, mondatok és idézetek nyelvét:</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button id="lang-opt-hu" onclick="setLanguage('hu')" class="p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
-                        <div class="flex items-center gap-3">
-                            <span class="text-3xl">🇭🇺</span>
-                            <div>
-                                <h4 class="font-bold text-sm text-[var(--text-color)]">Magyar (HU)</h4>
-                                <p class="text-xs text-[var(--sub-color)]">Magyar szavak, ékezetes mondatok és közmondások</p>
-                            </div>
-                        </div>
-                        <span id="lang-check-hu" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>
-                    </button>
-
-                    <button id="lang-opt-en" onclick="setLanguage('en')" class="p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
-                        <div class="flex items-center gap-3">
-                            <span class="text-3xl">🇬🇧</span>
-                            <div>
-                                <h4 class="font-bold text-sm text-[var(--text-color)]">English (EN)</h4>
-                                <p class="text-xs text-[var(--sub-color)]">English vocabulary pool, sentences & famous quotes</p>
-                            </div>
-                        </div>
-                        <span id="lang-check-en" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--sub-color)]/20 text-[var(--sub-color)] hidden">Aktív</span>
-                    </button>
+                <div id="languages-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Populated dynamically via JS renderLanguagesGrid() -->
                 </div>
             </div>
 
@@ -445,10 +421,10 @@
                         <h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4>
                     </div>
                     <p class="text-xs text-[var(--sub-color)] leading-relaxed">
-                        A reset művelet törli az összes helyben elmentett adatot: feloldott kezdő szinteket, személyes WPM rekordokat, tesztszámlálókat és az egyedi beállításokat. Az alábbi gomb megnyomásával az alkalmazás visszatér az eredeti kezdőállapotra.
+                        A reset művelet törli az összes helyben elmentett adatot: feloldott kezdő szinteket, személyes WPM rekordokat, tesztszámlálókat és az egyedi beállításokat.
                     </p>
                     <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">
-                        🗑️️ Összes Haladás És Rekord Törlése
+                        🗑 Összes Haladás És Rekord Törlése
                     </button>
                 </div>
             </div>
@@ -604,7 +580,7 @@
         let highestUnlockedModule = 0;
         let activeTheme = 'serika_dark';
         let currentFontSize = 'medium'; // 'small' | 'medium' | 'large' | 'xlarge'
-        let currentLanguage = 'hu';
+        let currentLanguage = 'hu'; // 'hu' | 'en' | 'de' | 'es' | 'fr' | 'it' | 'ro'
 
         let textLengthSetting = 25;
         let sentenceSubMode = 'words'; // 'words' | 'quotes' | 'time'
@@ -630,7 +606,6 @@
         let sentenceHistoryIndexes = [];
         const BEGINNER_PROGRESS_KEY = 'chilltyper_beginner_progress';
 
-        // 48 keys sequence: Level 1 starts with 'f' and 'j' (2 keys), then adds 1 key per level
         const KEYS_SEQUENCE = ['f', 'j', 'd', 'k', 's', 'l', 'a', 'é', 'g', 'h', 'e', 'i', 'r', 'u', 'v', 'm', 'c', ',', 'x', '.', 'z', 'o', 'w', 'p', 'q', 'ö', 'ü', 'ó', 'ő', 'ú', 'á', 'ű', 'í', 'y', 't', 'b', 'n', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
 
         const KEYBOARD_LAYOUT = [
@@ -687,7 +662,6 @@
 
         const KEY_NAMES_HU = { ' ': 'Szóköz', 'backspace': 'Backspace', 'enter': 'Enter', 'tab': 'Tab', 'shift': 'Shift' };
 
-        // Global Theme Definitions (25 Themes)
         const THEMES = [
             { id: 'serika_dark', name: 'Serika Dark', bg: '#323437', main: '#e2b714', text: '#d1d0c5' },
             { id: 'cyberpunk', name: 'Cyberpunk', bg: '#181425', main: '#fee440', text: '#2de2e6' },
@@ -716,88 +690,107 @@
             { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
         ];
 
-        // VOCABULARY & QUOTE POOLS
-        const WORDS_HU = ["alma", "fa", "ház", "pohár", "asztal", "iskola", "könyv", "ablak", "virág", "számítógép", "magyar", "tanulás", "fejlődés", "szöveg", "munka", "gyakorlás", "oktatás", "billentyűzet", "gépelés", "pontosság", "sebesség", "statisztika", "kihívás", "program", "felület", "rendszer", "siker", "tudás", "tapasztalat", "jövő", "lehetőség", "öröm", "szabadság", "alkotás", "ötlet", "megoldás", "cél", "út", "élet", "világ"];
-        const WORDS_EN = ["apple", "tree", "house", "glass", "table", "school", "book", "window", "flower", "computer", "english", "learning", "growth", "text", "work", "practice", "education", "keyboard", "typing", "accuracy", "speed", "statistics", "challenge", "program", "surface", "system", "success", "knowledge", "experience", "future", "opportunity", "joy", "freedom", "creation", "idea", "solution", "goal", "way", "life", "world"];
-
-        const QUOTES_HU = {
-            short: [
-                "A türelem rózsát terem.",
-                "A gyakorlat teszi a mestert.",
-                "Járt utat a járatlanért el ne hagyj.",
-                "Ki korán kel, aranyat lel."
-            ],
-            medium: [
-                "Nem az számít, honnan indulsz, hanem az, hogy hová tartasz.",
-                "A sikert nem adják ingyen, meg kell érte dolgozni minden nap.",
-                "A tudás a legértékesebb kincs, amit senki nem vehet el tőled."
-            ],
-            long: [
-                "Az életben a legnagyobb sikereket nem a szerencse hozza meg, hanem a kitartó munka és a folyamatos gyakorlás, amely minden akadályt legyőz.",
-                "Az igazi mester nem az, aki soha nem hibázik, hanem az, aki minden hibájából tanul és még erősebben megy tovább."
-            ]
-        };
-
-        const QUOTES_EN = {
-            short: [
-                "Practice makes perfect.",
-                "Patience is a virtue.",
-                "Knowledge is power.",
-                "Actions speak louder than words."
-            ],
-            medium: [
-                "It does not matter how slowly you go as long as you do not stop.",
-                "The journey of a thousand miles begins with one single step."
-            ],
-            long: [
-                "Success is not final, failure is not fatal: it is the courage to continue that counts in the long run for everyone.",
-                "Believe you can and you are halfway there to achieving whatever goals you set for yourself."
-            ]
-        };
-
-        const SENTENCES_HU_POOL = [
-            "A mai modern világban a hatékony információfeldolgozás elengedhetetlen feltétele a magabiztos digitális tudásnak.",
-            "A természet csendje és a friss erdei levegő mindig megnyugvást hoz a rohanó hétköznapokban.",
-            "Az elkötelezett gyakorlás és az odafigyelés az alapja minden magas szintű készség elsajátításának.",
-            "A technológiai fejlődés gyors üteme folyamatos alkalmazkodást és tanulást kíván meg mindannyiunktól.",
-            "Egy jó könyv olvasása közben teljesen új világok nyílnak meg a képzeletünk előtt.",
-            "A sikeres együttműködés kulcsa az őszinte kommunikáció és a kölcsönös tisztelet.",
-            "Minden nehézség egyben lehetőség is arra, hogy erősebbé és tapasztaltabbá váljunk.",
-            "A zene egy olyan egyetemes nyelv, amely határok nélkül képes megérinteni az emberi lelket.",
-            "A tudatos időbeosztás segít egyensúlyt teremteni a munka és a magánélet között.",
-            "A kitartó munka és a türelem idővel mindig meghozza a várt eredményeket.",
-            "A friss reggeli kávé illata sokak számára a nap legkellemesebb pillanatait jelenti.",
-            "Az új kihívások elfogadása lépésről lépésre tágítja a személyes határokat és növeli az önbizalmat.",
-            "A tudomány és a művészet találkozása elképesztő kreatív energiákat képes felszabadítani.",
-            "A helyes billentyűkezelés és a ritmus megtartása nagymértékben növeli a gépelési sebességet.",
-            "A környezettudatos életmód apró, de határozott lépésekkel kezdődik a mindennapokban.",
-            "Az emberi kapcsolatok minősége határozza meg leginkább a tartós boldogságot és elégedettséget.",
-            "A digitális korban az információk kritikus szűrése és értelmezése alapvető készséggé vált.",
-            "Egy kedves gesztus vagy egy elismerő mosoly teljesen megváltoztathatja valaki napját.",
-            "Az ihlet gyakran a legváratlanabb pillanatokban érkezik, amikor a legkevésbé számítunk rá.",
-            "A folytonos kíváncsiság és a nyitottság tartja szellemileg frissen és fiatalosan az embert."
+        // EXPANDED MULTI-LANGUAGE DATA POOLS
+        const SUPPORTED_LANGUAGES = [
+            { id: 'hu', flag: '🇭🇺', name: 'Magyar (HU)', desc: 'Magyar szavak, ékezetes mondatok és közmondások' },
+            { id: 'en', flag: '🇬🇧', name: 'English (EN)', desc: 'English vocabulary pool, sentences & famous quotes' },
+            { id: 'de', flag: '🇩🇪', name: 'Deutsch (DE)', desc: 'Deutsche Wörter, Sätze und bekannte Zitate' },
+            { id: 'es', flag: '🇪🇸', name: 'Español (ES)', desc: 'Palabras en español, frases y refranes' },
+            { id: 'fr', flag: '🇫🇷', name: 'Français (FR)', desc: 'Mots français, phrases et citations célèbres' },
+            { id: 'it', flag: '🇮🇹', name: 'Italiano (IT)', desc: 'Parole italiane, frasi e citazioni d\'autore' },
+            { id: 'ro', flag: '🇷🇴', name: 'Română (RO)', desc: 'Cuvinte în română, propoziții și proverbe' }
         ];
 
-        const SENTENCES_EN_POOL = [
-            "In today's fast-paced digital world, effective communication is essential for success.",
-            "Taking a quiet walk in nature can restore focus and bring peace to a busy mind.",
-            "Consistent practice and dedicated effort are the primary keys to mastering any new skill.",
-            "Technology continues to evolve rapidly, creating exciting new opportunities for global collaboration.",
-            "Reading a good book opens up fascinating new perspectives and expands our imagination.",
-            "Clear communication and mutual respect build the foundation for strong and lasting relationships.",
-            "Every challenge we face provides a valuable opportunity for personal growth and learning.",
-            "Music is a universal language that transcends cultural boundaries and connects people together.",
-            "Managing time thoughtfully helps maintain a healthy balance between work and personal life.",
-            "Patience and perseverance will always lead to meaningful progress over time.",
-            "The welcoming aroma of fresh morning coffee sets a pleasant tone for the rest of the day.",
-            "Embracing new experiences helps build confidence and widens our horizon step by step.",
-            "The intersection of art and science unleashes remarkable creativity and innovation.",
-            "Proper finger position and smooth rhythm significantly increase overall typing speed.",
-            "Sustainable living begins with small conscious choices integrated into our daily routine."
-        ];
+        const WORDS_POOL = {
+            hu: ["alma", "fa", "ház", "pohár", "asztal", "iskola", "könyv", "ablak", "virág", "számítógép", "magyar", "tanulás", "fejlődés", "szöveg", "munka", "gyakorlás", "oktatás", "billentyűzet", "gépelés", "pontosság", "sebesség", "statisztika", "kihívás", "program", "felület", "rendszer", "siker", "tudás", "tapasztalat", "jövő", "lehetőség", "öröm", "szabadság", "alkotás", "ötlet", "megoldás", "cél", "út", "élet", "világ"],
+            en: ["apple", "tree", "house", "glass", "table", "school", "book", "window", "flower", "computer", "english", "learning", "growth", "text", "work", "practice", "education", "keyboard", "typing", "accuracy", "speed", "statistics", "challenge", "program", "surface", "system", "success", "knowledge", "experience", "future", "opportunity", "joy", "freedom", "creation", "idea", "solution", "goal", "way", "life", "world"],
+            de: ["haus", "baum", "schule", "buch", "fenster", "blume", "computer", "lernen", "arbeit", "übung", "tastatur", "genauigkeit", "zeit", "erfolg", "wissen", "zukunft", "freude", "freiheit", "ziel", "leben", "welt", "sprache", "denken", "freiheit", "reise", "system", "lösung", "mensch"],
+            es: ["casa", "árbol", "escuela", "libro", "ventana", "flor", "ordenador", "trabajo", "práctica", "teclado", "precisión", "velocidad", "éxito", "futuro", "alegría", "libertad", "solución", "meta", "vida", "mundo", "tiempo", "camino", "pensamiento", "creación"],
+            fr: ["maison", "arbre", "école", "livre", "fenêtre", "fleur", "ordinateur", "travail", "pratique", "clavier", "précision", "vitesse", "succès", "avenir", "joie", "liberté", "solution", "objectif", "vie", "monde", "temps", "chemin", "pensée", "pensée"],
+            it: ["casa", "albero", "scuola", "libro", "finestra", "fiore", "computer", "lavoro", "pratica", "tastiera", "precisione", "velocità", "successo", "futuro", "gioia", "libertà", "soluzione", "obiettivo", "vita", "mondo", "tempo", "strada", "pensiero"],
+            ro: ["casă", "copac", "școală", "carte", "fereastră", "floare", "calculator", "muncă", "practică", "tastatură", "precizie", "viteză", "succes", "viitor", "bucurie", "libertate", "soluție", "scop", "viață", "lume", "timp", "drum", "gândire"]
+        };
+
+        const QUOTES_POOL = {
+            hu: {
+                short: ["A türelem rózsát terem.", "A gyakorlat teszi a mestert.", "Járt utat a járatlanért el ne hagyj.", "Ki korán kel, aranyat lel."],
+                medium: ["Nem az számít, honnan indulsz, hanem az, hogy hová tartasz.", "A sikert nem adják ingyen, meg kell érte dolgozni minden nap.", "A tudás a legértékesebb kincs, amit senki nem vehet el tőled."],
+                long: ["Az életben a legnagyobb sikereket nem a szerencse hozza meg, hanem a kitartó munka és a folyamatos gyakorlás, amely minden akadályt legyőz.", "Az igazi mester nem az, aki soha nem hibázik, hanem az, aki minden hibájából tanul és még erősebben megy tovább."]
+            },
+            en: {
+                short: ["Practice makes perfect.", "Patience is a virtue.", "Knowledge is power.", "Actions speak louder than words."],
+                medium: ["It does not matter how slowly you go as long as you do not stop.", "The journey of a thousand miles begins with one single step."],
+                long: ["Success is not final, failure is not fatal: it is the courage to continue that counts in the long run for everyone.", "Believe you can and you are halfway there to achieving whatever goals you set for yourself."]
+            },
+            de: {
+                short: ["Übung macht den Meister.", "Wissen ist Macht.", "Geduld bringt Rosen.", "Zeit ist Geld."],
+                medium: ["Der Weg ist das Ziel, egal wie langsam du gehst.", "Man lernt nie aus und jede Erfahrung bringt uns weiter."],
+                long: ["Erfolg ist nicht final, Scheitern ist nem fatal: Es ist der Mut weiterzumachen, der letztendlich zählt."]
+            },
+            es: {
+                short: ["La práctica hace al maestro.", "El saber es poder.", "La paciencia todo lo alcanza."],
+                medium: ["No importa lo despacio que vayas siempre que no te detengas.", "El camino de mil millas comienza con un solo paso."],
+                long: ["El éxito no es el final, el fracaso no es fatal: lo que cuenta es el valor para continuar siempre adelante."]
+            },
+            fr: {
+                short: ["C'est en forgeant qu'on devient forgeron.", "Savoir, c'est pouvoir.", "La patience est amère, mais son fruit est doux."],
+                medium: ["Peu importe la lenteur avec laquelle vous avancez, tant que vous ne vous arrêtez pas.", "Un voyage de mille milles commence toujours par un premier pas."],
+                long: ["Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte le plus."]
+            },
+            it: {
+                short: ["L'unione fa la forza.", "La pratica rende perfetti.", "Sapere è potere."],
+                medium: ["Non importa quanto vai piano, l'importante è non fermarsi mai.", "Un viaggio di mille miglia comincia sempre con un solo passo."],
+                long: ["Il successo non è definitivo, il fallimento non è fatale: ciò che conta davvero è il coraggio di andare avanti."]
+            },
+            ro: {
+                short: ["Repetiția este mama învățăturii.", "Cine se scoală de dimineață departe ajunge.", "Răbdarea este cheia succesului."],
+                medium: ["Nu contează cât de încet mergi, atâta timp cât nu te oprești.", "Un drum de o mie de mile începe cu un singur pas."],
+                long: ["Succesul nu este final, eșecul nu este fatal: curajul de a continua este singurul care contează cu adevărat."]
+            }
+        };
+
+        const SENTENCES_POOL = {
+            hu: [
+                "A mai modern világban a hatékony információfeldolgozás elengedhetetlen feltétele a magabiztos digitális tudásnak.",
+                "A természet csendje és a friss erdei levegő mindig megnyugvást hoz a rohanó hétköznapokban.",
+                "Az elkötelezett gyakorlás és az odafigyelés az alapja minden magas szintű készség elsajátításának.",
+                "A technológiai fejlődés gyors üteme folyamatos alkalmazkodást és tanulást kíván meg mindannyiunktól."
+            ],
+            en: [
+                "In today's fast-paced digital world, effective communication is essential for success.",
+                "Taking a quiet walk in nature can restore focus and bring peace to a busy mind.",
+                "Consistent practice and dedicated effort are the primary keys to mastering any new skill.",
+                "Technology continues to evolve rapidly, creating exciting new opportunities for global collaboration."
+            ],
+            de: [
+                "In der heutigen digitalen Welt ist effektive Kommunikation ein wesentlicher Schlüssel zum Erfolg.",
+                "Ein ruhiger Spaziergang in der Natur kann die Konzentration wiederherstellen und den Geist beruhigen.",
+                "Ständiges Üben und Engagement sind die Grundlagen für das Erlernen jeder neuen Fähigkeit."
+            ],
+            es: [
+                "En el mundo digital actual, la comunicación eficaz es esencial para el éxito en cualquier ámbito.",
+                "Dar un paseo tranquilo por la naturaleza ayuda a recuperar la concentración y aporta paz mental.",
+                "La práctica constante y el esfuerzo dedicado son la clave principal para dominar cualquier habilidad."
+            ],
+            fr: [
+                "Dans le monde numérique d'aujourd'hui, une communication efficace est essentielle pour réussir.",
+                "Une promenade paisible dans la nature permet de retrouver sa concentration et d'apaiser son esprit.",
+                "Une pratique constante et un effort soutenu sont les clés pour maîtriser une nouvelle compétence."
+            ],
+            it: [
+                "Nel mondo digitale di oggi, una comunicazione efficace è essenziale per raggiungere il successo.",
+                "Una passeggiata tranquilla nella natura aiuta a ritrovare la concentrazione e la pace interiore.",
+                "La pratica costante e l'impegno dedicato sono la chiave per padroneggiare ogni nuova abilità."
+            ],
+            ro: [
+                "În lumea digitală de astăzi, o comunicare eficientă este esențială pentru a avea succes.",
+                "O plimbare liniștită în natură poate reda concentrarea și aduce liniște sufletească.",
+                "Practica consecventă și efortul dedicat sunt cheia pentru a stăpâni orice nouă abilitate."
+            ]
+        };
 
         function getRandomSentenceFromPool() {
-            const pool = currentLanguage === 'en' ? SENTENCES_EN_POOL : SENTENCES_HU_POOL;
+            const pool = SENTENCES_POOL[currentLanguage] || SENTENCES_POOL.hu;
             let available = pool.map((s, idx) => idx).filter(idx => !sentenceHistoryIndexes.includes(idx));
             if (available.length === 0) {
                 sentenceHistoryIndexes = [];
@@ -912,10 +905,34 @@
                         ${isActive ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>' : ''}
                     </div>
                     <div class="flex items-center gap-1.5 w-full mt-1">
-                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.bg};" title="Háttérszín"></div>
-                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.main};" title="Kiemelő szín"></div>
-                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.text};" title="Szövegszín"></div>
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.bg};"></div>
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.main};"></div>
+                        <div class="w-4 h-4 rounded-full border border-white/10 shadow-inner" style="background-color: ${t.text};"></div>
                     </div>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function renderLanguagesGrid() {
+            const grid = document.getElementById('languages-grid');
+            if (!grid) return;
+            grid.innerHTML = "";
+            SUPPORTED_LANGUAGES.forEach(l => {
+                const isActive = currentLanguage === l.id;
+                const btn = document.createElement('button');
+                btn.onclick = () => setLanguage(l.id);
+                btn.className = `p-4 rounded-2xl border text-left transition flex flex-col justify-between gap-2 hover:scale-[1.02] ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] shadow-md ring-2 ring-[var(--main-color)]/40' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] hover:border-[var(--sub-color)]/50'}`;
+                
+                btn.innerHTML = `
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-2xl">${l.flag}</span>
+                            <h4 class="font-bold text-xs text-[var(--text-color)]">${l.name}</h4>
+                        </div>
+                        ${isActive ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>' : ''}
+                    </div>
+                    <p class="text-[10px] text-[var(--sub-color)] leading-tight mt-1">${l.desc}</p>
                 `;
                 grid.appendChild(btn);
             });
@@ -969,7 +986,6 @@
 
             words.forEach((wordStr, wordIdx) => {
                 const wordSpan = document.createElement('span');
-                // Zero extra horizontal padding to keep stable geometry without layout shifts
                 wordSpan.className = "inline-flex flex-nowrap whitespace-nowrap mx-1.5 my-0.5 items-center";
 
                 for (let i = 0; i < wordStr.length; i++) {
@@ -1012,7 +1028,6 @@
                         spaceSpan.className = "text-[var(--sub-color)] opacity-60 font-normal";
                     }
 
-                    // Use non-collapsing non-breaking space for smooth rendering
                     spaceSpan.textContent = "\u00A0";
                     wordSpan.appendChild(spaceSpan);
                     globalCharIdx++;
@@ -1039,7 +1054,6 @@
 
             const currentLine = Math.floor((activeTop + 5) / lineHeight);
 
-            // Smooth 3-line window scrolling without abrupt jumps
             if (currentLine >= 2) {
                 const translateY = (currentLine - 1) * lineHeight;
                 display.style.transform = `translateY(-${translateY}px)`;
@@ -1061,14 +1075,33 @@
                 const remaining = Math.max(0, targetHits - totalHits);
                 remEl.textContent = `${remaining} / ${targetHits}`;
             }
+
+            const totalAttempted = charIndex; 
+            const totalCorrect = totalAttempted - totalErrors;
+            const accuracy = totalAttempted > 0 ? Math.round((Math.max(0, totalCorrect) / totalAttempted) * 100) : 100;
+
+            const accEl = document.getElementById('live-accuracy-beginner');
+            const barEl = document.getElementById('accuracy-progress-bar');
+
+            if (accEl) {
+                accEl.textContent = `${accuracy}%`;
+                accEl.className = accuracy >= 90 ? "text-emerald-400 font-black text-sm" : "text-rose-400 font-black text-sm";
+            }
+
+            if (barEl) {
+                barEl.style.width = `${Math.min(100, accuracy)}%`;
+                barEl.className = accuracy >= 90 
+                    ? "h-full rounded-full transition-all duration-300 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" 
+                    : "h-full rounded-full transition-all duration-300 bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]";
+            }
         }
 
         function updateLiveStatsUI() {
             const elapsed = Math.max(1, elapsedTime);
             const wpm = Math.round((totalHits / 5) / (elapsed / 60));
             const cpm = Math.round(totalHits / (elapsed / 60));
-            const totalAttempted = totalHits + totalErrors;
-            const accuracy = totalAttempted > 0 ? Math.round((totalHits / totalAttempted) * 100) : 100;
+            const totalAttempted = charIndex > 0 ? charIndex : (totalHits + totalErrors);
+            const accuracy = totalAttempted > 0 ? Math.round(((totalAttempted - totalErrors) / totalAttempted) * 100) : 100;
 
             const timerEl = document.getElementById('live-timer');
             const wpmEl = document.getElementById('live-wpm');
@@ -1117,15 +1150,15 @@
             const rawWpm = Math.round(((totalHits + totalErrors) / 5) / (elapsed / 60));
             const cpm = Math.round(totalHits / (elapsed / 60));
             const rawCpm = Math.round((totalHits + totalErrors) / (elapsed / 60));
-            const totalAttempted = totalHits + totalErrors;
-            const accuracy = totalAttempted > 0 ? Math.round((totalHits / totalAttempted) * 100) : 100;
+            const totalAttempted = charIndex > 0 ? charIndex : (totalHits + totalErrors);
+            const accuracy = totalAttempted > 0 ? Math.round(((totalAttempted - totalErrors) / totalAttempted) * 100) : 100;
 
             document.getElementById('adv-stat-wpm').textContent = netWpm || 0;
             document.getElementById('adv-stat-raw-wpm').textContent = `Nyers: ${rawWpm || 0}`;
             document.getElementById('adv-stat-cpm').textContent = cpm || 0;
             document.getElementById('adv-stat-raw-cpm').textContent = `Nyers: ${rawCpm || 0}`;
             document.getElementById('adv-stat-acc').textContent = `${accuracy}%`;
-            document.getElementById('adv-stat-acc-detail').textContent = `${totalHits}/${totalAttempted} helyes`;
+            document.getElementById('adv-stat-acc-detail').textContent = `${totalAttempted - totalErrors}/${totalAttempted} helyes`;
             document.getElementById('adv-stat-consistency').textContent = `${Math.min(100, Math.max(70, accuracy - 4))}%`;
 
             const missedContainer = document.getElementById('adv-stat-missed-keys');
@@ -1145,7 +1178,6 @@
                 }
             }
 
-            // Save records
             const bestWpm = parseInt(localStorage.getItem('chilltyper_best_wpm') || '0', 10);
             if (netWpm > bestWpm) {
                 localStorage.setItem('chilltyper_best_wpm', netWpm);
@@ -1170,11 +1202,9 @@
             [10, 25, 50, 100].forEach(l => {
                 const btn = document.getElementById(`len-opt-${l}`);
                 if (!btn) return;
-                if (l === textLengthSetting) {
-                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                } else {
-                    btn.className = "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--sub-color)] hover:text-[var(--text-color)]";
-                }
+                btn.className = l === textLengthSetting 
+                    ? "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--bg-color)] bg-[var(--main-color)] shadow" 
+                    : "px-3.5 py-1.5 rounded-lg transition font-bold text-xs text-[var(--sub-color)] hover:text-[var(--text-color)]";
             });
         }
 
@@ -1192,11 +1222,9 @@
             ['words', 'quotes', 'time'].forEach(sm => {
                 const btn = document.getElementById(`sent-sub-${sm}`);
                 if (btn) {
-                    if (sm === sentenceSubMode) {
-                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                    } else {
-                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
-                    }
+                    btn.className = sm === sentenceSubMode 
+                        ? "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow" 
+                        : "px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
                 }
             });
 
@@ -1209,11 +1237,7 @@
                     container.appendChild(b);
                 });
             } else if (sentenceSubMode === 'quotes') {
-                [
-                    { id: 'short', label: 'Rövid' },
-                    { id: 'medium', label: 'Közepes' },
-                    { id: 'long', label: 'Hosszú' }
-                ].forEach(q => {
+                [{ id: 'short', label: 'Rövid' }, { id: 'medium', label: 'Közepes' }, { id: 'long', label: 'Hosszú' }].forEach(q => {
                     const b = document.createElement('button');
                     b.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition ${sentenceQuoteLength === q.id ? 'text-[var(--main-color)] underline font-black' : 'text-[var(--sub-color)] hover:text-[var(--text-color)]'}`;
                     b.textContent = q.label;
@@ -1247,8 +1271,8 @@
 
         function openSettingsModal() {
             renderThemesGrid();
+            renderLanguagesGrid();
             updateFontSizeUI();
-            updateLanguageUI();
             switchSettingsTab('theme');
             document.getElementById('modal-settings').classList.remove('hidden');
         }
@@ -1265,24 +1289,7 @@
         }
 
         function updateLanguageUI() {
-            const optHu = document.getElementById('lang-opt-hu');
-            const optEn = document.getElementById('lang-opt-en');
-            const checkHu = document.getElementById('lang-check-hu');
-            const checkEn = document.getElementById('lang-check-en');
-
-            if (!optHu || !optEn) return;
-
-            if (currentLanguage === 'en') {
-                optEn.className = "p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
-                optHu.className = "p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
-                if (checkEn) { checkEn.classList.remove('hidden'); checkEn.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]"; }
-                if (checkHu) checkHu.classList.add('hidden');
-            } else {
-                optHu.className = "p-5 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
-                optEn.className = "p-5 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]";
-                if (checkHu) { checkHu.classList.remove('hidden'); checkHu.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-[var(--main-color)] text-[var(--bg-color)]"; }
-                if (checkEn) checkEn.classList.add('hidden');
-            }
+            renderLanguagesGrid();
         }
 
         function requestResetConfirmation() {
@@ -1319,8 +1326,8 @@
         }
 
         function generateSentenceText() {
-            const wordList = currentLanguage === 'en' ? WORDS_EN : WORDS_HU;
-            const quoteMap = currentLanguage === 'en' ? QUOTES_EN : QUOTES_HU;
+            const wordList = WORDS_POOL[currentLanguage] || WORDS_POOL.hu;
+            const quoteMap = QUOTES_POOL[currentLanguage] || QUOTES_POOL.hu;
 
             if (sentenceSubMode === 'words') {
                 let words = [];
@@ -1339,7 +1346,7 @@
                 }
                 return sentences.join(' ');
             }
-            return currentLanguage === 'en' ? "The quick brown fox jumps over the lazy dog." : "A gyors barna róka átugorja a lusta kutyát.";
+            return "The quick brown fox jumps over the lazy dog.";
         }
 
         function startNewGame(resetProgress = true) {
@@ -1368,13 +1375,12 @@
                 currentText = generateSentenceText();
             } else if (currentMode === 'advanced') {
                 let words = [];
-                const wordList = currentLanguage === 'en' ? WORDS_EN : WORDS_HU;
+                const wordList = WORDS_POOL[currentLanguage] || WORDS_POOL.hu;
                 for (let i = 0; i < textLengthSetting; i++) {
                     words.push(wordList[Math.floor(Math.random() * wordList.length)]);
                 }
                 currentText = words.join(' ');
             } else {
-                // Level 1 (currentModuleIndex 0) uses 2 keys ('f', 'j'), each level adds +1 key
                 const available = KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)).filter(k => k !== ' ');
                 let words = [];
                 for (let i = 0; i < textLengthSetting; i++) {
@@ -1394,7 +1400,6 @@
         }
 
         function handleKeyDown(e) {
-            // Immediately prevent browser default action for Space key to stop page jumps
             if (e.key === ' ' || e.code === 'Space') {
                 e.preventDefault();
             }
@@ -1438,10 +1443,14 @@
                 if (charIndex > 0) {
                     e.preventDefault();
                     charIndex--;
-                    delete charErrors[charIndex];
+                    if (charErrors[charIndex]) {
+                        delete charErrors[charIndex];
+                        totalErrors = Math.max(0, totalErrors - 1);
+                    }
                     renderFloatingText();
                     highlightTargetKey();
                     saveBeginnerProgress();
+                    if (currentMode === 'beginner') updateRemainingHitsDisplay();
                 }
                 return;
             }
@@ -1456,13 +1465,11 @@
                     ? ['f', 'j'] 
                     : [KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, currentModuleIndex + 1)]];
 
-                // MEGFELELŐ/HELYES LEÜTÉS
                 if (e.key.toLowerCase() === targetChar.toLowerCase()) {
                     if (currentMode !== 'beginner' || currentNewKeys.includes(targetChar.toLowerCase())) {
                         totalHits++;
                     }
                 } else {
-                    // HIBÁS LEÜTÉS
                     totalErrors++;
                     charErrors[charIndex] = true;
                     keyErrorCounts[targetChar.toLowerCase()] = (keyErrorCounts[targetChar.toLowerCase()] || 0) + 1;
@@ -1482,7 +1489,6 @@
                     }
                 }
 
-                // A KURZOR MINDENKÉPPEN HALAD ELŐRE
                 charIndex++;
 
                 if (currentMode === 'sentence' && sentenceSubMode === 'time' && charIndex > currentText.length - 30) {
@@ -1516,8 +1522,9 @@
 
         function checkLevelCompletion() {
             localStorage.removeItem(BEGINNER_PROGRESS_KEY);
-            const total = totalHits + totalErrors;
-            const accuracy = total > 0 ? Math.round((totalHits / total) * 100) : 100;
+            const total = charIndex;
+            const correct = total - totalErrors;
+            const accuracy = total > 0 ? Math.round((correct / total) * 100) : 100;
             const passed = accuracy >= 90;
 
             const modal = document.getElementById('modal-level-result');
@@ -1552,7 +1559,7 @@
                     msgEl.textContent = "Gratulálunk! Az összes szintet teljesítetted!";
                 }
             } else {
-                titleEl.textContent = "⚠️️ Próbáld Újra!";
+                titleEl.textContent = "⚠️ Próbáld Újra!";
                 titleEl.className = "text-xl font-extrabold text-rose-400";
                 accuracyEl.textContent = `Pontosság: ${accuracy}% (Sajnos kevesebb mint 90%)`;
                 nextKeyContainer.classList.add('hidden');
@@ -1577,7 +1584,6 @@
             if (!kb) return;
             kb.innerHTML = "";
 
-            // Level 1 unlocks 2 keys (f, j). Each subsequent level unlocks 1 more key.
             const unlockedSet = new Set(KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)));
             const functionalKeys = ['tab', 'caps', 'shift', 'shift2', 'enter', 'backspace', ' '];
 
@@ -1621,11 +1627,9 @@
             ['tab-beginner', 'tab-advanced', 'tab-sentence'].forEach(id => {
                 const btn = document.getElementById(id);
                 if (!btn) return;
-                if (id === `tab-${mode}`) {
-                    btn.className = "px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow";
-                } else {
-                    btn.className = "px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
-                }
+                btn.className = id === `tab-${mode}` 
+                    ? "px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow" 
+                    : "px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]";
             });
 
             updateModeUI();
