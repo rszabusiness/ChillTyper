@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v5.3.2 - Vakírás Oktató</title>
+    <title>ChillTyper v5.3.3 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -192,7 +192,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.3.2</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.3.3</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -248,7 +248,7 @@
 
         <div class="flex items-center gap-2">
             <button id="sudden-death-btn" onclick="toggleSuddenDeath()" class="px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5 font-bold text-xs" title="Ha melléütsz, azonnal vége a játéknak!">
-                <span>☠️️ Instant Halál:</span>
+                <span>☠ Instant Halál:</span>
                 <span id="sudden-death-status" class="uppercase font-black text-rose-500">KI</span>
             </button>
 
@@ -416,7 +416,7 @@
         <div>
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
-        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.2 • Vakírás</div>
+        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.3 • Vakírás</div>
     </footer>
 
     <!-- MODALS -->
@@ -796,7 +796,7 @@
                 "La práctica constante y el esfuerzo dedicado son la clave principal para dominar cualquier habilidad."
             ],
             fr: [
-                "Dans le monde numérique d'aujourd'hui, une communication efficace est essentielle pour réussir.",
+                "Dans le monde numérique d'aujourd'hui, une communication effective est essentielle pour réussir.",
                 "Une promenade paisible dans la nature permet de retrouver sa concentration et d'apaiser son esprit.",
                 "Une pratique constante et un effort soutenu sont les clés pour maîtriser une nouvelle compétence."
             ],
@@ -1255,7 +1255,6 @@
         function setTextLength(len) {
             textLengthSetting = len;
             updateLengthSelectorUI();
-            // Ha kezdő módban vagyunk, megtartjuk a leütésszámot (totalHits)
             startNewGame(currentMode !== 'beginner');
         }
 
@@ -1383,7 +1382,7 @@
         }
 
         function closeStatsModal() {
-            document.getElementById('modal-stats').classList.remove('hidden');
+            document.getElementById('modal-stats').classList.add('hidden');
         }
 
         function generateSentenceText() {
@@ -1442,11 +1441,21 @@
                 }
                 currentText = words.join(' ');
             } else {
-                const available = KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)).filter(k => k !== ' ');
+                // KEZDŐ MÓD: Az új gomb legyen túlsúlyban (~65% valószínűséggel)
+                const unlockedKeys = KEYS_SEQUENCE.slice(0, Math.min(KEYS_SEQUENCE.length, currentModuleIndex + 2)).filter(k => k !== ' ');
+                const newKeys = currentModuleIndex === 0 ? ['f', 'j'] : [KEYS_SEQUENCE[Math.min(KEYS_SEQUENCE.length - 1, currentModuleIndex + 1)]];
+                
                 let words = [];
                 for (let i = 0; i < textLengthSetting; i++) {
                     let w = "";
-                    for (let j = 0; j < 3; j++) w += available[Math.floor(Math.random() * available.length)];
+                    for (let j = 0; j < 3; j++) {
+                        // 65% eséllyel az új gombot választjuk, különben a régebbiek közül
+                        if (Math.random() < 0.65) {
+                            w += newKeys[Math.floor(Math.random() * newKeys.length)];
+                        } else {
+                            w += unlockedKeys[Math.floor(Math.random() * unlockedKeys.length)];
+                        }
+                    }
                     words.push(w);
                 }
                 currentText = words.join(' ');
@@ -1808,7 +1817,7 @@
         }
 
         function closeLessonModal() {
-            document.getElementById('modal-lesson').classList.remove('hidden');
+            document.getElementById('modal-lesson').classList.add('hidden');
         }
 
         window.onload = init;
