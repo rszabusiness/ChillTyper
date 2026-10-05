@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v5.2.1 - Vakírás Oktató</title>
+    <title>ChillTyper v5.3.1 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -163,6 +163,19 @@
             filter: grayscale(100%);
         }
 
+        /* DYNAMIC HAND SVG STYLES */
+        .hand-finger {
+            fill: var(--sub-color);
+            opacity: 0.25;
+            transition: fill 0.2s ease, opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+        }
+
+        .hand-finger.active-finger {
+            fill: var(--main-color) !important;
+            opacity: 1 !important;
+            filter: drop-shadow(0 0 10px var(--main-color));
+        }
+
         #text-display {
             font-family: inherit;
         }
@@ -179,7 +192,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.2.1</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.3.1</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -197,12 +210,16 @@
                 💬 Mondatok
             </button>
 
-            <!-- STATS / RECORD MODAL BUTTON -->
+            <!-- HAND STYLE TOGGLE BUTTON -->
+            <button onclick="toggleHandStyle()" class="p-2 rounded-xl bg-[var(--bg-color)] hover:bg-[var(--sub-color)]/20 text-[var(--main-color)] transition flex items-center gap-1.5 font-extrabold text-xs border border-[var(--sub-color)]/30" title="Kéz Stílus Váltása">
+                <span>🖐️ Kéz Forma:</span>
+                <span id="hand-style-label" class="text-[var(--text-color)]">1. Kontúr</span>
+            </button>
+
             <button onclick="openStatsModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Személyes Rekordok">
                 <span class="text-lg">🏆</span>
             </button>
 
-            <!-- SETTINGS TAB BUTTON -->
             <button onclick="openSettingsModal()" class="p-2 rounded-xl hover:bg-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Beállítások (Téma, Betűméret, Nyelv, Reset)">
                 <span class="text-lg">⚙️</span>
             </button>
@@ -221,43 +238,32 @@
         <span id="length-unit-label" class="text-[11px] text-[var(--main-color)] font-extrabold uppercase tracking-wider">szó</span>
     </div>
 
-    <!-- MONDATOK SUB-MODE TOOLBAR (With Sudden Death Toggle) -->
+    <!-- MONDATOK SUB-MODE TOOLBAR -->
     <div id="sentence-toolbar" class="w-full max-w-3xl mx-auto bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 rounded-2xl p-2.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bold shadow-lg mb-4 hidden">
         <div class="flex items-center gap-1 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
-            <button id="sent-sub-words" onclick="setSentenceSubMode('words')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
-                📝 Szavak
-            </button>
-            <button id="sent-sub-quotes" onclick="setSentenceSubMode('quotes')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                💬 Idézetek
-            </button>
-            <button id="sent-sub-time" onclick="setSentenceSubMode('time')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">
-                ⏱ Időmérés
-            </button>
+            <button id="sent-sub-words" onclick="setSentenceSubMode('words')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">📝 Szavak</button>
+            <button id="sent-sub-quotes" onclick="setSentenceSubMode('quotes')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">💬 Idézetek</button>
+            <button id="sent-sub-time" onclick="setSentenceSubMode('time')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">⏱ Időmérés</button>
         </div>
 
         <div class="flex items-center gap-2">
-            <!-- INSTANT DEATH / SUDDEN DEATH TOGGLE BUTTON -->
             <button id="sudden-death-btn" onclick="toggleSuddenDeath()" class="px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5 font-bold text-xs" title="Ha melléütsz, azonnal vége a játéknak!">
                 <span>☠️ Instant Halál:</span>
                 <span id="sudden-death-status" class="uppercase font-black text-rose-500">KI</span>
             </button>
 
-            <div id="sentence-sub-options" class="flex items-center gap-1.5 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10">
-                <!-- Dynamic Sub-options -->
-            </div>
+            <div id="sentence-sub-options" class="flex items-center gap-1.5 bg-[var(--bg-color)]/70 p-1 rounded-xl border border-[var(--sub-color)]/10"></div>
         </div>
     </div>
 
     <!-- MAIN APP CONTENT -->
-    <main class="w-full max-w-5xl mx-auto flex flex-col gap-4 my-auto">
+    <main class="w-full max-w-7xl mx-auto flex flex-col gap-4 my-auto">
 
         <!-- LEVEL HEADER BAR (BEGINNER ONLY) -->
         <div id="beginner-level-bar" class="w-full bg-[var(--sub-alt-color)]/60 border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-4">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <span id="level-badge" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg">
-                        1
-                    </span>
+                    <span id="level-badge" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg">1</span>
                     <div>
                         <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J Billentyűk</h2>
                         <p id="level-desc" class="text-xs text-[var(--sub-color)]">Kezdő izommemória gyakorlás (csak a helyes leütés számít)</p>
@@ -287,14 +293,14 @@
                 </div>
             </div>
 
-            <!-- REAL-TIME ACCURACY PROGRESS BAR WITH 90% THRESHOLD LINE -->
+            <!-- REAL-TIME ACCURACY PROGRESS BAR -->
             <div class="w-full flex flex-col gap-1.5 pt-1">
                 <div class="flex justify-between items-center text-[11px] font-bold">
                     <span class="text-[var(--sub-color)]">Cél pontosság sáv:</span>
                     <span class="text-[var(--sub-color)]">Elvárt: <span class="text-emerald-400">≥ 90%</span></span>
                 </div>
                 <div class="w-full h-3.5 bg-[var(--bg-color)] rounded-full overflow-hidden border border-[var(--sub-color)]/30 relative p-0.5">
-                    <div class="absolute top-0 bottom-0 left-[90%] w-0.5 bg-white/80 z-10 border-r border-dashed border-slate-900 shadow" title="90% Elvárt Küszöb"></div>
+                    <div class="absolute top-0 bottom-0 left-[90%] w-0.5 bg-white/80 z-10 border-r border-dashed border-slate-900 shadow"></div>
                     <div id="accuracy-progress-bar" class="h-full rounded-full transition-all duration-300 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" style="width: 100%;"></div>
                 </div>
             </div>
@@ -323,22 +329,85 @@
         <!-- FLOATING TEXT DISPLAY CONTAINER -->
         <div id="text-display-container" class="w-full my-4 flex flex-col items-center justify-center relative rounded-3xl transition-colors p-4 sm:p-6 border border-transparent bg-[var(--sub-alt-color)]/30">
             <div class="text-window w-full max-w-4xl flex justify-center">
-                <div id="text-display" class="w-full text-center text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start">
-                    <!-- Dynamic word tokens -->
-                </div>
+                <div id="text-display" class="w-full text-center text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start"></div>
             </div>
 
-            <!-- RESTART BUTTON -->
             <button onclick="startNewGame()" class="mt-4 p-3 rounded-full text-[var(--sub-color)] hover:text-[var(--main-color)] transition hover:rotate-180 duration-300" title="Kör Újraindítása (Tab)">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
         </div>
 
-        <!-- VIRTUAL KEYBOARD -->
-        <div id="keyboard-container" class="w-full border border-[var(--sub-color)]/20 rounded-3xl p-3 sm:p-4 shadow-inner overflow-x-auto custom-scrollbar transition-colors" style="background-color: var(--bg-color);">
-            <div id="keyboard" class="flex flex-col gap-1.5 min-w-[720px] mx-auto select-none">
-                <!-- Rows generated dynamically -->
+        <!-- VIRTUAL KEYBOARD WITH BIGGER HANDS ON BOTH SIDES -->
+        <div class="w-full flex items-center justify-between gap-3 sm:gap-6">
+            
+            <!-- BAL KÉZ DISPLAY (NAGYOBB MÉRET + KÉT FORMA) -->
+            <div id="hand-left-container" class="hidden xl:flex flex-col items-center justify-center w-36 h-64 bg-[var(--sub-alt-color)]/50 border border-[var(--sub-color)]/20 rounded-3xl p-3 shadow-2xl transition-all">
+                <span class="text-[11px] font-extrabold text-[var(--sub-color)] uppercase tracking-widest mb-2">Bal Kéz</span>
+                
+                <!-- FORMA 1: REALISZTIKUS BAL KÉZFEJ -->
+                <svg id="hand-left-style-1" viewBox="0 0 120 160" class="w-28 h-52">
+                    <path d="M 25 150 C 25 110, 30 95, 38 85 L 90 85 C 98 95, 100 110, 100 150 Z" fill="var(--sub-color)" opacity="0.12" />
+                    <!-- Kisujj (0) -->
+                    <rect id="hand-left-0-s1" class="hand-finger" x="18" y="55" width="14" height="48" rx="7" />
+                    <circle class="hand-finger-tip" x="25" y="62" r="3" />
+                    <!-- Gyűrűsujj (1) -->
+                    <rect id="hand-left-1-s1" class="hand-finger" x="37" y="32" width="15" height="65" rx="7.5" />
+                    <!-- Középső ujj (2) -->
+                    <rect id="hand-left-2-s1" class="hand-finger" x="56" y="20" width="15" height="75" rx="7.5" />
+                    <!-- Mutatóujj (3) -->
+                    <rect id="hand-left-3-s1" class="hand-finger" x="75" y="34" width="15" height="63" rx="7.5" />
+                    <!-- Hüvelykujj (thumb) -->
+                    <rect id="hand-left-thumb-s1" class="hand-finger" x="92" y="82" width="16" height="42" rx="8" transform="rotate(-32 92 82)" />
+                </svg>
+
+                <!-- FORMA 2: MINIMALISTA SZÍNES UJJ-SÁVOK BAL -->
+                <svg id="hand-left-style-2" viewBox="0 0 120 160" class="w-28 h-52 hidden">
+                    <g transform="translate(10, 10)">
+                        <rect id="hand-left-0-s2" class="hand-finger" x="5" y="45" width="16" height="90" rx="8" fill="#fda4af" />
+                        <rect id="hand-left-1-s2" class="hand-finger" x="27" y="25" width="16" height="110" rx="8" fill="#fdba74" />
+                        <rect id="hand-left-2-s2" class="hand-finger" x="49" y="10" width="16" height="125" rx="8" fill="#fde047" />
+                        <rect id="hand-left-3-s2" class="hand-finger" x="71" y="25" width="16" height="110" rx="8" fill="#86efac" />
+                        <circle id="hand-left-thumb-s2" class="hand-finger" cx="95" cy="115" r="12" fill="#e2e8f0" />
+                    </g>
+                </svg>
             </div>
+
+            <!-- BILLENTYŰZET KONTAJNER -->
+            <div id="keyboard-container" class="flex-1 border border-[var(--sub-color)]/20 rounded-3xl p-3 sm:p-4 shadow-inner overflow-x-auto custom-scrollbar transition-colors" style="background-color: var(--bg-color);">
+                <div id="keyboard" class="flex flex-col gap-1.5 min-w-[720px] mx-auto select-none"></div>
+            </div>
+
+            <!-- JOBB KÉZ DISPLAY (NAGYOBB MÉRET + KÉT FORMA) -->
+            <div id="hand-right-container" class="hidden xl:flex flex-col items-center justify-center w-36 h-64 bg-[var(--sub-alt-color)]/50 border border-[var(--sub-color)]/20 rounded-3xl p-3 shadow-2xl transition-all">
+                <span class="text-[11px] font-extrabold text-[var(--sub-color)] uppercase tracking-widest mb-2">Jobb Kéz</span>
+                
+                <!-- FORMA 1: REALISZTIKUS JOBB KÉZFEJ -->
+                <svg id="hand-right-style-1" viewBox="0 0 120 160" class="w-28 h-52">
+                    <path d="M 20 150 C 20 110, 22 95, 30 85 L 82 85 C 90 95, 95 110, 95 150 Z" fill="var(--sub-color)" opacity="0.12" />
+                    <!-- Hüvelykujj (thumb) -->
+                    <rect id="hand-right-thumb-s1" class="hand-finger" x="12" y="90" width="16" height="42" rx="8" transform="rotate(32 12 90)" />
+                    <!-- Mutatóujj (4) -->
+                    <rect id="hand-right-4-s1" class="hand-finger" x="30" y="34" width="15" height="63" rx="7.5" />
+                    <!-- Középső ujj (5) -->
+                    <rect id="hand-right-5-s1" class="hand-finger" x="49" y="20" width="15" height="75" rx="7.5" />
+                    <!-- Gyűrűsujj (6) -->
+                    <rect id="hand-right-6-s1" class="hand-finger" x="68" y="32" width="15" height="65" rx="7.5" />
+                    <!-- Kisujj (7) -->
+                    <rect id="hand-right-7-s1" class="hand-finger" x="88" y="55" width="14" height="48" rx="7" />
+                </svg>
+
+                <!-- FORMA 2: MINIMALISTA SZÍNES UJJ-SÁVOK JOBB -->
+                <svg id="hand-right-style-2" viewBox="0 0 120 160" class="w-28 h-52 hidden">
+                    <g transform="translate(10, 10)">
+                        <circle id="hand-right-thumb-s2" class="hand-finger" cx="5" cy="115" r="12" fill="#e2e8f0" />
+                        <rect id="hand-right-4-s2" class="hand-finger" x="23" y="25" width="16" height="110" rx="8" fill="#67e8f9" />
+                        <rect id="hand-right-5-s2" class="hand-finger" x="45" y="10" width="16" height="125" rx="8" fill="#93c5fd" />
+                        <rect id="hand-right-6-s2" class="hand-finger" x="67" y="25" width="16" height="110" rx="8" fill="#d8b4fe" />
+                        <rect id="hand-right-7-s2" class="hand-finger" x="89" y="45" width="16" height="90" rx="8" fill="#f472b6" />
+                    </g>
+                </svg>
+            </div>
+
         </div>
     </main>
 
@@ -347,21 +416,17 @@
         <div>
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
-        <div class="font-mono text-[11px] opacity-75">
-            ChillTyper v5.2.1 • Vakírás
-        </div>
+        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.1 • Vakírás</div>
     </footer>
 
     <!-- MODALS -->
-    <!-- INSTANT DEATH / GAME OVER MODAL -->
+    <!-- INSTANT DEATH MODAL -->
     <div id="modal-sudden-death" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
         <div class="bg-[var(--sub-alt-color)] border border-rose-500 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
             <span class="text-5xl animate-bounce">☠️</span>
             <h3 class="text-2xl font-black text-rose-500">Game Over!</h3>
             <p class="text-sm font-extrabold text-[var(--text-color)]">Legyél pontosabb!</p>
-            <p class="text-xs text-[var(--sub-color)] leading-relaxed">
-                Az Instant Halál mód be van kapcsolva. Egyetlen elgépelés esetén a teszt azonnal elölről kezdődik.
-            </p>
+            <p class="text-xs text-[var(--sub-color)] leading-relaxed">Az Instant Halál mód be van kapcsolva. Egyetlen elgépelés esetén a teszt azonnal elölről kezdődik.</p>
             <button onclick="closeSuddenDeathModal(); startNewGame(true);" class="w-full mt-2 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-sm transition shadow-lg flex items-center justify-center gap-2">
                 🔄 Újrapróbálkozás (Enter / Tab)
             </button>
@@ -373,12 +438,10 @@
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙️ Beállítások</h3>
+                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙️️ Beállítások</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-1">Téma, betűméret, gyakorló nyelv és adatok kezelése</p>
                 </div>
-                <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">
-                    Bezárás ✕
-                </button>
+                <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">Bezárás ✕</button>
             </div>
 
             <div class="flex items-center gap-2 border-b border-[var(--sub-color)]/20 pb-3 flex-wrap">
@@ -396,22 +459,10 @@
             <div id="set-content-font" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                    <button id="fontsize-opt-small" onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
-                        <span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4><p class="text-[10px] text-[var(--sub-color)]">Kompakt nézet</p></div>
-                    </button>
-                    <button id="fontsize-opt-medium" onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
-                        <span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4><p class="text-[10px] text-[var(--sub-color)]">Alapértelmezett</p></div>
-                    </button>
-                    <button id="fontsize-opt-large" onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
-                        <span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4><p class="text-[10px] text-[var(--sub-color)]">Könnyen olvasható</p></div>
-                    </button>
-                    <button id="fontsize-opt-xlarge" onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]">
-                        <span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span>
-                        <div><h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4><p class="text-[10px] text-[var(--sub-color)]">Maximális méret</p></div>
-                    </button>
+                    <button id="fontsize-opt-small" onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4></div></button>
+                    <button id="fontsize-opt-medium" onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4></div></button>
+                    <button id="fontsize-opt-large" onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4></div></button>
+                    <button id="fontsize-opt-xlarge" onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4></div></button>
                 </div>
             </div>
 
@@ -422,27 +473,20 @@
 
             <div id="set-content-reset" class="flex flex-col gap-4 hidden">
                 <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
-                    <div class="flex items-center gap-3 text-rose-400">
-                        <span class="text-2xl">⚠️</span>
-                        <h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4>
-                    </div>
-                    <p class="text-xs text-[var(--sub-color)] leading-relaxed">
-                        A reset művelet törli az összes helyben elmentett adatot: feloldott kezdő szinteket, személyes WPM rekordokat, tesztszámlálókat és az egyedi beállításokat.
-                    </p>
-                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">
-                        🗑 Összes Haladás És Rekord Törlése
-                    </button>
+                    <div class="flex items-center gap-3 text-rose-400"><span class="text-2xl">⚠️</span><h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4></div>
+                    <p class="text-xs text-[var(--sub-color)] leading-relaxed">A reset művelet törli az összes helyben elmentett adatot.</p>
+                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">🗑 Összes Haladás Törlése</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- RESET CONFIRMATION OVERLAY MODAL -->
+    <!-- RESET CONFIRMATION MODAL -->
     <div id="modal-reset-confirm" class="fixed inset-0 z-50 bg-[var(--bg-color)]/90 backdrop-blur-md p-4 flex items-center justify-center hidden">
         <div class="bg-[var(--sub-alt-color)] border border-rose-500/40 rounded-3xl p-6 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
             <span class="text-4xl">🚨</span>
             <h3 class="text-xl font-extrabold text-rose-400">Biztosan törölni szeretnéd?</h3>
-            <p class="text-xs text-[var(--sub-color)] leading-relaxed">Ezzel a lépéssel törlődnek a feloldott szintek, rekordok és témák. Ez a folyamat nem vonható vissza.</p>
+            <p class="text-xs text-[var(--sub-color)] leading-relaxed">Ezzel a lépéssel törlődnek a feloldott szintek és rekordok.</p>
             <div class="flex items-center gap-3 w-full mt-2">
                 <button onclick="closeResetConfirmation()" class="flex-1 py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">Mégse</button>
                 <button onclick="executeFullReset()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition shadow-md">Igen, Töröld!</button>
@@ -461,23 +505,18 @@
         </div>
     </div>
 
-    <!-- LEVEL COMPLETED / RESULT MODAL -->
+    <!-- RESULT MODAL -->
     <div id="modal-level-result" class="fixed inset-0 z-50 bg-[var(--bg-color)]/90 backdrop-blur-md p-4 flex items-center justify-center hidden">
         <div class="bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/30 rounded-3xl p-6 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
             <h3 id="result-title" class="text-xl font-extrabold text-[var(--main-color)]">🎉 Szint Sikeresen Teljesítve!</h3>
-            <p id="result-accuracy" class="text-sm font-bold text-[var(--text-color)]">Pontosság: 95% (Elvárt: ≥90%)</p>
-
+            <p id="result-accuracy" class="text-sm font-bold text-[var(--text-color)]">Pontosság: 95%</p>
             <div id="result-nextkey-box" class="w-full bg-[var(--bg-color)] border border-[var(--main-color)]/40 rounded-2xl p-4 flex flex-col items-center gap-1.5 my-1">
                 <span id="result-nextkey-title" class="text-xs text-[var(--sub-color)] uppercase font-bold tracking-wider">Következő feloldott billentyű</span>
                 <span id="result-nextkey-char" class="text-3xl font-black text-[var(--main-color)]">D</span>
                 <span id="result-nextkey-finger" class="text-xs font-semibold text-[var(--text-color)]">Bal középső ujj</span>
             </div>
-
             <p id="result-msg" class="text-xs text-[var(--sub-color)]">Nyomj Enter-t a folytatáshoz!</p>
-
-            <button onclick="closeResultModalAndContinue()" class="w-full py-3 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm hover:brightness-110 transition shadow-lg">
-                Folytatás (Enter ↵)
-            </button>
+            <button onclick="closeResultModalAndContinue()" class="w-full py-3 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm hover:brightness-110 transition shadow-lg">Folytatás (Enter ↵)</button>
         </div>
     </div>
 
@@ -489,9 +528,7 @@
                     <h3 class="text-2xl font-black text-[var(--main-color)] flex items-center gap-2">📊 Teszt Eredmény Elemzés</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-0.5">Részletes gépelési mutatók</p>
                 </div>
-                <span id="adv-stat-time-tag" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] text-[var(--main-color)] font-bold text-xs border border-[var(--main-color)]/30">
-                    ⏱ Mérés Befejezve
-                </span>
+                <span id="adv-stat-time-tag" class="px-3 py-1.5 rounded-xl bg-[var(--bg-color)] text-[var(--main-color)] font-bold text-xs border border-[var(--main-color)]/30">⏱ Mérés Befejezve</span>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -513,7 +550,6 @@
                 <div class="bg-[var(--bg-color)] border border-[var(--sub-color)]/30 rounded-2xl p-4 flex flex-col items-center">
                     <span class="text-[10px] font-bold text-[var(--sub-color)] uppercase tracking-wider">Egyenletesség</span>
                     <span id="adv-stat-consistency" class="text-3xl font-black text-cyan-400 mt-1">100%</span>
-                    <span class="text-[10px] text-[var(--sub-color)] mt-0.5">Ritmus stabilitás</span>
                 </div>
             </div>
 
@@ -522,15 +558,13 @@
                 <div id="adv-stat-missed-keys" class="flex flex-wrap gap-2 pt-1"></div>
             </div>
 
-            <div class="flex items-center gap-3 pt-2">
-                <button onclick="closeAdvancedStatsModal(); startNewGame(true);" class="flex-1 py-3.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2">
-                    🔄 Újrapróbálkozás (Enter / Tab)
-                </button>
-            </div>
+            <button onclick="closeAdvancedStatsModal(); startNewGame(true);" class="w-full py-3.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2">
+                🔄 Újrapróbálkozás (Enter / Tab)
+            </button>
         </div>
     </div>
 
-    <!-- PERSONAL RECORDS / LOCAL STATS MODAL -->
+    <!-- STATS MODAL -->
     <div id="modal-stats" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
         <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col gap-5 shadow-2xl">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
@@ -569,7 +603,8 @@
         let currentFontSize = 'medium'; 
         let currentLanguage = 'hu'; 
 
-        let isSuddenDeathEnabled = false; // Instant Death State
+        let isSuddenDeathEnabled = false;
+        let handStyleMode = 1; // 1: Realisztikus Kontúr, 2: Minimalista Színes Ujj-Sávok
 
         let textLengthSetting = 25;
         let sentenceSubMode = 'words'; 
@@ -722,7 +757,7 @@
             },
             fr: {
                 short: ["C'est en forgeant qu'on devient forgeron.", "Savoir, c'est pouvoir.", "La patience est amère, mais son fruit est doux."],
-                medium: ["Peu importe la lenteur avec laquelle vous avancez, tant que vous ne vous arrêtez pas.", "Un voyage de mille milles commence toujours par un premier pas."],
+                medium: ["Peu importe la lenteur avec laquelle vous advancez, tant que vous ne vous arrêtez pas.", "Un voyage de mille milles commence toujours par un premier pas."],
                 long: ["Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte le plus."]
             },
             it: {
@@ -768,7 +803,7 @@
             it: [
                 "Nel mondo digitale di oggi, una comunicazione efficace è essenziale per raggiungere il successo.",
                 "Una passeggiata tranquilla nella natura aiuta a ritrovare la concentrazione e la pace interiore.",
-                "La pratica costante e l'impegno dedicato sono la chiave per padroneggiare ogni nuova abilità."
+                "La pratica constante e l'impegno dedicato sono la chiave per padroneggiare ogni nuova abilità."
             ],
             ro: [
                 "În lumea digitală de astăzi, o comunicare eficientă este esențială pentru a avea succes.",
@@ -776,6 +811,24 @@
                 "Practica consecventă și efortul dedicat sunt cheia pentru a stăpâni orice nouă abilitate."
             ]
         };
+
+        function toggleHandStyle() {
+            handStyleMode = handStyleMode === 1 ? 2 : 1;
+            document.getElementById('hand-style-label').textContent = handStyleMode === 1 ? "1. Kontúr" : "2. Sávok";
+
+            if (handStyleMode === 1) {
+                document.getElementById('hand-left-style-1').classList.remove('hidden');
+                document.getElementById('hand-left-style-2').classList.add('hidden');
+                document.getElementById('hand-right-style-1').classList.remove('hidden');
+                document.getElementById('hand-right-style-2').classList.add('hidden');
+            } else {
+                document.getElementById('hand-left-style-1').classList.add('hidden');
+                document.getElementById('hand-left-style-2').classList.remove('hidden');
+                document.getElementById('hand-right-style-1').classList.add('hidden');
+                document.getElementById('hand-right-style-2').classList.remove('hidden');
+            }
+            highlightTargetKey();
+        }
 
         function toggleSuddenDeath() {
             isSuddenDeathEnabled = !isSuddenDeathEnabled;
@@ -1416,7 +1469,6 @@
                 keyEl.classList.add('key-pressed');
             }
 
-            // INSTANT DEATH MODAL KEYBOARD HANDLING
             const suddenDeathModal = document.getElementById('modal-sudden-death');
             if (!suddenDeathModal.classList.contains('hidden')) {
                 if (e.key === 'Enter' || e.key === 'Tab') {
@@ -1488,7 +1540,6 @@
                         totalHits++;
                     }
                 } else {
-                    // INSTANT DEATH CHECK IN SENTENCE MODE
                     if (currentMode === 'sentence' && isSuddenDeathEnabled) {
                         triggerSuddenDeathGameOver();
                         return;
@@ -1639,10 +1690,31 @@
 
         function highlightTargetKey() {
             document.querySelectorAll('.key-target').forEach(el => el.classList.remove('key-target'));
+            document.querySelectorAll('.active-finger').forEach(el => el.classList.remove('active-finger'));
+
             if (charIndex < currentText.length) {
                 const targetChar = currentText[charIndex].toLowerCase();
                 const keyEl = getKeyElement(targetChar);
                 if (keyEl) keyEl.classList.add('key-target');
+
+                const fingerCode = KEY_FINGERS[targetChar] || 'thumb';
+                const s = `s${handStyleMode}`;
+
+                if (fingerCode === 'thumb') {
+                    const lThumb = document.getElementById(`hand-left-thumb-${s}`);
+                    const rThumb = document.getElementById(`hand-right-thumb-${s}`);
+                    if (lThumb) lThumb.classList.add('active-finger');
+                    if (rThumb) rThumb.classList.add('active-finger');
+                } else {
+                    const fingerNum = parseInt(fingerCode, 10);
+                    if (fingerNum <= 3) {
+                        const lFinger = document.getElementById(`hand-left-${fingerNum}-${s}`);
+                        if (lFinger) lFinger.classList.add('active-finger');
+                    } else {
+                        const rFinger = document.getElementById(`hand-right-${fingerNum}-${s}`);
+                        if (rFinger) rFinger.classList.add('active-finger');
+                    }
+                }
             }
         }
 
