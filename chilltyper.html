@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v5.3.1 - Vakírás Oktató</title>
+    <title>ChillTyper v5.3.2 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
@@ -192,7 +192,7 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.3.1</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.3.2</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
@@ -248,7 +248,7 @@
 
         <div class="flex items-center gap-2">
             <button id="sudden-death-btn" onclick="toggleSuddenDeath()" class="px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5 font-bold text-xs" title="Ha melléütsz, azonnal vége a játéknak!">
-                <span>☠️ Instant Halál:</span>
+                <span>☠️️ Instant Halál:</span>
                 <span id="sudden-death-status" class="uppercase font-black text-rose-500">KI</span>
             </button>
 
@@ -332,7 +332,7 @@
                 <div id="text-display" class="w-full text-center text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start"></div>
             </div>
 
-            <button onclick="startNewGame()" class="mt-4 p-3 rounded-full text-[var(--sub-color)] hover:text-[var(--main-color)] transition hover:rotate-180 duration-300" title="Kör Újraindítása (Tab)">
+            <button onclick="startNewGame(true)" class="mt-4 p-3 rounded-full text-[var(--sub-color)] hover:text-[var(--main-color)] transition hover:rotate-180 duration-300" title="Kör Újraindítása (Tab)">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
         </div>
@@ -416,7 +416,7 @@
         <div>
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
-        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.1 • Vakírás</div>
+        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.2 • Vakírás</div>
     </footer>
 
     <!-- MODALS -->
@@ -438,7 +438,7 @@
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
-                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙️️ Beállítások</h3>
+                    <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙ Beállítások</h3>
                     <p class="text-xs text-[var(--sub-color)] mt-1">Téma, betűméret, gyakorló nyelv és adatok kezelése</p>
                 </div>
                 <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">Bezárás ✕</button>
@@ -1255,7 +1255,8 @@
         function setTextLength(len) {
             textLengthSetting = len;
             updateLengthSelectorUI();
-            startNewGame(true);
+            // Ha kezdő módban vagyunk, megtartjuk a leütésszámot (totalHits)
+            startNewGame(currentMode !== 'beginner');
         }
 
         function updateLengthSelectorUI() {
@@ -1382,7 +1383,7 @@
         }
 
         function closeStatsModal() {
-            document.getElementById('modal-stats').classList.add('hidden');
+            document.getElementById('modal-stats').classList.remove('hidden');
         }
 
         function generateSentenceText() {
@@ -1807,7 +1808,7 @@
         }
 
         function closeLessonModal() {
-            document.getElementById('modal-lesson').classList.add('hidden');
+            document.getElementById('modal-lesson').classList.remove('hidden');
         }
 
         window.onload = init;
