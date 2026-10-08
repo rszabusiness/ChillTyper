@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper - Turbócsiga Gépelő Verseny</title>
+    <title>ChillTyper - Verdák Gépelő Verseny</title>
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>🏎️</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23e21d48'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'>🏎️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@600;800;900&family=VT323&family=Space+Grotesk:wght@500;700&family=Courier+Prime:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
     
@@ -64,19 +64,51 @@
 
         .race-lane {
             position: relative;
-            height: 52px;
-            border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
+            height: 80px;
             display: flex;
             align-items: center;
+            padding-bottom: 12px;
+            background: linear-gradient(to bottom,
+                rgba(44, 46, 49, 0) 0%,
+                rgba(44, 46, 49, 0) 80%,
+                rgba(0, 0, 0, 0.3) 100%);
+            border-bottom: 4px solid rgba(255, 255, 255, 0.05);
+        }
+        .race-lane:last-child {
+            border-bottom: none;
+        }
+        .lane-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+        .track-surface {
+            background-color: #2a2d30;
+            background-image:
+                radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0);
+            background-size: 24px 24px;
+            border: 4px solid #444;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
         }
 
-        .snail-runner {
+        .car-runner {
             position: absolute;
-            top: 6px;
-            transition: left 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            top: 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            will-change: left;
+        }
+
+        .car-icon {
+            width: 52px;
+            height: 32px;
+            filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.4));
         }
 
         .traffic-light {
@@ -99,6 +131,13 @@
             animation: blink-caret 1s infinite;
         }
 
+        .char-error {
+            color: var(--error-color) !important;
+            background-color: rgba(202, 71, 84, 0.2);
+            border-bottom: 3px solid var(--error-color);
+            border-radius: 2px;
+        }
+
         @keyframes blink-caret {
             0%, 100% { border-bottom-color: var(--caret-color); }
             50% { border-bottom-color: transparent; }
@@ -111,15 +150,15 @@
 </head>
 <body data-theme="serika_dark" data-font-size="medium" class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-6xl mx-auto selection:bg-amber-400 selection:text-slate-950">
 
-    <!-- HEADER WITH RETURN & SETTINGS BUTTON -->
+    <!-- HEADER -->
     <header class="w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-2xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-2xl flex items-center justify-center shadow-lg shadow-amber-500/10">
-                🏎️
+            <div class="w-12 h-12 rounded-2xl bg-red-600 text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-red-500/20">
+                ⚡
             </div>
             <div>
-                <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)] font-sans">Turbócsiga Verseny</h1>
-                <p class="text-xs font-semibold text-[var(--sub-color)]">Hagyd magad mögött a bot csigákat a gyors gépeléseddel!</p>
+                <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)] font-sans">Szelep Kupa Verseny</h1>
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Vezesd Villám McQueent és győzd le a riválisokat!</p>
             </div>
         </div>
 
@@ -129,7 +168,7 @@
             </a>
 
             <!-- SETTINGS BUTTON -->
-            <button onclick="openSettingsModal()" class="p-2.5 rounded-xl bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Beállítások (Téma, Betűméret, Nyelv, Reset)">
+            <button onclick="openSettingsModal()" class="p-2.5 rounded-xl bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 text-[var(--sub-color)] hover:text-[var(--main-color)] transition flex items-center gap-1.5" title="Beállítások">
                 <span class="text-lg">⚙️</span>
             </button>
 
@@ -163,37 +202,89 @@
             </div>
 
             <!-- VERSENYPÁLYA SÁVOK -->
-            <div class="flex flex-col w-full bg-[var(--bg-color)] rounded-2xl p-4 border border-[var(--sub-color)]/20 gap-1 relative overflow-hidden">
-                <div class="absolute top-0 bottom-0 right-10 w-2.5 bg-repeat-y opacity-40 z-10" style="background-image: linear-gradient(0deg, #fff 50%, #000 50%); background-size: 8px 16px;"></div>
+            <div class="flex flex-col w-full track-surface rounded-2xl p-4 border border-[var(--sub-color)]/20 gap-1 relative overflow-hidden">
+                <div class="absolute top-0 bottom-0 right-10 w-4 bg-repeat-y opacity-60 z-10" style="background-image: linear-gradient(0deg, #fff 50%, transparent 50%); background-size: 12px 24px;"></div>
 
+                <!-- JÁTÉKOS: Villám McQueen -->
                 <div class="race-lane">
-                    <div id="runner-player" class="snail-runner" style="left: 0%;">
-                        <span class="text-3xl">🐌</span>
-                        <span class="text-xs font-black text-[var(--main-color)] bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-lg border border-[var(--main-color)]/40 shadow">TE (Játékos)</span>
+                    <div id="runner-player" class="car-runner" style="left: 0%;">
+                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
+                            <!-- Shadow -->
+                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
+                            <!-- Body -->
+                            <path d="M 10,45 L 20,30 C 25,20 40,15 60,15 C 80,15 95,20 100,30 L 110,45 Z" fill="#dc2626" />
+                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#991b1b" />
+                            <!-- Roof/Windshield -->
+                            <path d="M 40,20 C 45,10 75,10 80,20 L 85,35 L 35,35 Z" fill="#1e293b" />
+                            <path d="M 45,18 C 50,12 70,12 75,18 L 78,28 L 42,28 Z" fill="#93c5fd" opacity="0.6" />
+                            <!-- Details -->
+                            <rect x="25" y="35" width="60" height="4" rx="2" fill="#facc15" />
+                            <text x="30" y="42" font-size="8" font-weight="black" fill="white" style="font-family: Arial">95</text>
+                            <!-- Wheels -->
+                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
+                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
+                            <circle cx="30" cy="50" r="3" fill="#aaa" />
+                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        </svg>
+                        <span class="text-xs font-black text-red-500 bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-lg border border-red-500/40 shadow">⚡ Villám McQueen (TE)</span>
                     </div>
                     <span id="wpm-player" class="absolute right-14 text-xs font-bold text-[var(--sub-color)]">0 WPM</span>
                 </div>
 
+                <!-- BOT 1: Matuka -->
                 <div class="race-lane">
-                    <div id="runner-bot1" class="snail-runner" style="left: 0%;">
-                        <span class="text-3xl">🐌</span>
-                        <span class="text-xs font-bold text-cyan-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-cyan-500/30">🐌 Turbo Csiga</span>
+                    <div id="runner-bot1" class="car-runner" style="left: 0%;">
+                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
+                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
+                            <path d="M 10,45 L 15,35 L 40,30 L 80,30 L 95,35 L 105,45 Z" fill="#854d0e" />
+                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#5c3a0a" />
+                            <path d="M 45,30 L 75,30 L 80,40 L 40,40 Z" fill="#1e293b" />
+                            <path d="M 48,28 L 72,28 L 75,35 L 45,35 Z" fill="#93c5fd" opacity="0.4" />
+                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
+                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
+                            <circle cx="30" cy="50" r="3" fill="#aaa" />
+                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        </svg>
+                        <span class="text-xs font-bold text-amber-500 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-amber-500/30">🛠️ Matuka</span>
                     </div>
                     <span id="wpm-bot1" class="absolute right-14 text-xs font-bold text-[var(--sub-color)]">0 WPM</span>
                 </div>
 
+                <!-- BOT 2: Jackson Storm -->
                 <div class="race-lane">
-                    <div id="runner-bot2" class="snail-runner" style="left: 0%;">
-                        <span class="text-3xl">🐌</span>
-                        <span class="text-xs font-bold text-purple-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-purple-500/30">🐌 Villám</span>
+                    <div id="runner-bot2" class="car-runner" style="left: 0%;">
+                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
+                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
+                            <path d="M 5,45 L 20,32 L 40,20 L 80,20 L 100,32 L 110,45 Z" fill="#0f172a" />
+                            <path d="M 10,45 L 105,45 L 100,52 L 15,52 Z" fill="#020617" />
+                            <path d="M 40,20 L 80,20 L 85,30 L 35,30 Z" fill="#1e293b" />
+                            <path d="M 45,18 L 75,18 L 80,28 L 40,28 Z" fill="#38bdf8" opacity="0.5" />
+                            <rect x="20" y="32" width="80" height="3" rx="1" fill="#0ea5e9" />
+                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#38bdf8" stroke-width="2" />
+                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#38bdf8" stroke-width="2" />
+                            <circle cx="30" cy="50" r="3" fill="#eee" />
+                            <circle cx="90" cy="50" r="3" fill="#eee" />
+                        </svg>
+                        <span class="text-xs font-bold text-sky-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-sky-500/30">🚀 Jackson Storm</span>
                     </div>
                     <span id="wpm-bot2" class="absolute right-14 text-xs font-bold text-[var(--sub-color)]">0 WPM</span>
                 </div>
 
+                <!-- BOT 3: Cruz Ramirez -->
                 <div class="race-lane">
-                    <div id="runner-bot3" class="snail-runner" style="left: 0%;">
-                        <span class="text-3xl">🐌</span>
-                        <span class="text-xs font-bold text-orange-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-orange-500/30">🐌 Száguldó</span>
+                    <div id="runner-bot3" class="car-runner" style="left: 0%;">
+                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
+                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
+                            <path d="M 10,45 L 20,30 L 40,20 L 80,20 L 100,30 L 110,45 Z" fill="#eab308" />
+                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#a16207" />
+                            <path d="M 40,20 L 80,20 L 85,30 L 35,30 Z" fill="#1e293b" />
+                            <path d="M 45,18 L 75,18 L 80,28 L 40,28 Z" fill="#bfdbfe" opacity="0.6" />
+                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#fef08a" stroke-width="2" />
+                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#fef08a" stroke-width="2" />
+                            <circle cx="30" cy="50" r="3" fill="#aaa" />
+                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        </svg>
+                        <span class="text-xs font-bold text-yellow-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-yellow-500/30">🟡 Cruz Ramirez</span>
                     </div>
                     <span id="wpm-bot3" class="absolute right-14 text-xs font-bold text-[var(--sub-color)]">0 WPM</span>
                 </div>
@@ -201,7 +292,7 @@
         </div>
 
         <div class="w-full bg-[var(--sub-alt-color)]/60 border border-[var(--sub-color)]/20 rounded-3xl p-6 sm:p-8 flex flex-col items-center gap-4 relative">
-            <div id="text-display" class="w-full text-center text-xl sm:text-2xl leading-relaxed text-[var(--sub-color)] select-none flex flex-wrap justify-center min-h-[100px]"></div>
+            <div id="text-display" class="w-full text-center text-xl sm:text-2xl leading-relaxed text-[var(--sub-color)] select-none flex flex-wrap justify-center content-start items-center min-h-[100px]"></div>
 
             <button onclick="resetRace()" class="p-3 rounded-full text-[var(--sub-color)] hover:text-[var(--main-color)] transition hover:rotate-180 duration-300" title="Újraindítás (Tab)">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
@@ -228,7 +319,7 @@
             </div>
 
             <div id="set-content-theme" class="flex flex-col gap-4">
-                <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül az azonnali stílusváltáshoz:</p>
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül:</p>
                 <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
             </div>
 
@@ -243,29 +334,15 @@
             </div>
 
             <div id="set-content-lang" class="flex flex-col gap-4 hidden">
-                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak, mondatok és idézetek nyelvét:</p>
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak nyelvét:</p>
                 <div id="languages-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
             <div id="set-content-reset" class="flex flex-col gap-4 hidden">
                 <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
-                    <div class="flex items-center gap-3 text-rose-400"><span class="text-2xl">⚠️</span><h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4></div>
-                    <p class="text-xs text-[var(--sub-color)] leading-relaxed">A reset művelet törli az összes helyben elmentett adatot.</p>
-                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg flex items-center gap-2">🗑 Összes Haladás Törlése</button>
+                    <div class="flex items-center gap-3 text-rose-400"><span class="text-2xl">⚠️</span><h4 class="font-bold text-base">Alaphelyzetbe Állítás</h4></div>
+                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg">🗑 Összes Haladás Törlése</button>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RESET CONFIRMATION MODAL -->
-    <div id="modal-reset-confirm" class="fixed inset-0 z-50 bg-[var(--bg-color)]/90 backdrop-blur-md p-4 flex items-center justify-center hidden">
-        <div class="bg-[var(--sub-alt-color)] border border-rose-500/40 rounded-3xl p-6 max-w-md w-full flex flex-col items-center text-center gap-4 shadow-2xl">
-            <span class="text-4xl">🚨</span>
-            <h3 class="text-xl font-extrabold text-rose-400">Biztosan törölni szeretnéd?</h3>
-            <p class="text-xs text-[var(--sub-color)] leading-relaxed">Ezzel a lépéssel törlődnek a feloldott szintek és rekordok.</p>
-            <div class="flex items-center gap-3 w-full mt-2">
-                <button onclick="closeResetConfirmation()" class="flex-1 py-3 rounded-xl bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/30 text-[var(--text-color)] font-bold text-xs transition">Mégse</button>
-                <button onclick="executeFullReset()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition shadow-md">Igen, Töröld!</button>
             </div>
         </div>
     </div>
@@ -325,25 +402,20 @@
 
         const SUPPORTED_LANGUAGES = [
             { id: 'hu', flag: '🇭🇺', name: 'Magyar (HU)', desc: 'Magyar szavak, ékezetes mondatok' },
-            { id: 'en', flag: '🇬🇧', name: 'English (EN)', desc: 'English vocabulary pool & sentences' },
-            { id: 'de', flag: '🇩🇪', name: 'Deutsch (DE)', desc: 'Deutsche Wörter und bekannte Zitate' },
-            { id: 'es', flag: '🇪🇸', name: 'Español (ES)', desc: 'Palabras en español y frases' },
-            { id: 'fr', flag: '🇫🇷', name: 'Français (FR)', desc: 'Mots français et citations' },
-            { id: 'it', flag: '🇮🇹', name: 'Italiano (IT)', desc: 'Parole italiane e frasi' },
-            { id: 'ro', flag: '🇷🇴', name: 'Română (RO)', desc: 'Cuvinte în română și propoziții' }
+            { id: 'en', flag: '🇬🇧', name: 'English (EN)', desc: 'English vocabulary pool & sentences' }
         ];
 
         const TEXTS = {
             hu: [
                 "A türelem és a kitartó gyakorlás mindig meghozza az eredményét a vakírásban.",
                 "Nem a gyorsaság az egyetlen fontos tényező, a pontosság lényegesen többet számít.",
-                "A száguldó turbócsigák bebizonyítják, hogy lassan de biztosan is célba lehet érni.",
+                "Szuper verdák száguldanak a versenypályán, hogy megnyerjék a Szelep Kupát.",
                 "A digitális világban a magabiztos billentyűkezelés az egyik leghasznosabb tudás."
             ],
             en: [
                 "Patience and persistent practice always bring results in touch typing.",
                 "Speed is not the only important factor, accuracy matters significantly more.",
-                "Racing snails prove that going slow and steady still wins the race.",
+                "Racing cars speed down the track competing for the prestigious Piston Cup.",
                 "In the digital world, confident keyboard skills are essential."
             ]
         };
@@ -361,16 +433,19 @@
 
         let difficulty = 'easy';
         let currentText = '';
-        let charIndex = 0;
+        let userInputs = [];
         let errorsCount = 0;
 
         let isRacing = false;
         let countdown = 3;
         let startTime = 0;
-        let botInterval = null;
+        let animFrameId = null;
+
+        let playerPos = 0;
+        let targetPlayerPos = 0;
 
         let botSpeeds = { bot1: 0, bot2: 0, bot3: 0 };
-        let botProgress = { bot1: 0, bot2: 0, bot3: 0 };
+        let botPos = { bot1: 0, bot2: 0, bot3: 0 };
 
         function initSettings() {
             activeTheme = localStorage.getItem('chilltyper_theme') || 'serika_dark';
@@ -392,20 +467,18 @@
             currentFontSize = size;
             document.body.setAttribute('data-font-size', size);
             localStorage.setItem('chilltyper_fontsize', size);
-            updateFontSizeUI();
+            renderText();
         }
 
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('chilltyper_lang', lang);
-            renderLanguagesGrid();
             resetRace();
         }
 
         function openSettingsModal() {
             renderThemesGrid();
             renderLanguagesGrid();
-            updateFontSizeUI();
             switchSettingsTab('theme');
             document.getElementById('modal-settings').classList.remove('hidden');
         }
@@ -436,7 +509,7 @@
                 const isActive = activeTheme === t.id;
                 const btn = document.createElement('button');
                 btn.onclick = () => setTheme(t.id);
-                btn.className = `p-3.5 rounded-2xl border text-left transition flex flex-col justify-between gap-2.5 hover:scale-[1.03] ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] shadow-md ring-2 ring-[var(--main-color)]/50' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)]/60 hover:border-[var(--sub-color)]/50'}`;
+                btn.className = `p-3.5 rounded-2xl border text-left transition flex flex-col justify-between gap-2.5 ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] shadow-md ring-2 ring-[var(--main-color)]/50' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)]/60'}`;
                 
                 btn.innerHTML = `
                     <div class="flex items-center justify-between w-full">
@@ -453,16 +526,6 @@
             });
         }
 
-        function updateFontSizeUI() {
-            ['small', 'medium', 'large', 'xlarge'].forEach(s => {
-                const btn = document.getElementById(`fontsize-opt-${s}`);
-                if (!btn) return;
-                btn.className = s === currentFontSize 
-                    ? "p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] shadow-md ring-2 ring-[var(--main-color)]/40" 
-                    : "p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02] opacity-80 hover:opacity-100";
-            });
-        }
-
         function renderLanguagesGrid() {
             const grid = document.getElementById('languages-grid');
             if (!grid) return;
@@ -471,36 +534,10 @@
                 const isActive = currentLanguage === l.id;
                 const btn = document.createElement('button');
                 btn.onclick = () => setLanguage(l.id);
-                btn.className = `p-4 rounded-2xl border text-left transition flex flex-col justify-between gap-2 hover:scale-[1.02] ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] shadow-md ring-2 ring-[var(--main-color)]/40' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] hover:border-[var(--sub-color)]/50'}`;
-                
-                btn.innerHTML = `
-                    <div class="flex items-center justify-between w-full">
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-2xl">${l.flag}</span>
-                            <h4 class="font-bold text-xs text-[var(--text-color)]">${l.name}</h4>
-                        </div>
-                        ${isActive ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-[var(--main-color)] text-[var(--bg-color)]">Aktív</span>' : ''}
-                    </div>
-                    <p class="text-[10px] text-[var(--sub-color)] leading-tight mt-1">${l.desc}</p>
-                `;
+                btn.className = `p-4 rounded-2xl border text-left transition ${isActive ? 'border-[var(--main-color)] bg-[var(--sub-alt-color)] ring-2 ring-[var(--main-color)]/40' : 'border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)]'}`;
+                btn.innerHTML = `<h4 class="font-bold text-xs text-[var(--text-color)]">${l.flag} ${l.name}</h4>`;
                 grid.appendChild(btn);
             });
-        }
-
-        function requestResetConfirmation() {
-            document.getElementById('modal-reset-confirm').classList.remove('hidden');
-        }
-
-        function closeResetConfirmation() {
-            document.getElementById('modal-reset-confirm').classList.add('hidden');
-        }
-
-        function executeFullReset() {
-            localStorage.clear();
-            initSettings();
-            closeResetConfirmation();
-            closeSettingsModal();
-            resetRace();
         }
 
         function setDifficulty(diff) {
@@ -521,17 +558,20 @@
         }
 
         function resetRace() {
-            clearInterval(botInterval);
+            if (animFrameId) cancelAnimationFrame(animFrameId);
             isRacing = false;
-            charIndex = 0;
+            userInputs = [];
             errorsCount = 0;
             countdown = 3;
+
+            playerPos = 0;
+            targetPlayerPos = 0;
+            botPos = { bot1: 0, bot2: 0, bot3: 0 };
 
             document.getElementById('runner-player').style.left = "0%";
             document.getElementById('runner-bot1').style.left = "0%";
             document.getElementById('runner-bot2').style.left = "0%";
             document.getElementById('runner-bot3').style.left = "0%";
-            botProgress = { bot1: 0, bot2: 0, bot3: 0 };
 
             document.getElementById('wpm-player').textContent = "0 WPM";
 
@@ -573,52 +613,105 @@
                     rLight.className = "traffic-light";
                     yLight.className = "traffic-light";
                     gLight.className = "traffic-light light-green";
-                    statusText.textContent = "GO! GÉPELJ!";
+                    statusText.textContent = "GO! PADLÓGÁZ!";
                     isRacing = true;
                     startTime = Date.now();
-                    startBots();
+                    lastFrameTime = performance.now();
+                    requestAnimationFrame(gameLoop);
                 }
                 countdown--;
             }, 1000);
         }
 
-        function startBots() {
-            botInterval = setInterval(() => {
-                if (!isRacing) return;
+        /* FIZIKAI MOZGÁSI CIKLUS */
+        let lastFrameTime = performance.now();
+        function gameLoop(now) {
+            if (!isRacing) return;
+            const delta = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
 
-                ['bot1', 'bot2', 'bot3'].forEach(bot => {
-                    if (botProgress[bot] < 82) {
-                        botProgress[bot] += (botSpeeds[bot] / 60) * 0.35;
-                        document.getElementById(`runner-${bot}`).style.left = `${Math.min(82, botProgress[bot])}%`;
-                    }
-                });
-            }, 200);
+            // 1. Játékos autó simítása
+            const posDiff = targetPlayerPos - playerPos;
+            if (posDiff !== 0) {
+                playerPos += posDiff * Math.min(1, delta * 8);
+            }
+            document.getElementById('runner-player').style.left = `${Math.max(0, Math.min(82, playerPos))}%`;
+
+            // 2. Botok WPM haladása
+            const totalWords = currentText.length / 5;
+
+            ['bot1', 'bot2', 'bot3'].forEach(bot => {
+                if (botPos[bot] < 82) {
+                    const progressFractionPerSec = (botSpeeds[bot] / 60) / totalWords;
+                    botPos[bot] += (progressFractionPerSec * 82) * delta;
+                    document.getElementById(`runner-${bot}`).style.left = `${Math.min(82, botPos[bot])}%`;
+                }
+            });
+
+            animFrameId = requestAnimationFrame(gameLoop);
         }
 
         function renderText() {
             const display = document.getElementById('text-display');
+            if (!display) return;
             display.innerHTML = "";
 
-            for (let i = 0; i < currentText.length; i++) {
-                const charSpan = document.createElement('span');
-                const char = currentText[i];
+            const words = currentText.split(' ');
+            let globalCharIdx = 0;
 
-                if (i < charIndex) {
-                    charSpan.className = "text-[var(--text-color)] font-bold";
-                } else if (i === charIndex) {
-                    charSpan.className = "caret-active font-black";
-                } else {
-                    charSpan.className = "text-[var(--sub-color)] opacity-50";
+            words.forEach((wordStr, wordIdx) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = "inline-flex flex-nowrap whitespace-nowrap mx-1.5 my-1 items-center";
+
+                for (let i = 0; i < wordStr.length; i++) {
+                    const char = wordStr[i];
+                    const charSpan = document.createElement('span');
+                    const charPos = globalCharIdx;
+
+                    if (charPos < userInputs.length) {
+                        if (userInputs[charPos].correct) {
+                            charSpan.className = "text-[var(--text-color)] font-bold";
+                        } else {
+                            charSpan.className = "char-error font-bold";
+                        }
+                    } else if (charPos === userInputs.length) {
+                        charSpan.className = "caret-active font-black";
+                    } else {
+                        charSpan.className = "text-[var(--sub-color)] opacity-50";
+                    }
+
+                    charSpan.textContent = char;
+                    wordSpan.appendChild(charSpan);
+                    globalCharIdx++;
                 }
 
-                charSpan.textContent = char;
-                display.appendChild(charSpan);
-            }
+                if (wordIdx < words.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    const spacePos = globalCharIdx;
+
+                    if (spacePos < userInputs.length) {
+                        if (userInputs[spacePos].correct) {
+                            spaceSpan.className = "text-[var(--text-color)] font-bold";
+                        } else {
+                            spaceSpan.className = "char-error font-bold";
+                        }
+                    } else if (spacePos === userInputs.length) {
+                        spaceSpan.className = "caret-active font-black";
+                    } else {
+                        spaceSpan.className = "text-[var(--sub-color)] opacity-50";
+                    }
+
+                    spaceSpan.textContent = "\u00A0";
+                    wordSpan.appendChild(spaceSpan);
+                    globalCharIdx++;
+                }
+
+                display.appendChild(wordSpan);
+            });
         }
 
         document.addEventListener('keydown', (e) => {
-            if (!document.getElementById('modal-settings').classList.contains('hidden') ||
-                !document.getElementById('modal-reset-confirm').classList.contains('hidden')) return;
+            if (!document.getElementById('modal-settings').classList.contains('hidden')) return;
 
             if (!document.getElementById('modal-result').classList.contains('hidden')) {
                 if (e.key === 'Enter' || e.key === 'Tab') {
@@ -637,44 +730,72 @@
 
             if (!isRacing) return;
 
+            // CTRL + BACKSPACE LOGIKA (SZÓTÖRLESE)
+            if (e.key === 'Backspace' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                if (userInputs.length > 0) {
+                    // Ha szóközön vagyunk közvetlenül, töröljük a szóközöket először
+                    while (userInputs.length > 0 && currentText[userInputs.length - 1] === ' ') {
+                        userInputs.pop();
+                    }
+                    // Majd töröljük az előző szó összes karakterét az előző szóközig
+                    while (userInputs.length > 0 && currentText[userInputs.length - 1] !== ' ') {
+                        userInputs.pop();
+                    }
+
+                    const correctCount = userInputs.filter(x => x.correct).length;
+                    targetPlayerPos = (correctCount / currentText.length) * 82;
+                    renderText();
+                }
+                return;
+            }
+
+            // SIMA BACKSPACE (EGY KARAKTER TÖRLESE)
             if (e.key === 'Backspace') {
-                if (charIndex > 0) {
-                    charIndex--;
+                if (userInputs.length > 0) {
+                    userInputs.pop();
+                    
+                    const correctCount = userInputs.filter(x => x.correct).length;
+                    targetPlayerPos = (correctCount / currentText.length) * 82;
                     renderText();
                 }
                 return;
             }
 
             if (e.key.length === 1) {
-                const targetChar = currentText[charIndex];
-                if (e.key === targetChar) {
-                    charIndex++;
-                } else {
-                    errorsCount++;
-                }
+                if (userInputs.length < currentText.length) {
+                    const targetChar = currentText[userInputs.length];
+                    const isCorrect = (e.key === targetChar);
 
-                const playerProgressPercent = (charIndex / currentText.length) * 82;
-                document.getElementById('runner-player').style.left = `${Math.min(82, playerProgressPercent)}%`;
+                    if (!isCorrect) {
+                        errorsCount++;
+                    }
 
-                const elapsedSec = Math.max(1, (Date.now() - startTime) / 1000);
-                const liveWpm = Math.round((charIndex / 5) / (elapsedSec / 60));
-                document.getElementById('wpm-player').textContent = `${liveWpm} WPM`;
+                    userInputs.push({ char: e.key, correct: isCorrect });
 
-                renderText();
+                    const correctCount = userInputs.filter(x => x.correct).length;
+                    targetPlayerPos = (correctCount / currentText.length) * 82;
 
-                if (charIndex >= currentText.length) {
-                    finishRace(liveWpm);
+                    const elapsedSec = Math.max(1, (Date.now() - startTime) / 1000);
+                    const liveWpm = Math.round((correctCount / 5) / (elapsedSec / 60));
+                    document.getElementById('wpm-player').textContent = `${liveWpm} WPM`;
+
+                    renderText();
+
+                    if (userInputs.length === currentText.length && userInputs.every(x => x.correct)) {
+                        finishRace(liveWpm);
+                    }
                 }
             }
         });
 
         function finishRace(playerWpm) {
             isRacing = false;
-            clearInterval(botInterval);
+            if (animFrameId) cancelAnimationFrame(animFrameId);
 
             let rank = 1;
             ['bot1', 'bot2', 'bot3'].forEach(bot => {
-                if (botProgress[bot] >= 82) {
+                if (botPos[bot] >= 82) {
                     rank++;
                 }
             });
@@ -689,11 +810,11 @@
 
             if (rank === 1) {
                 emojiEl.textContent = "🏆";
-                titleEl.textContent = "1. Helyezés! Bajnok!";
+                titleEl.textContent = "1. Helyezés! Megnyerted a Szelep Kupát!";
                 titleEl.className = "text-2xl font-black text-amber-400";
             } else if (rank === 2) {
                 emojiEl.textContent = "🥈";
-                titleEl.textContent = "2. Helyezés! Szép volt!";
+                titleEl.textContent = "2. Helyezés! Szép futam!";
                 titleEl.className = "text-2xl font-black text-slate-300";
             } else {
                 emojiEl.textContent = "🥉";

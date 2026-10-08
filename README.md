@@ -1,4 +1,4 @@
-# ⌨ ChillTyper v5.3.4 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
+# ⌨ ChillTyper v5.4.3 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
 
 **ChillTyper** egy modern, böngészőben futó, interaktív tízujjas gépírás-oktató és -fejlesztő webalkalmazás, amely a **magyar QWERTZ billentyűzetkiosztás** alapjaira épül[cite: 3].
 
@@ -57,10 +57,17 @@ Három különálló al-mód a sokoldalú gyakorláshoz[cite: 3]:
    * 🦅 **Hosszú**[cite: 3]
 3. **⏱️ Időmérés**: Klasszikus visszaszámláló teszt választható időtartammal: `15s`, `30s`, `60s`, `120s`[cite: 3].
 
+### 4. 🏎️ Verdák Verseny (ÚJ)[cite: 3]
+Interaktív, versenyzőkkel szimulált gépelési kihívás:
+* **Versenyzők**: Vezesd Villám McQueent a győzelembe, miközben versenyezel a botokkal (Matuka, Jackson Storm, Cruz Ramirez).
+* **Vizuális Haladás**: A gépelési sebességed (WPM) határozza meg az autód pozícióját a pályán valós időben.
+* **Nehézségi Szintek**: Választható nehézség (Könnyű, Közepes, Nehéz, Turbó Pro), amely befolyásolja a riválisok sebességét.
+* **Vizuális Élmény**: Valódi versenypálya design, startlámpák és dinamikus autóanimációk.
+
 ## 🛠 Technikai Részletek
 
 * **Egyszerű asztali alkalmazás**: A Python-indító az önálló HTML-felületet asztali ablakban futtatja, és önálló EXE-vé csomagolható[cite: 3].
 * **Külső Függőségek**: Tailwind CSS (CDN), Google Fonts (Plus Jakarta Sans, JetBrains Mono, Orbitron, VT323, Space Grotesk, Courier Prime, Fredoka)[cite: 3].
 * **Adattárolás**: A témát, a betűméretet, a feloldott legmagasabb szintet és az aktuális kezdőszint részfeladatait tartósan elmenti[cite: 3]. Bezárás után az utolsó gépelt karaktertől folytatható[cite: 3]. Windows alatt az adatok a `%LOCALAPPDATA%\ChillTyper\webview` mappába kerülnek[cite: 3].
 
-*ChillTyper v5.3.4 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]
+*ChillTyper v5.4.3 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]
