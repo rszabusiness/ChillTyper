@@ -12,19 +12,22 @@ from threading import Thread
 
 
 APP_NAME = "ChillTyper"
+APP_VERSION = "5.4.3"
 HOST = "127.0.0.1"
 PORT = 8765
 HTML_NAME = "chilltyper.html"
+ALT_HTML_NAME = "verseny.html"
 ICON_NAME = "chilltyper_icon.ico"
 SOURCE_DIR = Path(__file__).resolve().parent
+BUNDLED_HTML_NAMES = (HTML_NAME, ALT_HTML_NAME)
 
 
-def bundled_html_path() -> Path:
+def bundled_html_path(html_name: str = HTML_NAME) -> Path:
     """Return the HTML resource path in source and PyInstaller one-file modes."""
     bundle_dir = getattr(sys, "_MEIPASS", None)
     if getattr(sys, "frozen", False) and bundle_dir:
-        return Path(bundle_dir) / HTML_NAME
-    return SOURCE_DIR / HTML_NAME
+        return Path(bundle_dir) / html_name
+    return SOURCE_DIR / html_name
 
 
 def user_data_path() -> Path:
@@ -38,10 +41,15 @@ def user_data_path() -> Path:
     return base_dir / APP_NAME / "webview"
 
 
-def make_handler(page: bytes) -> type[BaseHTTPRequestHandler]:
+def make_handler(pages: dict[str, bytes]) -> type[BaseHTTPRequestHandler]:
     class ChillTyperHandler(BaseHTTPRequestHandler):
         def do_GET(self) -> None:
-            if self.path.partition("?")[0] not in ("/", f"/{HTML_NAME}"):
+            requested_path = self.path.partition("?")[0]
+            page_name = requested_path.lstrip("/") or HTML_NAME
+            page = pages.get(page_name)
+            if page is None and requested_path == "/":
+                page = pages.get(HTML_NAME)
+            if page is None:
                 self.send_error(404)
                 return
 
@@ -58,28 +66,34 @@ def make_handler(page: bytes) -> type[BaseHTTPRequestHandler]:
     return ChillTyperHandler
 
 
-def run_app() -> None:
-    html_path = bundled_html_path()
-    if not html_path.is_file():
-        raise SystemExit(
-            f"Nem található a beágyazott alkalmazásfelület: {html_path}\n"
-            "Forrásból indítva tedd a chilltyper.html fájlt a Python-fájl mellé, "
-            "vagy az alkalmazást a --build-exe kapcsolóval csomagold újra."
-        )
+def run_app(page_name: str = HTML_NAME) -> None:
+    page_map: dict[str, bytes] = {}
+    for html_name in BUNDLED_HTML_NAMES:
+        html_path = bundled_html_path(html_name)
+        if not html_path.is_file():
+            missing_names = ", ".join(
+                f"{name} ({bundled_html_path(name)})" for name in BUNDLED_HTML_NAMES if not bundled_html_path(name).is_file()
+            )
+            raise SystemExit(
+                "Nem található a beágyazott alkalmazásfelület:\n"
+                f"{missing_names}\n"
+                "Forrásból indítva tedd a chilltyper.html és verseny.html fájlokat a Python-fájl mellé, "
+                "vagy az alkalmazást a --build-exe kapcsolóval csomagold újra."
+            )
+        page_map[html_name] = html_path.read_bytes()
 
     try:
         import webview
     except ModuleNotFoundError as error:
         if error.name == "webview":
             raise SystemExit(
-                "A ChillTyper indításához telepítsd a pywebview csomagot:\n"
+                "A ChillTyper indításához telepítésd a pywebview csomagot:\n"
                 "python -m pip install pywebview"
             ) from error
         raise
 
-    page = html_path.read_bytes()
     try:
-        server = ThreadingHTTPServer((HOST, PORT), make_handler(page))
+        server = ThreadingHTTPServer((HOST, PORT), make_handler(page_map))
     except OSError as error:
         if getattr(error, "winerror", None) == 10048:
             raise SystemExit(
@@ -92,12 +106,13 @@ def run_app() -> None:
         kwargs={"poll_interval": 0.2},
         daemon=True,
     )
-    url = f"http://{HOST}:{server.server_port}/"
+    root_path = page_name if page_name in BUNDLED_HTML_NAMES else HTML_NAME
+    url = f"http://{HOST}:{server.server_port}/{root_path}"
 
     try:
         server_thread.start()
         webview.create_window(
-            "ChillTyper – Magyar QWERTZ vakírás",
+            f"{APP_NAME} v{APP_VERSION} – Magyar QWERTZ vakírás",
             url,
             width=1280,
             height=900,
@@ -112,14 +127,15 @@ def run_app() -> None:
 
 
 def build_exe() -> None:
-    html_path = SOURCE_DIR / HTML_NAME
-    if not html_path.is_file():
-        raise SystemExit(f"Az EXE készítéséhez hiányzik a HTML-fájl: {html_path}")
+    missing_html = [name for name in BUNDLED_HTML_NAMES if not (SOURCE_DIR / name).is_file()]
+    if missing_html:
+        raise SystemExit(f"Az EXE készítéséhez hiányzik a HTML-fájl(ok): {', '.join(str(SOURCE_DIR / name) for name in missing_html)}")
 
     icon_path = SOURCE_DIR / ICON_NAME
     if not icon_path.is_file():
         raise SystemExit(f"Az EXE ikonjához hiányzik az ikonfájl: {icon_path}")
 
+    exe_name = f"{APP_NAME}-v{APP_VERSION}"
     command = [
         sys.executable,
         "-m",
@@ -129,7 +145,7 @@ def build_exe() -> None:
         "--onefile",
         "--windowed",
         "--name",
-        APP_NAME,
+        exe_name,
         "--icon",
         str(icon_path),
         "--specpath",
@@ -138,14 +154,16 @@ def build_exe() -> None:
         str(SOURCE_DIR / "build" / "work"),
         "--distpath",
         str(SOURCE_DIR / "dist"),
-        "--add-data",
-        f"{html_path};.",
+    ]
+    for html_name in BUNDLED_HTML_NAMES:
+        command.extend(["--add-data", f"{SOURCE_DIR / html_name};."])
+    command.extend([
         "--collect-all",
         "webview",
         str(Path(__file__).resolve()),
-    ]
+    ])
     subprocess.run(command, cwd=SOURCE_DIR, check=True)
-    print(f"Elkészült: {SOURCE_DIR / 'dist' / f'{APP_NAME}.exe'}")
+    print(f"Elkészült: {SOURCE_DIR / 'dist' / f'{exe_name}.exe'}")
 
 
 def main() -> None:
@@ -153,13 +171,19 @@ def main() -> None:
     parser.add_argument(
         "--build-exe",
         action="store_true",
-        help="Önálló EXE készítése; a HTML-felületet belecsomagolja a fájlba.",
+        help="Önálló EXE készítése; a ChillTyper és a Verseny HTML-felületeket belecsomagolja a fájlba.",
+    )
+    parser.add_argument(
+        "--page",
+        choices=[HTML_NAME, ALT_HTML_NAME],
+        default=HTML_NAME,
+        help="Melyik HTML-felület nyíljon meg az appben. A versenyhez használd a verseny.html értéket.",
     )
     args = parser.parse_args()
     if args.build_exe:
         build_exe()
     else:
-        run_app()
+        run_app(page_name=args.page)
 
 
 if __name__ == "__main__":
