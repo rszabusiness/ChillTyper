@@ -12,7 +12,7 @@ from threading import Thread
 
 
 APP_NAME = "ChillTyper"
-APP_VERSION = "5.4.3"
+APP_VERSION = "5.4.5"
 HOST = "127.0.0.1"
 PORT = 8765
 HTML_NAME = "chilltyper.html"

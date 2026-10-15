@@ -1,6 +1,13 @@
-# ⌨ ChillTyper v5.4.3 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
+# ⌨ ChillTyper v5.4.5 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
 
 **ChillTyper** egy modern, böngészőben futó, interaktív tízujjas gépírás-oktató és -fejlesztő webalkalmazás, amely a **magyar QWERTZ billentyűzetkiosztás** alapjaira épül[cite: 3].
+
+## 🆕 Újdonságok a v5.4.5 verzióban
+
+* **Kezdőszintek gyorsabb elérése**: A szintjelző melletti nyilakkal lépkedhetsz a már feloldott szintek között, a szintjelzőre vagy a szintlistára kattintva pedig közvetlenül választhatsz közülük.
+* **Összes kezdőszint feloldása**: A beállításokban egyetlen gombbal feloldhatod mind a 47 kezdőszintet.
+* **Összesített leütésszám**: A statisztikai ablakban már az eddig begépelt karakterek száma is megjelenik.
+* **Választható versenyhossz**: A Verdák versenyben 1, 3 vagy 5 mondattal állíthatod be a futam hosszát. A rajt előtti visszaszámlálás közben a közlekedési lámpák is sorban váltanak.
 
 ## ✨ Főbb Funkciók & Jellemzők
 
@@ -70,4 +77,4 @@ Interaktív, versenyzőkkel szimulált gépelési kihívás:
 * **Külső Függőségek**: Tailwind CSS (CDN), Google Fonts (Plus Jakarta Sans, JetBrains Mono, Orbitron, VT323, Space Grotesk, Courier Prime, Fredoka)[cite: 3].
 * **Adattárolás**: A témát, a betűméretet, a feloldott legmagasabb szintet és az aktuális kezdőszint részfeladatait tartósan elmenti[cite: 3]. Bezárás után az utolsó gépelt karaktertől folytatható[cite: 3]. Windows alatt az adatok a `%LOCALAPPDATA%\ChillTyper\webview` mappába kerülnek[cite: 3].
 
-*ChillTyper v5.4.3 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]
+*ChillTyper v5.4.5 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]

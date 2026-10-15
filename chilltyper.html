@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChillTyper v5.3.4 - Vakírás Oktató</title>
+    <title>ChillTyper v5.4.5 - Vakírás Oktató</title>
 
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23eab308'/><text x='50' y='68' font-size='52' font-weight='900' text-anchor='middle' fill='%230f172a' font-family='sans-serif'>CT</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@600;800;900&family=VT323&family=Space+Grotesk:wght@500;700&family=Courier+Prime:wght@400;700&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
-
+    
     <style>
         :root {
             --bg-color: #323437;
@@ -163,7 +163,6 @@
             filter: grayscale(100%);
         }
 
-        /* DYNAMIC HAND SVG STYLES */
         .hand-finger {
             fill: var(--sub-color);
             opacity: 0.25;
@@ -192,14 +191,14 @@
             <div>
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl font-black tracking-tight text-[var(--text-color)]">ChillTyper</h1>
-                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.4.3</span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-[var(--main-color)]/20 text-[var(--main-color)] border border-[var(--main-color)]/30 font-mono tracking-wider">v5.4.5</span>
                 </div>
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Magyar QWERTZ Vakírás Oktató</p>
             </div>
         </div>
 
         <!-- MODE SELECTOR TABS & ACTION BUTTONS -->
-        <div class="flex items-center gap-2 bg-[var(--sub-alt-color)] p-1.5 rounded-2xl border border-[var(--sub-color)]/20">
+        <div class="flex flex-wrap items-center gap-2 bg-[var(--sub-alt-color)] p-1.5 rounded-2xl border border-[var(--sub-color)]/20">
             <button id="tab-beginner" onclick="switchAppMode('beginner')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">
                 🌱 Kezdő Szintek
             </button>
@@ -228,7 +227,7 @@
 
             <!-- LINK A KÜLÖNÁLLÓ CSIGAVERSENY OLDALRA -->
             <a href="verseny.html" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-rose-400 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 shadow flex items-center gap-1.5">
-                <span>🏎️ Verdák Verseny</span>
+                <span>🏎️ Verdák verseny</span>
                 <span class="text-[10px] opacity-70">➔</span>
             </a>
         </div>
@@ -271,7 +270,11 @@
         <div id="beginner-level-bar" class="w-full bg-[var(--sub-alt-color)]/60 border border-[var(--sub-color)]/20 rounded-2xl p-4 flex flex-col gap-4">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <span id="level-badge" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg">1</span>
+                    <div class="flex items-center gap-1">
+                        <button onclick="changeLevelOffset(-1)" class="w-7 h-10 rounded-lg bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/40 text-[var(--text-color)] font-black text-xs flex items-center justify-center transition" title="Előző Szint">◀</button>
+                        <span id="level-badge" onclick="openLessonModal()" class="w-10 h-10 rounded-xl bg-[var(--main-color)]/20 border border-[var(--main-color)] text-[var(--main-color)] font-extrabold flex items-center justify-center text-lg cursor-pointer hover:bg-[var(--main-color)] hover:text-[var(--bg-color)] transition" title="Szintek választása">1</span>
+                        <button onclick="changeLevelOffset(1)" class="w-7 h-10 rounded-lg bg-[var(--sub-color)]/20 hover:bg-[var(--sub-color)]/40 text-[var(--text-color)] font-black text-xs flex items-center justify-center transition" title="Következő Szint">▶</button>
+                    </div>
                     <div>
                         <h2 id="level-title" class="text-base font-bold text-[var(--text-color)]">1. Szint: F, J Billentyűk</h2>
                         <p id="level-desc" class="text-xs text-[var(--sub-color)]">Kezdő izommemória gyakorlás (csak a helyes leütés számít)</p>
@@ -424,7 +427,7 @@
         <div>
             <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">tab</span> - teszt újraindítása &nbsp;|&nbsp; <span class="bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-md">backspace</span> - javítás
         </div>
-        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.3.4 • Vakírás</div>
+        <div class="font-mono text-[11px] opacity-75">ChillTyper v5.4.5 • Vakírás</div>
     </footer>
 
     <!-- MODALS -->
@@ -480,6 +483,13 @@
             </div>
 
             <div id="set-content-reset" class="flex flex-col gap-4 hidden">
+                <!-- ÚJ: MINDEN SZINT FELOLDÁSA GOMB -->
+                <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col gap-3">
+                    <div class="flex items-center gap-3 text-amber-400"><span class="text-2xl">🔓</span><h4 class="font-bold text-base">Összes Kezdő Szint Feloldása</h4></div>
+                    <p class="text-xs text-[var(--sub-color)] leading-relaxed">Ha azonnal ki szeretnéd próbálni az összes szintet a kezdő módban anélkül, hogy végigjátszanád őket.</p>
+                    <button onclick="unlockAllLevels()" class="mt-2 py-3 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition self-start shadow-lg flex items-center gap-2">🔓 Minden Szint Feloldása</button>
+                </div>
+
                 <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
                     <div class="flex items-center gap-3 text-rose-400"><span class="text-2xl">⚠️</span><h4 class="font-bold text-base">Alaphelyzetbe Állítás (Reset Progress)</h4></div>
                     <p class="text-xs text-[var(--sub-color)] leading-relaxed">A reset művelet törli az összes helyben elmentett adatot.</p>
@@ -574,7 +584,7 @@
 
     <!-- STATS MODAL -->
     <div id="modal-stats" class="fixed inset-0 z-50 bg-[var(--bg-color)]/95 backdrop-blur-md p-4 flex items-center justify-center hidden">
-        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-md w-full flex flex-col gap-5 shadow-2xl">
+        <div class="bg-[var(--sub-alt-color)] border border-[var(--main-color)]/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full flex flex-col gap-5 shadow-2xl">
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
                     <h3 class="text-xl font-black text-[var(--main-color)] flex items-center gap-2">🏆 Személyes Rekordjaid</h3>
@@ -583,18 +593,22 @@
                 <button onclick="closeStatsModal()" class="p-2 text-[var(--sub-color)] hover:text-[var(--text-color)] font-bold text-lg">✕</button>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                 <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
-                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Legmagasabb Szint</span>
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Szint</span>
                     <span id="stat-local-level" class="text-2xl font-black text-[var(--main-color)] mt-1">1</span>
                 </div>
                 <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
-                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Legjobb WPM</span>
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">WPM</span>
                     <span id="stat-local-wpm" class="text-2xl font-black text-[var(--text-color)] mt-1">0</span>
                 </div>
                 <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
-                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Befejezett Teszt</span>
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Teszt</span>
                     <span id="stat-local-tests" class="text-2xl font-black text-[var(--text-color)] mt-1">0</span>
+                </div>
+                <div class="bg-[var(--bg-color)] p-3.5 rounded-2xl border border-[var(--sub-color)]/20 flex flex-col items-center">
+                    <span class="text-[10px] text-[var(--sub-color)] uppercase font-bold">Karakter</span>
+                    <span id="stat-local-chars" class="text-2xl font-black text-cyan-400 mt-1">0</span>
                 </div>
             </div>
 
@@ -604,7 +618,7 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        let currentMode = 'beginner';
+        let currentMode = 'beginner'; 
         let currentModuleIndex = 0;
         let highestUnlockedModule = 0;
         let activeTheme = 'serika_dark';
@@ -612,7 +626,7 @@
         let currentLanguage = 'hu'; 
 
         let isSuddenDeathEnabled = false;
-        let handStyleMode = 1; // 1: Realisztikus Kontúr, 2: Minimalista Színes Ujj-SÁvok
+        let handStyleMode = 1;
 
         let textLengthSetting = 25;
         let sentenceSubMode = 'words'; 
@@ -713,10 +727,10 @@
             { id: 'ocean', name: 'Ocean', bg: '#0f172a', main: '#38bdf8', text: '#e0f2fe' },
             { id: 'rose_pine', name: 'Rosé Pine', bg: '#191724', main: '#ebbcba', text: '#e0def4' },
             { id: 'stealth', name: 'Stealth', bg: '#121212', main: '#555555', text: '#aaaaaa' },
-            { id: 'solarized_dark', name: 'Solarized Dark', bg: '#002b36', main: '#b58900', text: '#839496' },
+            { id: 'solarized_dark', name: 'Solarized Dark', bg: '#002b36', main: '#b58900', text: '#268bd2' },
             { id: 'emerald', name: 'Emerald', bg: '#062319', main: '#10b981', text: '#d1fae5' },
             { id: 'miami', name: 'Miami Vice', bg: '#240046', main: '#ff007f', text: '#e0aaff' },
-            { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#f3e8ff' },
+            { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#e879f9' },
             { id: 'cheesecake', name: 'Cheesecake', bg: '#fdf6e3', main: '#d33682', text: '#657b83' },
             { id: 'matcha', name: 'Matcha', bg: '#2b332c', main: '#a3be8c', text: '#e5e9f0' },
             { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
@@ -1382,14 +1396,23 @@
             startNewGame(true);
         }
 
+        // ÚJ: Összes szint feloldása függvény
+        function unlockAllLevels() {
+            highestUnlockedModule = 46;
+            localStorage.setItem('chilltyper_highest_level', '46');
+            closeSettingsModal();
+            updateModeUI();
+            startNewGame(true);
+        }
+
         function openStatsModal() {
             document.getElementById('stat-local-level').textContent = (highestUnlockedModule || 0) + 1;
             document.getElementById('stat-local-wpm').textContent = localStorage.getItem('chilltyper_best_wpm') || '0';
             document.getElementById('stat-local-tests').textContent = localStorage.getItem('chilltyper_total_tests') || '0';
+            document.getElementById('stat-local-chars').textContent = localStorage.getItem('chilltyper_total_chars') || '0';
             document.getElementById('modal-stats').classList.remove('hidden');
         }
 
-        // JAVÍTVA: bezáráshoz a .add('hidden') kell!
         function closeStatsModal() {
             document.getElementById('modal-stats').classList.add('hidden');
         }
@@ -1564,6 +1587,9 @@
                     startTimer();
                 }
 
+                const currentTotalChars = parseInt(localStorage.getItem('chilltyper_total_chars') || '0', 10);
+                localStorage.setItem('chilltyper_total_chars', currentTotalChars + 1);
+
                 const targetChar = currentText[charIndex];
                 const currentNewKeys = currentModuleIndex === 0 
                     ? ['f', 'j'] 
@@ -1626,6 +1652,15 @@
                     highlightTargetKey();
                     saveBeginnerProgress();
                 }
+            }
+        }
+
+        function changeLevelOffset(offset) {
+            const newIndex = currentModuleIndex + offset;
+            if (newIndex >= 0 && newIndex <= highestUnlockedModule && newIndex < 47) {
+                currentModuleIndex = newIndex;
+                updateModeUI();
+                startNewGame(true);
             }
         }
 

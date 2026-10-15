@@ -64,36 +64,10 @@
 
         .race-lane {
             position: relative;
-            height: 80px;
+            height: 56px;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            padding-bottom: 12px;
-            background: linear-gradient(to bottom,
-                rgba(44, 46, 49, 0) 0%,
-                rgba(44, 46, 49, 0) 80%,
-                rgba(0, 0, 0, 0.3) 100%);
-            border-bottom: 4px solid rgba(255, 255, 255, 0.05);
-        }
-        .race-lane:last-child {
-            border-bottom: none;
-        }
-        .lane-divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            border-top: 2px dashed rgba(255, 255, 255, 0.2);
-            pointer-events: none;
-        }
-        .track-surface {
-            background-color: #2a2d30;
-            background-image:
-                radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0);
-            background-size: 24px 24px;
-            border: 4px solid #444;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
         }
 
         .car-runner {
@@ -184,6 +158,17 @@
 
     <!-- MAIN RACING BOARD -->
     <main class="w-full flex flex-col gap-6 my-auto">
+        
+        <!-- KÖZÉPEN A VERSENYPÁLYA FELETT A MONDAT VÁLASZTÓ -->
+        <div class="flex items-center justify-center gap-2 w-full">
+            <span class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Mondatok száma:</span>
+            <div class="flex items-center gap-1.5 bg-[var(--sub-alt-color)] p-1.5 rounded-2xl border border-[var(--sub-color)]/20 shadow-lg">
+                <button id="sentence-opt-1" onclick="setSentenceCount(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-[var(--main-color)] bg-[var(--main-color)]/10 border border-[var(--main-color)]/30 transition">1 mondat</button>
+                <button id="sentence-opt-3" onclick="setSentenceCount(3)" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-[var(--sub-color)] hover:text-[var(--text-color)] transition">3 mondat</button>
+                <button id="sentence-opt-5" onclick="setSentenceCount(5)" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-[var(--sub-color)] hover:text-[var(--text-color)] transition">5 mondat</button>
+            </div>
+        </div>
+
         <div class="w-full bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 rounded-3xl p-6 shadow-2xl flex flex-col gap-4">
             
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/20 pb-4">
@@ -202,29 +187,19 @@
             </div>
 
             <!-- VERSENYPÁLYA SÁVOK -->
-            <div class="flex flex-col w-full track-surface rounded-2xl p-4 border border-[var(--sub-color)]/20 gap-1 relative overflow-hidden">
-                <div class="absolute top-0 bottom-0 right-10 w-4 bg-repeat-y opacity-60 z-10" style="background-image: linear-gradient(0deg, #fff 50%, transparent 50%); background-size: 12px 24px;"></div>
+            <div class="flex flex-col w-full bg-[var(--bg-color)] rounded-2xl p-4 border border-[var(--sub-color)]/20 gap-1 relative overflow-hidden">
+                <div class="absolute top-0 bottom-0 right-10 w-2.5 bg-repeat-y opacity-40 z-10" style="background-image: linear-gradient(0deg, #fff 50%, #000 50%); background-size: 8px 16px;"></div>
 
                 <!-- JÁTÉKOS: Villám McQueen -->
                 <div class="race-lane">
                     <div id="runner-player" class="car-runner" style="left: 0%;">
-                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
-                            <!-- Shadow -->
-                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
-                            <!-- Body -->
-                            <path d="M 10,45 L 20,30 C 25,20 40,15 60,15 C 80,15 95,20 100,30 L 110,45 Z" fill="#dc2626" />
-                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#991b1b" />
-                            <!-- Roof/Windshield -->
-                            <path d="M 40,20 C 45,10 75,10 80,20 L 85,35 L 35,35 Z" fill="#1e293b" />
-                            <path d="M 45,18 C 50,12 70,12 75,18 L 78,28 L 42,28 Z" fill="#93c5fd" opacity="0.6" />
-                            <!-- Details -->
-                            <rect x="25" y="35" width="60" height="4" rx="2" fill="#facc15" />
-                            <text x="30" y="42" font-size="8" font-weight="black" fill="white" style="font-family: Arial">95</text>
-                            <!-- Wheels -->
-                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
-                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
-                            <circle cx="30" cy="50" r="3" fill="#aaa" />
-                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        <svg class="car-icon" viewBox="0 0 100 50">
+                            <path d="M 5,35 L 15,22 L 35,12 L 65,12 L 85,22 L 98,32 L 98,40 L 5,40 Z" fill="#dc2626"/>
+                            <path d="M 38,15 L 62,15 L 72,23 L 32,23 Z" fill="#93c5fd"/>
+                            <polygon points="55,27 45,37 53,37 42,44 60,32 50,32" fill="#facc15"/>
+                            <text x="22" y="34" font-size="12" font-weight="900" fill="#ffffff">95</text>
+                            <circle cx="22" cy="40" r="7" fill="#18181b" stroke="#71717a" stroke-width="2"/>
+                            <circle cx="78" cy="40" r="7" fill="#18181b" stroke="#71717a" stroke-width="2"/>
                         </svg>
                         <span class="text-xs font-black text-red-500 bg-[var(--sub-alt-color)] px-2.5 py-1 rounded-lg border border-red-500/40 shadow">⚡ Villám McQueen (TE)</span>
                     </div>
@@ -234,16 +209,13 @@
                 <!-- BOT 1: Matuka -->
                 <div class="race-lane">
                     <div id="runner-bot1" class="car-runner" style="left: 0%;">
-                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
-                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
-                            <path d="M 10,45 L 15,35 L 40,30 L 80,30 L 95,35 L 105,45 Z" fill="#854d0e" />
-                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#5c3a0a" />
-                            <path d="M 45,30 L 75,30 L 80,40 L 40,40 Z" fill="#1e293b" />
-                            <path d="M 48,28 L 72,28 L 75,35 L 45,35 Z" fill="#93c5fd" opacity="0.4" />
-                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
-                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#444" stroke-width="2" />
-                            <circle cx="30" cy="50" r="3" fill="#aaa" />
-                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        <svg class="car-icon" viewBox="0 0 100 50">
+                            <rect x="10" y="25" width="45" height="15" fill="#854d0e" rx="2"/>
+                            <path d="M 55,20 L 75,20 L 85,30 L 85,40 L 55,40 Z" fill="#a16207"/>
+                            <path d="M 58,22 L 72,22 L 78,29 L 58,29 Z" fill="#e0f2fe"/>
+                            <line x1="15" y1="25" x2="35" y2="10" stroke="#78350f" stroke-width="4"/>
+                            <circle cx="30" cy="40" r="7" fill="#18181b"/>
+                            <circle cx="75" cy="40" r="7" fill="#18181b"/>
                         </svg>
                         <span class="text-xs font-bold text-amber-500 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-amber-500/30">🛠️ Matuka</span>
                     </div>
@@ -253,17 +225,12 @@
                 <!-- BOT 2: Jackson Storm -->
                 <div class="race-lane">
                     <div id="runner-bot2" class="car-runner" style="left: 0%;">
-                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
-                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
-                            <path d="M 5,45 L 20,32 L 40,20 L 80,20 L 100,32 L 110,45 Z" fill="#0f172a" />
-                            <path d="M 10,45 L 105,45 L 100,52 L 15,52 Z" fill="#020617" />
-                            <path d="M 40,20 L 80,20 L 85,30 L 35,30 Z" fill="#1e293b" />
-                            <path d="M 45,18 L 75,18 L 80,28 L 40,28 Z" fill="#38bdf8" opacity="0.5" />
-                            <rect x="20" y="32" width="80" height="3" rx="1" fill="#0ea5e9" />
-                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#38bdf8" stroke-width="2" />
-                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#38bdf8" stroke-width="2" />
-                            <circle cx="30" cy="50" r="3" fill="#eee" />
-                            <circle cx="90" cy="50" r="3" fill="#eee" />
+                        <svg class="car-icon" viewBox="0 0 100 50">
+                            <path d="M 5,36 L 20,20 L 40,10 L 68,10 L 88,20 L 98,34 L 98,40 L 5,40 Z" fill="#0f172a"/>
+                            <path d="M 40,13 L 65,13 L 75,21 L 35,21 Z" fill="#38bdf8"/>
+                            <path d="M 20,32 L 80,32 L 85,36 L 15,36 Z" fill="#0284c7"/>
+                            <circle cx="22" cy="40" r="7" fill="#020617" stroke="#38bdf8" stroke-width="1.5"/>
+                            <circle cx="78" cy="40" r="7" fill="#020617" stroke="#38bdf8" stroke-width="1.5"/>
                         </svg>
                         <span class="text-xs font-bold text-sky-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-sky-500/30">🚀 Jackson Storm</span>
                     </div>
@@ -273,16 +240,11 @@
                 <!-- BOT 3: Cruz Ramirez -->
                 <div class="race-lane">
                     <div id="runner-bot3" class="car-runner" style="left: 0%;">
-                        <svg class="car-icon" viewBox="0 0 120 60" width="70" height="35">
-                            <ellipse cx="60" cy="55" rx="50" ry="5" fill="rgba(0,0,0,0.4)" />
-                            <path d="M 10,45 L 20,30 L 40,20 L 80,20 L 100,30 L 110,45 Z" fill="#eab308" />
-                            <path d="M 15,45 L 105,45 L 100,52 L 20,52 Z" fill="#a16207" />
-                            <path d="M 40,20 L 80,20 L 85,30 L 35,30 Z" fill="#1e293b" />
-                            <path d="M 45,18 L 75,18 L 80,28 L 40,28 Z" fill="#bfdbfe" opacity="0.6" />
-                            <circle cx="30" cy="50" r="8" fill="#111" stroke="#fef08a" stroke-width="2" />
-                            <circle cx="90" cy="50" r="8" fill="#111" stroke="#fef08a" stroke-width="2" />
-                            <circle cx="30" cy="50" r="3" fill="#aaa" />
-                            <circle cx="90" cy="50" r="3" fill="#aaa" />
+                        <svg class="car-icon" viewBox="0 0 100 50">
+                            <path d="M 5,35 L 18,21 L 38,12 L 65,12 L 82,21 L 96,32 L 96,40 L 5,40 Z" fill="#eab308"/>
+                            <path d="M 38,15 L 62,15 L 70,22 L 32,22 Z" fill="#bfdbfe"/>
+                            <circle cx="22" cy="40" r="7" fill="#18181b" stroke="#fef08a" stroke-width="1.5"/>
+                            <circle cx="78" cy="40" r="7" fill="#18181b" stroke="#fef08a" stroke-width="1.5"/>
                         </svg>
                         <span class="text-xs font-bold text-yellow-400 bg-[var(--sub-alt-color)] px-2 py-0.5 rounded-lg border border-yellow-500/30">🟡 Cruz Ramirez</span>
                     </div>
@@ -391,12 +353,12 @@
             { id: 'ocean', name: 'Ocean', bg: '#0f172a', main: '#38bdf8', text: '#e0f2fe' },
             { id: 'rose_pine', name: 'Rosé Pine', bg: '#191724', main: '#ebbcba', text: '#e0def4' },
             { id: 'stealth', name: 'Stealth', bg: '#121212', main: '#555555', text: '#aaaaaa' },
-            { id: 'solarized_dark', name: 'Solarized Dark', bg: '#002b36', main: '#b58900', text: '#839496' },
-            { id: 'emerald', name: 'Emerald', bg: '#062319', main: '#10b981', text: '#d1fae5' },
+            { id: 'solarized_dark', name: 'Solarized Dark', bg: '#002b36', main: '#b58900', text: '#268bd2' },
+            { id: 'emerald', name: 'Emerald', bg: '#062319', main: '#10b981', text: '#34d399' },
             { id: 'miami', name: 'Miami Vice', bg: '#240046', main: '#ff007f', text: '#e0aaff' },
-            { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#f3e8ff' },
+            { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#e879f9' },
             { id: 'cheesecake', name: 'Cheesecake', bg: '#fdf6e3', main: '#d33682', text: '#657b83' },
-            { id: 'matcha', name: 'Matcha', bg: '#2b332c', main: '#a3be8c', text: '#e5e9f0' },
+            { id: 'matcha', name: 'Matcha', bg: '#2b332c', main: '#a3be8c', text: '#ebcb8b' },
             { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
         ];
 
@@ -410,13 +372,15 @@
                 "A türelem és a kitartó gyakorlás mindig meghozza az eredményét a vakírásban.",
                 "Nem a gyorsaság az egyetlen fontos tényező, a pontosság lényegesen többet számít.",
                 "Szuper verdák száguldanak a versenypályán, hogy megnyerjék a Szelep Kupát.",
-                "A digitális világban a magabiztos billentyűkezelés az egyik leghasznosabb tudás."
+                "A digitális világban a magabiztos billentyűkezelés az egyik leghasznosabb tudás.",
+                "Villám McQueen sosem adja fel a versenyt, akármilyen nehéz is a helyzet."
             ],
             en: [
                 "Patience and persistent practice always bring results in touch typing.",
                 "Speed is not the only important factor, accuracy matters significantly more.",
                 "Racing cars speed down the track competing for the prestigious Piston Cup.",
-                "In the digital world, confident keyboard skills are essential."
+                "In the digital world, confident keyboard skills are essential.",
+                "Lightning McQueen never gives up the race no matter how difficult it gets."
             ]
         };
 
@@ -430,6 +394,7 @@
         let activeTheme = 'serika_dark';
         let currentFontSize = 'medium';
         let currentLanguage = 'hu';
+        let sentenceCount = 1; // Alapértelmezett mondatszám
 
         let difficulty = 'easy';
         let currentText = '';
@@ -437,9 +402,9 @@
         let errorsCount = 0;
 
         let isRacing = false;
-        let countdown = 3;
-        let startTime = 0;
+        let countdownTimer = null;
         let animFrameId = null;
+        let startTime = 0;
 
         let playerPos = 0;
         let targetPlayerPos = 0;
@@ -473,6 +438,20 @@
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('chilltyper_lang', lang);
+            resetRace();
+        }
+
+        function setSentenceCount(count) {
+            sentenceCount = count;
+            [1, 3, 5].forEach(num => {
+                const btn = document.getElementById(`sentence-opt-${num}`);
+                if (!btn) return;
+                if (num === count) {
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-[var(--main-color)] bg-[var(--main-color)]/10 border border-[var(--main-color)]/30 transition";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-[var(--sub-color)] hover:text-[var(--text-color)] transition";
+                }
+            });
             resetRace();
         }
 
@@ -559,10 +538,11 @@
 
         function resetRace() {
             if (animFrameId) cancelAnimationFrame(animFrameId);
+            if (countdownTimer) clearInterval(countdownTimer);
+            
             isRacing = false;
             userInputs = [];
             errorsCount = 0;
-            countdown = 3;
 
             playerPos = 0;
             targetPlayerPos = 0;
@@ -576,7 +556,16 @@
             document.getElementById('wpm-player').textContent = "0 WPM";
 
             const pool = TEXTS[currentLanguage] || TEXTS.hu;
-            currentText = pool[Math.floor(Math.random() * pool.length)];
+            let selectedSentences = [];
+            let poolCopy = [...pool];
+            
+            for (let i = 0; i < sentenceCount; i++) {
+                if (poolCopy.length === 0) poolCopy = [...pool];
+                const randomIndex = Math.floor(Math.random() * poolCopy.length);
+                selectedSentences.push(poolCopy.splice(randomIndex, 1)[0]);
+            }
+            currentText = selectedSentences.join(" ");
+
             renderText();
 
             const cfg = RANGES[difficulty];
@@ -600,16 +589,21 @@
             rLight.className = "traffic-light light-red";
             yLight.className = "traffic-light";
             gLight.className = "traffic-light";
-            statusText.textContent = "KÉSZENLÉT..";
+            statusText.textContent = "3..";
 
-            let timer = setInterval(() => {
-                if (countdown === 2) {
+            let count = 3;
+
+            countdownTimer = setInterval(() => {
+                count--;
+                if (count === 2) {
+                    rLight.className = "traffic-light";
                     yLight.className = "traffic-light light-yellow";
-                    statusText.textContent = "3.. 2..";
-                } else if (countdown === 1) {
+                    statusText.textContent = "2..";
+                } else if (count === 1) {
+                    yLight.className = "traffic-light";
                     statusText.textContent = "1..";
-                } else if (countdown === 0) {
-                    clearInterval(timer);
+                } else if (count === 0) {
+                    clearInterval(countdownTimer);
                     rLight.className = "traffic-light";
                     yLight.className = "traffic-light";
                     gLight.className = "traffic-light light-green";
@@ -619,7 +613,6 @@
                     lastFrameTime = performance.now();
                     requestAnimationFrame(gameLoop);
                 }
-                countdown--;
             }, 1000);
         }
 
@@ -734,11 +727,9 @@
             if (e.key === 'Backspace' && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault();
                 if (userInputs.length > 0) {
-                    // Ha szóközön vagyunk közvetlenül, töröljük a szóközöket először
                     while (userInputs.length > 0 && currentText[userInputs.length - 1] === ' ') {
                         userInputs.pop();
                     }
-                    // Majd töröljük az előző szó összes karakterét az előző szóközig
                     while (userInputs.length > 0 && currentText[userInputs.length - 1] !== ' ') {
                         userInputs.pop();
                     }
