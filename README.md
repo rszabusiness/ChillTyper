@@ -1,8 +1,8 @@
-# ⌨ ChillTyper v5.4.6 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
+# ⌨ ChillTyper v5.4.7 - Magyar QWERTZ Vakírás Tanuló & Gyakorló
 
 **ChillTyper** egy modern, böngészőben futó, interaktív tízujjas gépírás-oktató és -fejlesztő webalkalmazás, amely a **magyar QWERTZ billentyűzetkiosztás** alapjaira épül[cite: 3].
 
-## 🆕 Újdonságok a v5.4.6 verzióban
+## 🆕 Újdonságok a v5.4.7 verzióban
 
 * **Kezdőszintek gyorsabb elérése**: A szintjelző melletti nyilakkal lépkedhetsz a már feloldott szintek között, a szintjelzőre vagy a szintlistára kattintva pedig közvetlenül választhatsz közülük.
 * **Összes kezdőszint feloldása**: A beállításokban egyetlen gombbal feloldhatod mind a 47 kezdőszintet.
@@ -79,7 +79,7 @@ Interaktív, versenyzőkkel szimulált gépelési kihívás:
 
 ## 🖥️ Windowsos EXE
 
-A kész, önálló alkalmazás a `dist/ChillTyper-v5.4.6.exe` fájlból indítható. Az EXE alapértelmezés szerint a fő gépírófelületet nyitja meg; a versenyfelület a Python-indítóval a `--page verseny.html` kapcsolóval választható.
+A kész, önálló alkalmazás a `dist/ChillTyper-v5.4.7.exe` fájlból indítható. Az EXE alapértelmezés szerint a fő gépírófelületet nyitja meg; a versenyfelület a Python-indítóval a `--page verseny.html` kapcsolóval választható.
 
 Új EXE készítése a projekt gyökérmappájából:
 
@@ -90,4 +90,4 @@ python chilltyper_app.py --build-exe
 
 A parancs a `dist` mappába készíti a verziószámozott EXE-t, és mindkét HTML-felületet beágyazza.
 
-*ChillTyper v5.4.6 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]
+*ChillTyper v5.4.7 • Magyar QWERTZ Vakírás Oktató Program © 2026*[cite: 3]
