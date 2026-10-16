@@ -96,7 +96,8 @@
         .light-yellow { background-color: #eab308; box-shadow: 0 0 12px #eab308; }
         .light-green { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
 
-        .caret-active {
+        /* Kurzor stílusok (5 féle) */
+        body[data-cursor="line"] .caret-active {
             position: relative;
             background-color: rgba(226, 183, 20, 0.2);
             border-bottom: 3px solid var(--caret-color);
@@ -104,7 +105,34 @@
             border-radius: 2px;
             animation: blink-caret 1s infinite;
         }
+        body[data-cursor="block"] .caret-active {
+            position: relative;
+            background-color: var(--caret-color);
+            color: var(--bg-color) !important;
+            border-radius: 2px;
+        }
+        body[data-cursor="underline"] .caret-active {
+            position: relative;
+            border-bottom: 2px solid var(--caret-color);
+            color: var(--main-color) !important;
+        }
+        body[data-cursor="outline"] .caret-active {
+            position: relative;
+            border: 2px solid var(--caret-color);
+            color: var(--main-color) !important;
+            border-radius: 2px;
+        }
+        body[data-cursor="none"] .caret-active {
+            position: relative;
+            color: var(--main-color) !important;
+        }
 
+        /* Helyes karakter: zöld szín */
+        .char-correct {
+            color: #22c55e !important;
+        }
+
+        /* Helytelen karakter: marad a piros/hibás */
         .char-error {
             color: var(--error-color) !important;
             background-color: rgba(202, 71, 84, 0.2);
@@ -122,7 +150,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--sub-color); border-radius: 4px; }
     </style>
 </head>
-<body data-theme="serika_dark" data-font-size="medium" class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-6xl mx-auto selection:bg-amber-400 selection:text-slate-950">
+<body data-theme="serika_dark" data-font-size="medium" data-cursor="line" class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-6xl mx-auto selection:bg-amber-400 selection:text-slate-950">
 
     <!-- HEADER -->
     <header class="w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
@@ -137,7 +165,7 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <a href="chilltyper.html" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[var(--sub-color)] hover:text-[var(--text-color)] bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 hover:border-[var(--sub-color)]/40 transition flex items-center gap-2 shadow">
+            <a href="chilltyper_2.html" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[var(--sub-color)] hover:text-[var(--text-color)] bg-[var(--sub-alt-color)] border border-[var(--sub-color)]/20 hover:border-[var(--sub-color)]/40 transition flex items-center gap-2 shadow">
                 <span>🏠 Vissza az Oktatóhoz</span>
             </a>
 
@@ -159,7 +187,7 @@
     <!-- MAIN RACING BOARD -->
     <main class="w-full flex flex-col gap-6 my-auto">
         
-        <!-- KÖZÉPEN A VERSENYPÁLYA FELETT A MONDAT VÁLASZTÓ -->
+        <!-- MONDAT VÁLASZTÓ -->
         <div class="flex items-center justify-center gap-2 w-full">
             <span class="text-xs font-bold text-[var(--sub-color)] uppercase tracking-wider">Mondatok száma:</span>
             <div class="flex items-center gap-1.5 bg-[var(--sub-alt-color)] p-1.5 rounded-2xl border border-[var(--sub-color)]/20 shadow-lg">
@@ -268,44 +296,73 @@
             <div class="flex items-center justify-between border-b border-[var(--sub-color)]/30 pb-4">
                 <div>
                     <h3 class="text-2xl font-black text-[var(--text-color)] flex items-center gap-2">⚙ Beállítások</h3>
-                    <p class="text-xs text-[var(--sub-color)] mt-1">Téma, betűméret, gyakorló nyelv és adatok kezelése</p>
+                    <p class="text-xs text-[var(--sub-color)] mt-1">Témák, kurzor, betűméret, nyelv és adatok kezelése</p>
                 </div>
                 <button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-[var(--main-color)] text-[var(--bg-color)] font-black text-sm shadow hover:brightness-110 transition">Bezárás ✕</button>
             </div>
 
+            <!-- BEÁLLÍTÁSOK FÜLEK -->
             <div class="flex items-center gap-2 border-b border-[var(--sub-color)]/20 pb-3 flex-wrap">
-                <button id="set-tab-theme" onclick="switchSettingsTab('theme')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">🎨 Téma</button>
+                <button id="set-tab-themes" onclick="switchSettingsTab('themes')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--bg-color)] bg-[var(--main-color)] shadow">🎨 Témák</button>
+                <button id="set-tab-cursor" onclick="switchSettingsTab('cursor')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🖱️ Kurzor választó</button>
                 <button id="set-tab-font" onclick="switchSettingsTab('font')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🔠 Betűméret</button>
                 <button id="set-tab-lang" onclick="switchSettingsTab('lang')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🌐 Nyelv</button>
                 <button id="set-tab-reset" onclick="switchSettingsTab('reset')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--sub-color)] hover:text-[var(--text-color)]">🔄 Reset & Adatok</button>
             </div>
 
-            <div id="set-content-theme" class="flex flex-col gap-4">
+            <!-- 1. TÉMÁK TAB (25 TÉMA) -->
+            <div id="set-content-themes" class="flex flex-col gap-4">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válassz a 25 egyedi téma közül:</p>
                 <div id="themes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
             </div>
 
-            <div id="set-content-font" class="flex flex-col gap-4 hidden">
-                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                    <button id="fontsize-opt-small" onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4></div></button>
-                    <button id="fontsize-opt-medium" onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4></div></button>
-                    <button id="fontsize-opt-large" onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4></div></button>
-                    <button id="fontsize-opt-xlarge" onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4></div></button>
+            <!-- 2. KURZOR VÁLASZTÓ TAB (5 FÉLE KURZOR) -->
+            <div id="set-content-cursor" class="flex flex-col gap-4 hidden">
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a kurzor stílusát:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <button onclick="setCursorStyle('line')" id="cursor-opt-line" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <span class="font-bold text-xs text-[var(--text-color)]">Vonal (Line)</span>
+                    </button>
+                    <button onclick="setCursorStyle('block')" id="cursor-opt-block" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <span class="font-bold text-xs text-[var(--text-color)]">Blokk (Block)</span>
+                    </button>
+                    <button onclick="setCursorStyle('underline')" id="cursor-opt-underline" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <span class="font-bold text-xs text-[var(--text-color)]">Aláhúzás (Underline)</span>
+                    </button>
+                    <button onclick="setCursorStyle('outline')" id="cursor-opt-outline" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <span class="font-bold text-xs text-[var(--text-color)]">Körvonal (Outline)</span>
+                    </button>
+                    <button onclick="setCursorStyle('none')" id="cursor-opt-none" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02]">
+                        <span class="font-bold text-xs text-[var(--text-color)]">Nincs (None)</span>
+                    </button>
                 </div>
             </div>
 
+            <!-- 3. BETŰMÉRET TAB -->
+            <div id="set-content-font" class="flex flex-col gap-4 hidden">
+                <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a szövegmegjelenítő betűméretét:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="setFontSize('small')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-base font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Kicsi</h4></div></button>
+                    <button onclick="setFontSize('medium')" class="p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Közepes</h4></div></button>
+                    <button onclick="setFontSize('large')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-2xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Nagy</h4></div></button>
+                    <button onclick="setFontSize('xlarge')" class="p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center gap-3 text-left transition hover:scale-[1.02]"><span class="text-3xl font-black text-[var(--main-color)] bg-[var(--bg-color)] p-2 rounded-xl border border-[var(--sub-color)]/20">Aa</span><div><h4 class="font-bold text-xs text-[var(--text-color)]">Extra Nagy</h4></div></button>
+                </div>
+            </div>
+
+            <!-- 4. NYELV TAB -->
             <div id="set-content-lang" class="flex flex-col gap-4 hidden">
                 <p class="text-xs font-semibold text-[var(--sub-color)]">Válaszd ki a gyakorló szavak nyelvét:</p>
                 <div id="languages-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
+            <!-- 5. RESET TAB -->
             <div id="set-content-reset" class="flex flex-col gap-4 hidden">
                 <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
                     <div class="flex items-center gap-3 text-rose-400"><span class="text-2xl">⚠️</span><h4 class="font-bold text-base">Alaphelyzetbe Állítás</h4></div>
-                    <button onclick="requestResetConfirmation()" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg">🗑 Összes Haladás Törlése</button>
+                    <button onclick="localStorage.clear(); location.reload();" class="mt-2 py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition self-start shadow-lg">🗑 Összes Haladás Törlése</button>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -357,7 +414,7 @@
             { id: 'emerald', name: 'Emerald', bg: '#062319', main: '#10b981', text: '#34d399' },
             { id: 'miami', name: 'Miami Vice', bg: '#240046', main: '#ff007f', text: '#e0aaff' },
             { id: 'lavender', name: 'Lavender', bg: '#232035', main: '#c084fc', text: '#e879f9' },
-            { id: 'cheesecake', name: 'Cheesecake', bg: '#fdf6e3', main: '#d33682', text: '#657b83' },
+            { id: 'cheesecake', name: 'Cheesecake', bg: '#fdf6e3', main: '#d33682', text: '#b58900' },
             { id: 'matcha', name: 'Matcha', bg: '#2b332c', main: '#a3be8c', text: '#ebcb8b' },
             { id: 'crimson', name: 'Crimson', bg: '#1a0508', main: '#e11d48', text: '#fecdd3' }
         ];
@@ -394,7 +451,8 @@
         let activeTheme = 'serika_dark';
         let currentFontSize = 'medium';
         let currentLanguage = 'hu';
-        let sentenceCount = 1; // Alapértelmezett mondatszám
+        let currentCursor = 'line';
+        let sentenceCount = 1;
 
         let difficulty = 'easy';
         let currentText = '';
@@ -416,9 +474,11 @@
             activeTheme = localStorage.getItem('chilltyper_theme') || 'serika_dark';
             currentFontSize = localStorage.getItem('chilltyper_fontsize') || 'medium';
             currentLanguage = localStorage.getItem('chilltyper_lang') || 'hu';
+            currentCursor = localStorage.getItem('chilltyper_cursor') || 'line';
 
             setTheme(activeTheme);
             setFontSize(currentFontSize);
+            setCursorStyle(currentCursor, false);
         }
 
         function setTheme(themeId) {
@@ -441,6 +501,26 @@
             resetRace();
         }
 
+        function setCursorStyle(style, save = true) {
+            currentCursor = style;
+            document.body.setAttribute('data-cursor', style);
+            if (save) localStorage.setItem('chilltyper_cursor', style);
+            
+            ['line', 'block', 'underline', 'outline', 'none'].forEach(s => {
+                const btn = document.getElementById(`cursor-opt-${s}`);
+                if (!btn) return;
+                const txt = btn.querySelector('span') ? btn.querySelector('span').textContent.replace(' (Aktív)', '') : s;
+                if (s === style) {
+                    btn.className = "p-4 rounded-2xl border border-[var(--main-color)] bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition shadow-md ring-2 ring-[var(--main-color)]/40";
+                    btn.innerHTML = `<span class="font-bold text-xs text-[var(--text-color)]">${txt}</span><span class="text-xs px-2 py-1 rounded bg-[var(--main-color)] text-[var(--bg-color)] font-bold">Aktív</span>`;
+                } else {
+                    btn.className = "p-4 rounded-2xl border border-[var(--sub-color)]/20 bg-[var(--sub-alt-color)] flex items-center justify-between text-left transition hover:scale-[1.02] opacity-80";
+                    btn.innerHTML = `<span class="font-bold text-xs text-[var(--text-color)]">${txt}</span>`;
+                }
+            });
+            renderText();
+        }
+
         function setSentenceCount(count) {
             sentenceCount = count;
             [1, 3, 5].forEach(num => {
@@ -458,7 +538,7 @@
         function openSettingsModal() {
             renderThemesGrid();
             renderLanguagesGrid();
-            switchSettingsTab('theme');
+            switchSettingsTab('themes');
             document.getElementById('modal-settings').classList.remove('hidden');
         }
 
@@ -467,7 +547,7 @@
         }
 
         function switchSettingsTab(tab) {
-            ['theme', 'font', 'lang', 'reset'].forEach(t => {
+            ['themes', 'cursor', 'font', 'lang', 'reset'].forEach(t => {
                 const btn = document.getElementById(`set-tab-${t}`);
                 const content = document.getElementById(`set-content-${t}`);
                 if (t === tab) {
@@ -616,21 +696,18 @@
             }, 1000);
         }
 
-        /* FIZIKAI MOZGÁSI CIKLUS */
         let lastFrameTime = performance.now();
         function gameLoop(now) {
             if (!isRacing) return;
             const delta = (now - lastFrameTime) / 1000;
             lastFrameTime = now;
 
-            // 1. Játékos autó simítása
             const posDiff = targetPlayerPos - playerPos;
             if (posDiff !== 0) {
                 playerPos += posDiff * Math.min(1, delta * 8);
             }
             document.getElementById('runner-player').style.left = `${Math.max(0, Math.min(82, playerPos))}%`;
 
-            // 2. Botok WPM haladása
             const totalWords = currentText.length / 5;
 
             ['bot1', 'bot2', 'bot3'].forEach(bot => {
@@ -663,7 +740,7 @@
 
                     if (charPos < userInputs.length) {
                         if (userInputs[charPos].correct) {
-                            charSpan.className = "text-[var(--text-color)] font-bold";
+                            charSpan.className = "char-correct font-bold";
                         } else {
                             charSpan.className = "char-error font-bold";
                         }
@@ -684,7 +761,7 @@
 
                     if (spacePos < userInputs.length) {
                         if (userInputs[spacePos].correct) {
-                            spaceSpan.className = "text-[var(--text-color)] font-bold";
+                            spaceSpan.className = "char-correct font-bold";
                         } else {
                             spaceSpan.className = "char-error font-bold";
                         }
@@ -723,7 +800,6 @@
 
             if (!isRacing) return;
 
-            // CTRL + BACKSPACE LOGIKA (SZÓTÖRLESE)
             if (e.key === 'Backspace' && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault();
                 if (userInputs.length > 0) {
@@ -741,7 +817,6 @@
                 return;
             }
 
-            // SIMA BACKSPACE (EGY KARAKTER TÖRLESE)
             if (e.key === 'Backspace') {
                 if (userInputs.length > 0) {
                     userInputs.pop();
